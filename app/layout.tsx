@@ -1,0 +1,119 @@
+import type { Metadata } from "next";
+import { Cormorant_Garamond, Dancing_Script, Inter } from "next/font/google";
+import "./globals.css";
+
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
+  variable: "--font-heading",
+  display: "swap",
+});
+
+const dancing = Dancing_Script({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-script",
+  display: "swap",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
+  variable: "--font-body",
+  display: "swap",
+});
+
+export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://auraglow.de"),
+  title: {
+    default: "Aura Glow by Mürvet | Exklusive Beauty & Aesthetics",
+    template: "%s | Aura Glow by Mürvet",
+  },
+  description:
+    "Exklusives Beauty & Aesthetics Studio für Wimpernverlängerung, Hollywood Glow Facials, Permanent Make-up und zertifizierte Masterclasses in Düsseldorf.",
+  keywords: [
+    "Aura Glow",
+    "Mürvet",
+    "Beauty Düsseldorf",
+    "Wimpernverlängerung Düsseldorf",
+    "Powder Brows",
+    "Permanent Make-up",
+    "Hollywood Glow",
+    "Microneedling",
+    "Lash Lifting",
+    "Beauty Schulungen",
+  ],
+  authors: [{ name: "Aura Glow by Mürvet" }],
+  creator: "Mürvet",
+  publisher: "Aura Glow by Mürvet",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  openGraph: {
+    type: "website",
+    locale: "de_DE",
+    url: "https://auraglow.de",
+    siteName: "Aura Glow by Mürvet",
+    title: "Aura Glow by Mürvet | Exklusive Beauty & Aesthetics",
+    description:
+      "Entdecke individuelle Beauty-Behandlungen für deine natürliche Schönheit und ein strahlendes Selbstbewusstsein.",
+    images: [
+      {
+        url: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1200&q=85",
+        width: 1200,
+        height: 630,
+        alt: "Aura Glow by Mürvet Studio",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Aura Glow by Mürvet | Exklusive Beauty & Aesthetics",
+    description:
+      "Entdecke individuelle Beauty-Behandlungen für deine natürliche Schönheit und ein strahlendes Selbstbewusstsein.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon-48x48.png", type: "image/png", sizes: "48x48" },
+      { url: "/icon-96x96.png", type: "image/png", sizes: "96x96" },
+      { url: "/icon-192x192.png", type: "image/png", sizes: "192x192" },
+      { url: "/icon-512x512.png", type: "image/png", sizes: "512x512" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
+  manifest: "/manifest.webmanifest",
+  alternates: {
+    canonical: "./",
+  },
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="de" className={`${cormorant.variable} ${dancing.variable} ${inter.variable}`}>
+      <body className="antialiased bg-[#F7F3EE] text-[#392D29] min-h-screen selection:bg-[#E8D6C5] selection:text-[#211A18]">
+        {children}
+      </body>
+    </html>
+  );
+}

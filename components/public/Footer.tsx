@@ -1,0 +1,181 @@
+import React from "react";
+import AuraGlowLogo from "@/components/ui/AuraGlowLogo";
+import {
+  MapPin,
+  Phone,
+  Mail,
+  Instagram,
+  Clock3,
+  ArrowUpRight,
+  ShieldCheck,
+} from "lucide-react";
+import { BusinessSettings, OpeningHour } from "@/lib/types";
+
+interface FooterProps {
+  business: BusinessSettings;
+  openingHours: OpeningHour[];
+}
+
+export default function Footer({ business, openingHours }: FooterProps) {
+  const currentYear = new Date().getFullYear();
+
+  return (
+    <footer className="bg-[#211A18] text-[#EFE6DD] pt-20 pb-12 border-t border-[#392D29]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 pb-16 border-b border-white/10">
+          {/* Column 1: Brand & Identity */}
+          <div className="space-y-6">
+            <AuraGlowLogo size="md" color="#FFFFFF" textColor="#FAF6F1" />
+            <p className="text-sm text-[#EFE6DD]/75 leading-relaxed font-light">
+              Exklusives Beauty &amp; Aesthetics Studio. Individuelle Behandlungen
+              für deine natürliche Schönheit, strahlenden Glow und absolute Perfektion
+              in ruhiger, entspannender Atmosphäre.
+            </p>
+            {business.instagram_url && (
+              <a
+                href={business.instagram_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.14em] text-[#D9A891] hover:text-white transition-colors"
+                aria-label="Folge Aura Glow auf Instagram"
+              >
+                <Instagram className="w-4 h-4" />
+                <span>Instagram folgen</span>
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </a>
+            )}
+          </div>
+
+          {/* Column 2: Navigation & Behandlungen */}
+          <div className="space-y-4">
+            <h3 className="text-xs uppercase tracking-[0.18em] text-[#D9A891] font-medium">
+              Navigation
+            </h3>
+            <ul className="space-y-2.5 text-sm">
+              <li>
+                <a href="/leistungen" className="text-[#EFE6DD]/80 hover:text-white transition-colors">
+                  Behandlungen &amp; Facials
+                </a>
+              </li>
+              <li>
+                <a href="/preise" className="text-[#EFE6DD]/80 hover:text-white transition-colors">
+                  Preise &amp; Pakete
+                </a>
+              </li>
+              <li>
+                <a href="/galerie" className="text-[#EFE6DD]/80 hover:text-white transition-colors">
+                  Impressionen &amp; Galerie
+                </a>
+              </li>
+              <li>
+                <a href="/ueber-uns" className="text-[#EFE6DD]/80 hover:text-white transition-colors">
+                  Über Mürvet &amp; Philosophie
+                </a>
+              </li>
+              <li>
+                <a href="/termin" className="text-[#EFE6DD]/80 hover:text-white transition-colors">
+                  Termin online anfragen
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 3: Öffnungszeiten */}
+          <div className="space-y-4">
+            <h3 className="text-xs uppercase tracking-[0.18em] text-[#D9A891] font-medium flex items-center gap-2">
+              <Clock3 className="w-3.5 h-3.5" />
+              <span>Öffnungszeiten</span>
+            </h3>
+            <div className="space-y-2 text-xs text-[#EFE6DD]/80">
+              {openingHours.map((h) => (
+                <div key={h.id} className="flex justify-between py-1 border-b border-white/5">
+                  <span className="font-light">{h.day_name}</span>
+                  <span className="font-medium text-[#EFE6DD]">
+                    {h.is_closed ? (
+                      h.custom_label || "Geschlossen"
+                    ) : (
+                      `${h.open_time} – ${h.close_time} Uhr`
+                    )}
+                  </span>
+                </div>
+              ))}
+            </div>
+            <p className="text-[11px] text-[#EFE6DD]/60 italic">
+              Termine ausschließlich nach vorheriger Vereinbarung.
+            </p>
+          </div>
+
+          {/* Column 4: Kontakt & Studio */}
+          <div className="space-y-4">
+            <h3 className="text-xs uppercase tracking-[0.18em] text-[#D9A891] font-medium">
+              Studio &amp; Kontakt
+            </h3>
+            <ul className="space-y-3 text-sm text-[#EFE6DD]/80">
+              {business.street && (
+                <li className="flex items-start gap-3">
+                  <MapPin className="w-4 h-4 text-[#D9A891] shrink-0 mt-0.5" />
+                  <span>
+                    {business.street}
+                    <br />
+                    {business.postal_code} {business.city}
+                  </span>
+                </li>
+              )}
+              {business.phone && (
+                <li className="flex items-center gap-3">
+                  <Phone className="w-4 h-4 text-[#D9A891] shrink-0" />
+                  <a
+                    href={`tel:${business.phone.replace(/\s+/g, "")}`}
+                    className="hover:text-white transition-colors"
+                  >
+                    {business.phone_display || business.phone}
+                  </a>
+                </li>
+              )}
+              {business.email && (
+                <li className="flex items-center gap-3">
+                  <Mail className="w-4 h-4 text-[#D9A891] shrink-0" />
+                  <a
+                    href={`mailto:${business.email}`}
+                    className="hover:text-white transition-colors"
+                  >
+                    {business.email}
+                  </a>
+                </li>
+              )}
+            </ul>
+
+            <div className="pt-2">
+              <a
+                href="/termin"
+                className="inline-flex items-center justify-center min-h-[44px] text-xs uppercase tracking-[0.14em] font-medium px-5 py-2.5 bg-[#A26D57] text-white hover:bg-[#8E5A45] active:scale-[0.98] transition-all rounded-sm shadow-luxury-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9A891]"
+              >
+                Termin vereinbaren
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Bar: Copyright & Legal */}
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-[#EFE6DD]/70 space-y-4 sm:space-y-0">
+          <div>
+            &copy; {currentYear} {business.business_name}. Alle Rechte vorbehalten.
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+            <a href="/impressum" className="hover:text-[#D9A891] transition-colors min-h-[44px] inline-flex items-center">
+              Impressum
+            </a>
+            <span className="text-white/20 hidden sm:inline" aria-hidden="true">|</span>
+            <a href="/datenschutz" className="hover:text-[#D9A891] transition-colors min-h-[44px] inline-flex items-center">
+              Datenschutz
+            </a>
+            <span className="text-white/20 hidden sm:inline" aria-hidden="true">|</span>
+            <a href="/admin/login" className="hover:text-[#D9A891] transition-colors text-white/50 min-h-[44px] inline-flex items-center">
+              Admin-Bereich
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}

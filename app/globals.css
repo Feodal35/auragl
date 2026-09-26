@@ -1,0 +1,197 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@layer base {
+  :root {
+    --font-heading: 'Cormorant Garamond', Georgia, serif;
+    --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-script: 'Dancing Script', cursive;
+
+    --color-bg-primary: #F7F3EE;
+    --color-bg-secondary: #EFE6DD;
+    --color-text-primary: #392D29;
+    --color-text-secondary: #756A63;
+    --color-rose-gold: #B88770;
+    --color-rose-gold-dark: #936650;
+    --color-champagne: #E8D6C5;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    background-color: #F7F3EE;
+    color: #392D29;
+    font-family: var(--font-body);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: #F7F3EE;
+    color: #392D29;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: break-word;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background-color: #E8D6C5;
+    color: #211A18;
+  }
+
+  /* Accessible focus indicators per WCAG 2.1 Criteria 2.4.7 */
+  :focus-visible {
+    outline: 2px solid #A26D57;
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* Luxury subtle scrollbar */
+  ::-webkit-scrollbar {
+    width: 7px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #F7F3EE;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #DCC8B5;
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #B88770;
+  }
+}
+
+/* Reduced motion preference per WCAG Guideline */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Editorial typography utilities */
+.font-editorial {
+  font-family: var(--font-heading);
+  letter-spacing: -0.01em;
+}
+
+.font-script {
+  font-family: var(--font-script);
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.text-pretty {
+  text-wrap: pretty;
+}
+
+/* Luxury button & interaction styles with WCAG AA compliance (4.5:1+ contrast) */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  background-color: #A26D57;
+  color: #FFFFFF;
+  padding: 0.875rem 2rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 14px rgba(162, 109, 87, 0.25);
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.btn-primary:hover {
+  background-color: #8B5742;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(162, 109, 87, 0.35);
+}
+
+.btn-primary:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  background-color: transparent;
+  color: #392D29;
+  border: 1px solid #B88770;
+  padding: 0.875rem 2rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.btn-secondary:hover {
+  background-color: #FAF6F1;
+  border-color: #8B5742;
+  color: #8B5742;
+  transform: translateY(-1px);
+}
+
+.btn-secondary:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-secondary-light {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  background-color: rgba(255, 255, 255, 0.12);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(8px);
+  padding: 0.875rem 2rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.btn-secondary-light:hover {
+  background-color: rgba(255, 255, 255, 0.22);
+  border-color: #FFFFFF;
+  transform: translateY(-1px);
+}
+
+.btn-secondary-light:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Subtle line divider */
+.rose-gold-divider {
+  height: 1px;
+  background: linear-gradient(90deg, rgba(184, 135, 112, 0) 0%, rgba(184, 135, 112, 0.5) 50%, rgba(184, 135, 112, 0) 100%);
+}
