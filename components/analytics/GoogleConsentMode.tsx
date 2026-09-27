@@ -98,14 +98,14 @@ export default function GoogleConsentMode({
 
       // 5. Cross-domain linking configuration
       gtag('set', 'linker', {
-        'domains': ['auraglow.de', 'www.auraglow.de', 'auragl.vercel.app'],
+        'domains': ['auraglow.de', 'www.auraglow.de', 'auragl.vercel.app', 'xn--aura6lowbymrvet-9vb.de', 'www.xn--aura6lowbymrvet-9vb.de'],
         'accept_incoming': true
       });
 
       // Push initial page parameters
       window.dataLayer.push({
         'user_id': uid,
-        'cross_domain_domains': ['auraglow.de', 'www.auraglow.de', 'auragl.vercel.app']
+        'cross_domain_domains': ['auraglow.de', 'www.auraglow.de', 'auragl.vercel.app', 'xn--aura6lowbymrvet-9vb.de', 'www.xn--aura6lowbymrvet-9vb.de']
       });
     })();
   `;
@@ -152,7 +152,7 @@ export default function GoogleConsentMode({
                   anonymize_ip: true,
                   send_page_view: true,
                   linker: {
-                    domains: ['auraglow.de', 'www.auraglow.de', 'auragl.vercel.app'],
+                    domains: ['auraglow.de', 'www.auraglow.de', 'auragl.vercel.app', 'xn--aura6lowbymrvet-9vb.de', 'www.xn--aura6lowbymrvet-9vb.de'],
                     accept_incoming: true
                   }
                 });
