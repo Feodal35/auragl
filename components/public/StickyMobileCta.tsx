@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { Phone, CalendarDays, MessageCircle } from "lucide-react";
+import { trackContactChannelClick, trackCtaClick } from "@/lib/tracking";
 
 interface StickyMobileCtaProps {
   phone?: string;
@@ -25,6 +26,7 @@ export default function StickyMobileCta({
         {/* Call button */}
         <a
           href={`tel:${cleanPhone}`}
+          onClick={() => trackContactChannelClick("phone", cleanPhone)}
           className="min-h-[44px] flex flex-col items-center justify-center py-1.5 px-2 rounded-sm bg-white border border-[#E8D6C5] text-[#392D29] hover:bg-[#FAF6F1] active:scale-[0.98] transition-all text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A26D57]"
           aria-label="Studio telefonisch anrufen"
         >
@@ -37,6 +39,7 @@ export default function StickyMobileCta({
           href={`https://wa.me/${cleanWhatsapp}`}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => trackContactChannelClick("whatsapp", cleanWhatsapp)}
           className="min-h-[44px] flex flex-col items-center justify-center py-1.5 px-2 rounded-sm bg-white border border-[#E8D6C5] text-[#392D29] hover:bg-[#FAF6F1] active:scale-[0.98] transition-all text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A26D57]"
           aria-label="Nachricht über WhatsApp schreiben"
         >
@@ -47,6 +50,7 @@ export default function StickyMobileCta({
         {/* Book appointment button */}
         <Link
           href="/termin"
+          onClick={() => trackCtaClick("Sticky Mobile Termin", "/termin")}
           className="min-h-[44px] flex flex-col items-center justify-center py-1.5 px-2 rounded-sm bg-[#A26D57] text-white hover:bg-[#8B5742] active:scale-[0.98] transition-all text-center shadow-luxury-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A26D57]"
           aria-label="Termin online anfragen"
         >

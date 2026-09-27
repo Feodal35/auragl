@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { AppointmentRequestSchema, AppointmentRequestFormValues } from "@/lib/validations";
 import { ServiceItem } from "@/lib/types";
 import { CheckCircle2, AlertCircle, CalendarDays, Loader2, Clock3 } from "lucide-react";
+import { trackFormConversion } from "@/lib/tracking";
 
 interface AppointmentFormProps {
   services: ServiceItem[];
@@ -68,6 +69,14 @@ export default function AppointmentForm({ services, initialTreatment = "" }: App
         );
         return;
       }
+
+      // Google Ads Enhanced Conversions & GTM Lead Tracking
+      trackFormConversion("appointment", {
+        name: `${data.first_name} ${data.last_name}`.trim(),
+        email: data.email,
+        phone: data.phone,
+        treatment: data.treatment_title,
+      });
 
       setIsSuccess(true);
       reset();

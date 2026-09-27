@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ContactMessageSchema, ContactMessageFormValues } from "@/lib/validations";
 import { CheckCircle2, AlertCircle, Send, Loader2 } from "lucide-react";
+import { trackFormConversion } from "@/lib/tracking";
 
 export default function ContactForm() {
   const router = useRouter();
@@ -55,6 +56,14 @@ export default function ContactForm() {
         );
         return;
       }
+
+      // Google Ads Enhanced Conversions & GTM Lead Tracking
+      trackFormConversion("contact", {
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        treatment: data.subject,
+      });
 
       setIsSuccess(true);
       reset();
