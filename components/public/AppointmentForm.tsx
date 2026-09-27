@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AppointmentRequestSchema, AppointmentRequestFormValues } from "@/lib/validations";
@@ -286,13 +287,15 @@ export default function AppointmentForm({ services, initialTreatment = "" }: App
           />
         </div>
         <label htmlFor="termin-privacy" className="text-xs text-[#756A63] font-light leading-relaxed cursor-pointer select-none">
-          Ich willige ein, dass meine Daten zur Bearbeitung dieser Terminanfrage gespeichert und
-          verarbeitet werden. Dies ist eine unverbindliche Anfrage; der Termin wird erst nach
-          persönlicher Rückmeldung durch Aura Glow verbindlich. Weitere Details findest du in der{" "}
-          <a href="/datenschutz" target="_blank" className="underline hover:text-[#A26D57]">
+          Ich habe die{" "}
+          <Link href="/datenschutz" target="_blank" rel="noopener noreferrer" className="underline hover:text-[#A26D57] font-medium">
             Datenschutzerklärung
-          </a>
-          . <span className="text-[#A26D57]">*</span>
+          </Link>{" "}
+          und die{" "}
+          <Link href="/agb" target="_blank" rel="noopener noreferrer" className="underline hover:text-[#A26D57] font-medium">
+            AGB inklusive der Stornierungsbedingungen
+          </Link>{" "}
+          (kostenfreie Absage bis 24 Stunden vor dem Termin) zur Kenntnis genommen und erkläre mich mit diesen einverstanden. Die Anfrage ist zunächst unverbindlich; der Termin wird erst nach persönlicher Bestätigung durch das Studio verbindlich. <span className="text-[#A26D57]">*</span>
         </label>
       </div>
       {errors.privacy_accepted && (

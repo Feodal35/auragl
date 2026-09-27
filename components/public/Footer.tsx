@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
 import AuraGlowLogo from "@/components/ui/AuraGlowLogo";
@@ -8,7 +10,8 @@ import {
   Instagram,
   Clock3,
   ArrowUpRight,
-  Sparkles,
+  ShieldCheck,
+  Cookie,
 } from "lucide-react";
 import { BusinessSettings, OpeningHour } from "@/lib/types";
 
@@ -20,8 +23,14 @@ interface FooterProps {
 export default function Footer({ business, openingHours }: FooterProps) {
   const currentYear = new Date().getFullYear();
 
+  const handleOpenCookieSettings = () => {
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new Event("openCookieSettings"));
+    }
+  };
+
   return (
-    <footer className="bg-[#211A18] text-[#EFE6DD] pt-20 pb-16 lg:pb-12 border-t border-[#392D29]">
+    <footer className="bg-[#211A18] text-[#EFE6DD] pt-20 pb-20 lg:pb-12 border-t border-[#392D29]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 pb-16 border-b border-white/10">
           {/* Column 1: Brand & Identity */}
@@ -47,7 +56,7 @@ export default function Footer({ business, openingHours }: FooterProps) {
             )}
           </div>
 
-          {/* Column 2: Navigation & Internal Linking (Item 3) */}
+          {/* Column 2: Navigation & Behandlungen */}
           <div className="space-y-4">
             <h3 className="text-xs uppercase tracking-[0.18em] text-[#D9A891] font-medium">
               Behandlungen &amp; Studio
@@ -91,7 +100,7 @@ export default function Footer({ business, openingHours }: FooterProps) {
             </ul>
           </div>
 
-          {/* Column 3: Öffnungszeiten */}
+          {/* Column 3: Öffnungszeiten & Preisangabenverordnung */}
           <div className="space-y-4">
             <h3 className="text-xs uppercase tracking-[0.18em] text-[#D9A891] font-medium flex items-center gap-2">
               <Clock3 className="w-3.5 h-3.5" />
@@ -114,9 +123,12 @@ export default function Footer({ business, openingHours }: FooterProps) {
             <p className="text-[11px] text-[#EFE6DD]/60 italic pt-1">
               Termine ausschließlich nach vorheriger Vereinbarung.
             </p>
+            <p className="text-[10px] text-[#EFE6DD]/50 pt-2 border-t border-white/5">
+              * Alle Preise verstehen sich in Euro (€) inklusive der gesetzlichen Mehrwertsteuer (Preisangabenverordnung).
+            </p>
           </div>
 
-          {/* Column 4: Kontakt & Studio Standort (Item 14) */}
+          {/* Column 4: Kontakt & Studio Standort */}
           <div className="space-y-4" itemScope itemType="https://schema.org/BeautySalon">
             <h3 className="text-xs uppercase tracking-[0.18em] text-[#D9A891] font-medium">
               Studio &amp; Kontakt
@@ -175,22 +187,54 @@ export default function Footer({ business, openingHours }: FooterProps) {
           </div>
         </div>
 
-        {/* Bottom Bar: Copyright & Legal */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-[#EFE6DD]/70 space-y-4 sm:space-y-0">
+        {/* Bottom Bar: Copyright & Complete German Legal Links */}
+        <div className="pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-[#EFE6DD]/70 gap-4">
           <div>
             &copy; {currentYear} {business.business_name}. Alle Rechte vorbehalten.
           </div>
-          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
-            <Link href="/impressum" className="hover:text-[#D9A891] transition-colors min-h-[44px] inline-flex items-center">
-              Impressum
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
+            <Link
+              href="/impressum"
+              className="hover:text-[#D9A891] transition-colors min-h-[40px] inline-flex items-center"
+            >
+              Impressum (§ 5 DDG)
             </Link>
             <span className="text-white/20 hidden sm:inline" aria-hidden="true">|</span>
-            <Link href="/datenschutz" className="hover:text-[#D9A891] transition-colors min-h-[44px] inline-flex items-center">
-              Datenschutz
+            <Link
+              href="/datenschutz"
+              className="hover:text-[#D9A891] transition-colors min-h-[40px] inline-flex items-center"
+            >
+              Datenschutz (DSGVO)
             </Link>
             <span className="text-white/20 hidden sm:inline" aria-hidden="true">|</span>
-            <Link href="/admin/login" className="hover:text-[#D9A891] transition-colors text-white/50 min-h-[44px] inline-flex items-center">
-              Admin-Bereich
+            <Link
+              href="/agb"
+              className="hover:text-[#D9A891] transition-colors min-h-[40px] inline-flex items-center"
+            >
+              AGB &amp; Stornierung
+            </Link>
+            <span className="text-white/20 hidden sm:inline" aria-hidden="true">|</span>
+            <Link
+              href="/widerruf"
+              className="hover:text-[#D9A891] transition-colors min-h-[40px] inline-flex items-center"
+            >
+              Widerrufsbelehrung
+            </Link>
+            <span className="text-white/20 hidden sm:inline" aria-hidden="true">|</span>
+            <button
+              type="button"
+              onClick={handleOpenCookieSettings}
+              className="hover:text-[#D9A891] transition-colors min-h-[40px] inline-flex items-center gap-1 text-[#EFE6DD]/70 hover:underline cursor-pointer"
+            >
+              <Cookie className="w-3 h-3 text-[#D9A891]" />
+              <span>Cookie-Einstellungen</span>
+            </button>
+            <span className="text-white/20 hidden sm:inline" aria-hidden="true">|</span>
+            <Link
+              href="/admin/login"
+              className="hover:text-[#D9A891] transition-colors text-white/40 min-h-[40px] inline-flex items-center"
+            >
+              Admin
             </Link>
           </div>
         </div>

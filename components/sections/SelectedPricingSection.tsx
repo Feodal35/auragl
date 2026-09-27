@@ -74,8 +74,13 @@ export default function SelectedPricingSection({ pricing }: SelectedPricingProps
           ))}
         </div>
 
+        {/* PAngV legal note */}
+        <p className="mt-8 text-center text-xs text-[#756A63]/80 font-light">
+          Alle angegebenen Preise verstehen sich in Euro (€) inklusive der gesetzlichen Mehrwertsteuer (MwSt.) gemäß PAngV.
+        </p>
+
         {/* Bottom CTA to Full Price List */}
-        <div className="mt-12 text-center pt-8 border-t border-[#E8D6C5]">
+        <div className="mt-8 text-center pt-8 border-t border-[#E8D6C5]">
           <a
             href="/preise"
             className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.16em] font-medium text-[#392D29] hover:text-[#A26D57] transition-colors pb-1 border-b border-[#392D29] hover:border-[#A26D57] min-h-[44px]"

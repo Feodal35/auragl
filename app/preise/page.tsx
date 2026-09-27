@@ -51,6 +51,11 @@ export default async function PricingPage() {
             ohne versteckte Kosten.
           </p>
 
+          {/* PAngV badge */}
+          <div className="mt-4 inline-flex items-center gap-2 px-4 py-1.5 bg-[#FAF6F1] border border-[#E8D6C5] rounded-full text-xs text-[#756A63]">
+            <span>✓ Alle angegebenen Preise verstehen sich in Euro (€) inklusive der gesetzlichen Mehrwertsteuer (gemäß PAngV).</span>
+          </div>
+
           {/* Quick Category Anchors */}
           <div className="flex flex-wrap justify-center gap-2 mt-8">
             {categories.map((c) => (
@@ -161,8 +166,20 @@ export default async function PricingPage() {
           })}
         </div>
 
+        {/* PAngV Legal Note & Cancellation reminder */}
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 text-center text-xs text-[#756A63] font-light leading-relaxed">
+          <p>
+            * Alle ausgewiesenen Preise verstehen sich in Euro (€) inklusive der gesetzlichen Mehrwertsteuer gemäß § 1 Preisangabenverordnung (PAngV).
+            Terminabsagen sind bis zu 24 Stunden vor dem vereinbarten Behandlungsbeginn kostenfrei möglich (Details siehe unsere{" "}
+            <Link href="/agb" className="underline hover:text-[#A26D57]">
+              AGB
+            </Link>
+            ).
+          </p>
+        </div>
+
         {/* Bottom Banner */}
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-24">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
           <div className="bg-[#211A18] text-white p-8 sm:p-12 text-center rounded-[1px] space-y-4">
             <h3 className="font-editorial text-2xl sm:text-3xl font-light">
               Hast du Fragen zu einer Behandlung?

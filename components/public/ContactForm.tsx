@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -202,9 +203,9 @@ export default function ContactForm() {
         </div>
         <label htmlFor="kontakt-privacy" className="text-xs text-[#756A63] font-light leading-relaxed cursor-pointer select-none">
           Ich habe die{" "}
-          <a href="/datenschutz" target="_blank" className="underline hover:text-[#A26D57]">
+          <Link href="/datenschutz" target="_blank" rel="noopener noreferrer" className="underline hover:text-[#A26D57]">
             Datenschutzerklärung
-          </a>{" "}
+          </Link>{" "}
           gelesen und stimme der Verarbeitung meiner Daten zur Beantwortung meiner Anfrage zu.{" "}
           <span className="text-[#A26D57]">*</span>
         </label>
