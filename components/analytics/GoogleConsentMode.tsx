@@ -19,7 +19,7 @@ interface GoogleConsentModeProps {
  */
 export default function GoogleConsentMode({
   gaId = process.env.NEXT_PUBLIC_GA_ID,
-  gtmId = process.env.NEXT_PUBLIC_GTM_ID,
+  gtmId = process.env.NEXT_PUBLIC_GTM_ID || "GTM-KG93TJHK",
 }: GoogleConsentModeProps) {
   const syncInitScript = `
     window.dataLayer = window.dataLayer || [];
@@ -168,7 +168,7 @@ export default function GoogleConsentMode({
 /**
  * Google Tag Manager NoScript Fallback Component (Placed immediately after <body> opening)
  */
-export function GoogleTagManagerNoScript({ gtmId = process.env.NEXT_PUBLIC_GTM_ID }: { gtmId?: string }) {
+export function GoogleTagManagerNoScript({ gtmId = process.env.NEXT_PUBLIC_GTM_ID || "GTM-KG93TJHK" }: { gtmId?: string }) {
   if (!gtmId) return null;
 
   return (
