@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import AuraGlowLogo from "@/components/ui/AuraGlowLogo";
 import {
   MapPin,
@@ -7,7 +8,7 @@ import {
   Instagram,
   Clock3,
   ArrowUpRight,
-  ShieldCheck,
+  Sparkles,
 } from "lucide-react";
 import { BusinessSettings, OpeningHour } from "@/lib/types";
 
@@ -20,16 +21,16 @@ export default function Footer({ business, openingHours }: FooterProps) {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#211A18] text-[#EFE6DD] pt-20 pb-12 border-t border-[#392D29]">
+    <footer className="bg-[#211A18] text-[#EFE6DD] pt-20 pb-16 lg:pb-12 border-t border-[#392D29]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 pb-16 border-b border-white/10">
           {/* Column 1: Brand & Identity */}
           <div className="space-y-6">
             <AuraGlowLogo size="md" color="#FFFFFF" textColor="#FAF6F1" />
             <p className="text-sm text-[#EFE6DD]/75 leading-relaxed font-light">
-              Exklusives Beauty &amp; Aesthetics Studio. Individuelle Behandlungen
-              für deine natürliche Schönheit, strahlenden Glow und absolute Perfektion
-              in ruhiger, entspannender Atmosphäre.
+              Exklusives Beauty &amp; Aesthetics Studio in Düsseldorf. Meisterhafte
+              Behandlungen für natürliche Schönheit, strahlenden Glow und vollendete
+              Symmetrie auf der Königsallee.
             </p>
             {business.instagram_url && (
               <a
@@ -46,36 +47,46 @@ export default function Footer({ business, openingHours }: FooterProps) {
             )}
           </div>
 
-          {/* Column 2: Navigation & Behandlungen */}
+          {/* Column 2: Navigation & Internal Linking (Item 3) */}
           <div className="space-y-4">
             <h3 className="text-xs uppercase tracking-[0.18em] text-[#D9A891] font-medium">
-              Navigation
+              Behandlungen &amp; Studio
             </h3>
             <ul className="space-y-2.5 text-sm">
               <li>
-                <a href="/leistungen" className="text-[#EFE6DD]/80 hover:text-white transition-colors">
+                <Link href="/leistungen" className="text-[#EFE6DD]/80 hover:text-white transition-colors">
                   Behandlungen &amp; Facials
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/preise" className="text-[#EFE6DD]/80 hover:text-white transition-colors">
-                  Preise &amp; Pakete
-                </a>
+                <Link href="/preise" className="text-[#EFE6DD]/80 hover:text-white transition-colors">
+                  Preise &amp; Konditionen
+                </Link>
               </li>
               <li>
-                <a href="/galerie" className="text-[#EFE6DD]/80 hover:text-white transition-colors">
-                  Impressionen &amp; Galerie
-                </a>
+                <Link href="/#fallstudien" className="text-[#EFE6DD]/80 hover:text-white transition-colors">
+                  Fallstudien &amp; Ergebnisse
+                </Link>
               </li>
               <li>
-                <a href="/ueber-uns" className="text-[#EFE6DD]/80 hover:text-white transition-colors">
+                <Link href="/galerie" className="text-[#EFE6DD]/80 hover:text-white transition-colors">
+                  Vorher-Nachher Galerie
+                </Link>
+              </li>
+              <li>
+                <Link href="/ueber-uns" className="text-[#EFE6DD]/80 hover:text-white transition-colors">
                   Über Mürvet &amp; Philosophie
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/termin" className="text-[#EFE6DD]/80 hover:text-white transition-colors">
+                <Link href="/#faq" className="text-[#EFE6DD]/80 hover:text-white transition-colors">
+                  Häufige Fragen (FAQ)
+                </Link>
+              </li>
+              <li>
+                <Link href="/termin" className="text-[#EFE6DD]/80 hover:text-white transition-colors">
                   Termin online anfragen
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -100,24 +111,30 @@ export default function Footer({ business, openingHours }: FooterProps) {
                 </div>
               ))}
             </div>
-            <p className="text-[11px] text-[#EFE6DD]/60 italic">
+            <p className="text-[11px] text-[#EFE6DD]/60 italic pt-1">
               Termine ausschließlich nach vorheriger Vereinbarung.
             </p>
           </div>
 
-          {/* Column 4: Kontakt & Studio */}
-          <div className="space-y-4">
+          {/* Column 4: Kontakt & Studio Standort (Item 14) */}
+          <div className="space-y-4" itemScope itemType="https://schema.org/BeautySalon">
             <h3 className="text-xs uppercase tracking-[0.18em] text-[#D9A891] font-medium">
               Studio &amp; Kontakt
             </h3>
             <ul className="space-y-3 text-sm text-[#EFE6DD]/80">
               {business.street && (
-                <li className="flex items-start gap-3">
+                <li
+                  className="flex items-start gap-3"
+                  itemProp="address"
+                  itemScope
+                  itemType="https://schema.org/PostalAddress"
+                >
                   <MapPin className="w-4 h-4 text-[#D9A891] shrink-0 mt-0.5" />
                   <span>
-                    {business.street}
+                    <span itemProp="streetAddress">{business.street}</span>
                     <br />
-                    {business.postal_code} {business.city}
+                    <span itemProp="postalCode">{business.postal_code}</span>{" "}
+                    <span itemProp="addressLocality">{business.city}</span>
                   </span>
                 </li>
               )}
@@ -127,6 +144,7 @@ export default function Footer({ business, openingHours }: FooterProps) {
                   <a
                     href={`tel:${business.phone.replace(/\s+/g, "")}`}
                     className="hover:text-white transition-colors"
+                    itemProp="telephone"
                   >
                     {business.phone_display || business.phone}
                   </a>
@@ -138,6 +156,7 @@ export default function Footer({ business, openingHours }: FooterProps) {
                   <a
                     href={`mailto:${business.email}`}
                     className="hover:text-white transition-colors"
+                    itemProp="email"
                   >
                     {business.email}
                   </a>
@@ -146,12 +165,12 @@ export default function Footer({ business, openingHours }: FooterProps) {
             </ul>
 
             <div className="pt-2">
-              <a
+              <Link
                 href="/termin"
                 className="inline-flex items-center justify-center min-h-[44px] text-xs uppercase tracking-[0.14em] font-medium px-5 py-2.5 bg-[#A26D57] text-white hover:bg-[#8E5A45] active:scale-[0.98] transition-all rounded-sm shadow-luxury-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9A891]"
               >
-                Termin vereinbaren
-              </a>
+                Termin anfragen
+              </Link>
             </div>
           </div>
         </div>
@@ -162,17 +181,17 @@ export default function Footer({ business, openingHours }: FooterProps) {
             &copy; {currentYear} {business.business_name}. Alle Rechte vorbehalten.
           </div>
           <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
-            <a href="/impressum" className="hover:text-[#D9A891] transition-colors min-h-[44px] inline-flex items-center">
+            <Link href="/impressum" className="hover:text-[#D9A891] transition-colors min-h-[44px] inline-flex items-center">
               Impressum
-            </a>
+            </Link>
             <span className="text-white/20 hidden sm:inline" aria-hidden="true">|</span>
-            <a href="/datenschutz" className="hover:text-[#D9A891] transition-colors min-h-[44px] inline-flex items-center">
+            <Link href="/datenschutz" className="hover:text-[#D9A891] transition-colors min-h-[44px] inline-flex items-center">
               Datenschutz
-            </a>
+            </Link>
             <span className="text-white/20 hidden sm:inline" aria-hidden="true">|</span>
-            <a href="/admin/login" className="hover:text-[#D9A891] transition-colors text-white/50 min-h-[44px] inline-flex items-center">
+            <Link href="/admin/login" className="hover:text-[#D9A891] transition-colors text-white/50 min-h-[44px] inline-flex items-center">
               Admin-Bereich
-            </a>
+            </Link>
           </div>
         </div>
       </div>

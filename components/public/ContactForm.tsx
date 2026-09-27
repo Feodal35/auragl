@@ -1,12 +1,14 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ContactMessageSchema, ContactMessageFormValues } from "@/lib/validations";
 import { CheckCircle2, AlertCircle, Send, Loader2 } from "lucide-react";
 
 export default function ContactForm() {
+  const router = useRouter();
   const [isSuccess, setIsSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -55,6 +57,7 @@ export default function ContactForm() {
 
       setIsSuccess(true);
       reset();
+      router.push("/danke?type=kontakt");
     } catch {
       setErrorMessage("Verbindungsfehler. Bitte überprüfe deine Internetverbindung.");
     }

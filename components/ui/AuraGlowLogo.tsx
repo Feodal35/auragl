@@ -57,7 +57,7 @@ export default function AuraGlowLogo({
     return (
       <img
         src={customLogoUrl || "/images/aura-glow-logo.png"}
-        alt="Aura Glow by Mürvet"
+        alt="Aura Glow by Mürvet - Beauty & Aesthetics Studio Düsseldorf Logo"
         width={1003}
         height={735}
         className={cn(

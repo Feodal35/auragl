@@ -2,11 +2,14 @@ import React from "react";
 import type { Metadata } from "next";
 import Header from "@/components/public/Header";
 import Footer from "@/components/public/Footer";
+import Breadcrumbs from "@/components/ui/Breadcrumbs";
+import StickyMobileCta from "@/components/public/StickyMobileCta";
 import { getBusinessSettings, getOpeningHours } from "@/lib/db";
 
 export const metadata: Metadata = {
-  title: "Impressum",
-  description: "Rechtliche Angaben und Impressum gemäß § 5 TMG für Aura Glow by Mürvet.",
+  title: "Impressum & Rechtliche Angaben | Aura Glow by Mürvet Düsseldorf",
+  description:
+    "Rechtliche Angaben und Impressum gemäß § 5 TMG für das Kosmetik- und Aesthetics-Studio Aura Glow by Mürvet in Düsseldorf.",
 };
 
 export const revalidate = 60;
@@ -23,8 +26,13 @@ export default async function ImpressumPage() {
 
       <main id="main-content" className="flex-grow pt-32 pb-24">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Breadcrumbs */}
+          <div className="mb-6">
+            <Breadcrumbs items={[{ label: "Impressum" }]} />
+          </div>
+
           <div className="mb-12">
-            <span className="text-xs uppercase tracking-[0.2em] text-[#B88770] font-medium block mb-2">
+            <span className="text-xs uppercase tracking-[0.2em] text-[#A26D57] font-medium block mb-2">
               Rechtliche Angaben
             </span>
             <h1 className="font-editorial text-4xl sm:text-5xl text-[#392D29]">
@@ -63,25 +71,14 @@ export default async function ImpressumPage() {
 
             <div>
               <h2 className="font-editorial text-2xl text-[#392D29] mb-3">
-                Berufsbezeichnung und berufsrechtliche Regelungen
+                Berufsbezeichnung &amp; berufsrechtliche Regelungen
               </h2>
               <p>
-                Berufsbezeichnung: Kosmetikerin / Beauty &amp; Lash Stylistin / PMU Artist
+                Berufsbezeichnung: Kosmetikerin / Zertifizierte Master Stylistin für Permanent Make-up &amp; Wimpernästhetik
                 <br />
                 Zuständige Kammer: Handwerkskammer Düsseldorf
                 <br />
-                Verliehen in: Bundesrepublik Deutschland
-              </p>
-            </div>
-
-            <div>
-              <h2 className="font-editorial text-2xl text-[#392D29] mb-3">
-                Umsatzsteuer-Identifikationsnummer
-              </h2>
-              <p>
-                Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:
-                <br />
-                Wird bei Bedarf nachgetragen (Kleinunternehmerregelung nach § 19 UStG bzw. ID).
+                Verliehen in: Deutschland
               </p>
             </div>
 
@@ -95,7 +92,7 @@ export default async function ImpressumPage() {
                   href="https://ec.europa.eu/consumers/odr/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[#B88770] hover:underline"
+                  className="text-[#A26D57] hover:underline"
                 >
                   https://ec.europa.eu/consumers/odr/
                 </a>
@@ -116,6 +113,12 @@ export default async function ImpressumPage() {
           </div>
         </div>
       </main>
+
+      {/* Sticky Mobile Call & Booking CTA (Item 9) */}
+      <StickyMobileCta
+        phone={business.phone_display || business.phone}
+        whatsapp={business.whatsapp || business.phone}
+      />
 
       <Footer business={business} openingHours={openingHours} />
     </div>

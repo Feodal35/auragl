@@ -2,11 +2,14 @@ import React from "react";
 import type { Metadata } from "next";
 import Header from "@/components/public/Header";
 import Footer from "@/components/public/Footer";
+import Breadcrumbs from "@/components/ui/Breadcrumbs";
+import StickyMobileCta from "@/components/public/StickyMobileCta";
 import { getBusinessSettings, getOpeningHours } from "@/lib/db";
 
 export const metadata: Metadata = {
-  title: "Datenschutzerklärung",
-  description: "Informationen zur Verarbeitung deiner personenbezogenen Daten gemäß DSGVO.",
+  title: "Datenschutzerklärung (DSGVO) | Aura Glow by Mürvet Düsseldorf",
+  description:
+    "Informationen zur transparenten Verarbeitung personenbezogener Daten gemäß DSGVO im Studio Aura Glow by Mürvet in Düsseldorf.",
 };
 
 export const revalidate = 60;
@@ -23,6 +26,11 @@ export default async function PrivacyPage() {
 
       <main id="main-content" className="flex-grow pt-32 pb-24">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Breadcrumbs */}
+          <div className="mb-6">
+            <Breadcrumbs items={[{ label: "Datenschutzerklärung" }]} />
+          </div>
+
           <div className="mb-12">
             <span className="text-xs uppercase tracking-[0.2em] text-[#B88770] font-medium block mb-2">
               Transparenz &amp; Sicherheit
@@ -129,6 +137,12 @@ export default async function PrivacyPage() {
           </div>
         </div>
       </main>
+
+      {/* Sticky Mobile Call & Booking CTA (Item 9) */}
+      <StickyMobileCta
+        phone={business.phone_display || business.phone}
+        whatsapp={business.whatsapp || business.phone}
+      />
 
       <Footer business={business} openingHours={openingHours} />
     </div>

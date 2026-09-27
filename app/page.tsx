@@ -12,6 +12,10 @@ import AboutMurvetSection from "@/components/sections/AboutMurvetSection";
 import AppointmentExperienceSection from "@/components/sections/AppointmentExperienceSection";
 import ContactVisitSection from "@/components/sections/ContactVisitSection";
 import FinalCtaSection from "@/components/sections/FinalCtaSection";
+import CaseStudySpotlight from "@/components/sections/CaseStudySpotlight";
+import TestimonialsSection from "@/components/sections/TestimonialsSection";
+import FaqSection from "@/components/sections/FaqSection";
+import StickyMobileCta from "@/components/public/StickyMobileCta";
 import JsonLdSchema from "@/components/public/JsonLdSchema";
 
 import {
@@ -75,27 +79,42 @@ export default async function HomePage() {
         {/* 05 — Categories */}
         <CategoriesSection categories={categories} />
 
-        {/* 06 — Gallery Preview */}
+        {/* 06 — Case Studies (Vaka Çalışmaları - Item 6) */}
+        <CaseStudySpotlight />
+
+        {/* 07 — Gallery Preview */}
         <GalleryPreviewSection items={gallery} />
 
-        {/* 07 — Selected Pricing */}
+        {/* 08 — Selected Pricing */}
         <SelectedPricingSection pricing={pricing} />
 
-        {/* 08 — About Mürvet */}
+        {/* 09 — Customer Testimonials (Müşteri Yorumları - Item 15) */}
+        <TestimonialsSection />
+
+        {/* 10 — About Mürvet */}
         <AboutMurvetSection content={contentSections.about_murvet} />
 
-        {/* 09 — Appointment Experience */}
+        {/* 11 — Appointment Experience */}
         <AppointmentExperienceSection />
 
-        {/* 10 — Contact & Visit */}
+        {/* 12 — 5 FAQ Accordion (Item 7) */}
+        <FaqSection />
+
+        {/* 13 — Contact & Visit (with Google Map - Item 14) */}
         <ContactVisitSection business={business} openingHours={openingHours} />
 
-        {/* 11 — Final CTA */}
+        {/* 14 — Final CTA */}
         <FinalCtaSection
           content={contentSections.appointment_cta}
           design={designSettings.appointment_cta}
         />
       </main>
+
+      {/* Sticky Mobile Call & Booking CTA (Item 9) */}
+      <StickyMobileCta
+        phone={business.phone_display || business.phone}
+        whatsapp={business.whatsapp || business.phone}
+      />
 
       <Footer business={business} openingHours={openingHours} />
     </div>

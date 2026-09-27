@@ -77,7 +77,7 @@ export default function GalleryPreviewSection({ items }: GalleryPreviewProps) {
             >
               <img
                 src={previewItems[0].image_url}
-                alt={previewItems[0].caption}
+                alt={`${previewItems[0].caption} - Behandlungsergebnis Aura Glow Düsseldorf`}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                 loading="lazy"
               />
@@ -111,7 +111,7 @@ export default function GalleryPreviewSection({ items }: GalleryPreviewProps) {
               >
                 <img
                   src={item.image_url}
-                  alt={item.caption}
+                  alt={`${item.caption} - Vorher Nachher Ergebnis Düsseldorf`}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                   loading="lazy"
                 />
@@ -151,7 +151,7 @@ export default function GalleryPreviewSection({ items }: GalleryPreviewProps) {
             </button>
             <img
               src={activeItem.image_url}
-              alt={activeItem.caption}
+              alt={`${activeItem.caption} - Großansicht Behandlungsergebnis Aura Glow`}
               className="max-h-[75vh] w-auto object-contain rounded-[1px] shadow-2xl"
             />
             <div className="text-center mt-4 text-white">

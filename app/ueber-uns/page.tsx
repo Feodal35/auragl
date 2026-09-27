@@ -1,15 +1,18 @@
 import React from "react";
 import type { Metadata } from "next";
+import Link from "next/link";
 import Header from "@/components/public/Header";
 import Footer from "@/components/public/Footer";
+import Breadcrumbs from "@/components/ui/Breadcrumbs";
+import StickyMobileCta from "@/components/public/StickyMobileCta";
 import { getBusinessSettings, getOpeningHours, getContentSections } from "@/lib/db";
 import AuraGlowLogo from "@/components/ui/AuraGlowLogo";
 import { ShieldCheck, Sparkles, HeartHandshake, CalendarDays, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Über Mürvet & Studio-Philosophie",
+  title: "Über Mürvet | Studio-Philosophie & Expertise Düsseldorf",
   description:
-    "Erfahre mehr über die Vision von Aura Glow by Mürvet: Handwerkliche Perfektion, natürliche Ästhetik und kompromisslose Hygiene in Düsseldorf.",
+    "Erfahre mehr über Mürvet und die Philosophie von Aura Glow in Düsseldorf: Meisterhafte Präzision, natürliche Ästhetik und kompromisslose Hygiene.",
 };
 
 export const revalidate = 60;
@@ -28,11 +31,16 @@ export default async function AboutPage() {
       <Header businessPhone={business.phone_display || business.phone} />
 
       <main id="main-content" className="flex-grow pt-32 pb-24">
+        {/* Breadcrumbs */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
+          <Breadcrumbs items={[{ label: "Über uns" }]} />
+        </div>
+
         {/* Hero Header */}
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-20 text-center">
           <div className="inline-flex items-center gap-3 mb-3">
             <span className="w-8 h-[1px] bg-[#B88770]" />
-            <span className="text-xs uppercase tracking-[0.24em] text-[#B88770] font-medium">
+            <span className="text-xs uppercase tracking-[0.24em] text-[#A26D57] font-medium">
               Aura Glow Philosophie
             </span>
             <span className="w-8 h-[1px] bg-[#B88770]" />
@@ -54,7 +62,7 @@ export default async function AboutPage() {
               <div className="relative aspect-[3/4] overflow-hidden rounded-[1px] shadow-luxury-md bg-[#E8D6C5]">
                 <img
                   src="/images/treatments/murvet-at-work.jpg"
-                  alt="Mürvet — Gründerin von Aura Glow bei der Behandlung"
+                  alt="Mürvet — Gründerin von Aura Glow bei der Behandlung im Düsseldorfer Studio"
                   className="w-full h-full object-cover object-center"
                   loading="lazy"
                 />
@@ -64,7 +72,7 @@ export default async function AboutPage() {
 
             {/* Story Narrative */}
             <div className="lg:col-span-7 space-y-6">
-              <span className="text-xs uppercase tracking-[0.2em] text-[#B88770] font-medium">
+              <span className="text-xs uppercase tracking-[0.2em] text-[#A26D57] font-medium">
                 Die Gründerin
               </span>
               <h2 className="font-editorial text-3xl sm:text-4xl text-[#392D29] font-normal leading-tight">
@@ -87,7 +95,7 @@ export default async function AboutPage() {
 
               {/* Founder Signature */}
               <div className="pt-6 border-t border-[#E8D6C5]">
-                <span className="font-script text-3xl sm:text-4xl text-[#B88770] block">
+                <span className="font-script text-3xl sm:text-4xl text-[#A26D57] block">
                   Mürvet
                 </span>
                 <span className="text-xs uppercase tracking-[0.16em] text-[#756A63] mt-1 block">
@@ -105,39 +113,39 @@ export default async function AboutPage() {
               Unsere Leitwerte
             </h2>
             <p className="text-sm text-[#756A63] font-light mt-2">
-              Was deinen Besuch bei Aura Glow unverwechselbar macht.
+              Drei unverrückbare Prinzipien leiten jede einzelne Behandlung.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white p-8 border border-[#E8D6C5]/70 rounded-[1px] shadow-luxury-sm space-y-4">
-              <div className="w-12 h-12 rounded-full bg-[#FAF6F1] border border-[#E8D6C5] flex items-center justify-center text-[#B88770]">
-                <Sparkles className="w-6 h-6" />
-              </div>
-              <h3 className="font-editorial text-2xl text-[#392D29]">
-                Natürliche Harmonie
-              </h3>
-              <p className="text-sm text-[#756A63] font-light leading-relaxed">
-                Jede Behandlung wird typgerecht angepasst. Keine Schablonen, sondern ein
-                Look, der zu deiner Augenform und deinen Gesichtszügen passt.
-              </p>
-            </div>
-
-            <div className="bg-white p-8 border border-[#E8D6C5]/70 rounded-[1px] shadow-luxury-sm space-y-4">
-              <div className="w-12 h-12 rounded-full bg-[#FAF6F1] border border-[#E8D6C5] flex items-center justify-center text-[#B88770]">
+            <div className="bg-white border border-[#E8D6C5] p-8 rounded-[1px] space-y-4 shadow-luxury-sm">
+              <div className="w-12 h-12 rounded-full bg-[#FAF6F1] border border-[#E8D6C5] flex items-center justify-center text-[#A26D57]">
                 <ShieldCheck className="w-6 h-6" />
               </div>
               <h3 className="font-editorial text-2xl text-[#392D29]">
                 Kompromisslose Hygiene
               </h3>
               <p className="text-sm text-[#756A63] font-light leading-relaxed">
-                Steriles Arbeiten, desinfizierte Instrumente und dermatologisch geprüfte
-                Wirkstoffe sind das Fundament für sichere und langanhaltende Resultate.
+                Sterile Einwegmaterialien, kontinuierliche Desinfektion und höchste
+                Sicherheitsstandards nach deutschen Hygienerichtlinien.
               </p>
             </div>
 
-            <div className="bg-white p-8 border border-[#E8D6C5]/70 rounded-[1px] shadow-luxury-sm space-y-4">
-              <div className="w-12 h-12 rounded-full bg-[#FAF6F1] border border-[#E8D6C5] flex items-center justify-center text-[#B88770]">
+            <div className="bg-white border border-[#E8D6C5] p-8 rounded-[1px] space-y-4 shadow-luxury-sm">
+              <div className="w-12 h-12 rounded-full bg-[#FAF6F1] border border-[#E8D6C5] flex items-center justify-center text-[#A26D57]">
+                <Sparkles className="w-6 h-6" />
+              </div>
+              <h3 className="font-editorial text-2xl text-[#392D29]">
+                Natürliche Harmonie
+              </h3>
+              <p className="text-sm text-[#756A63] font-light leading-relaxed">
+                Keine standardisierten Schablonen. Jedes Wimpern- und Brauen-Styling
+                wird individuell auf deine Gesichtsarchitektur abgestimmt.
+              </p>
+            </div>
+
+            <div className="bg-white border border-[#E8D6C5] p-8 rounded-[1px] space-y-4 shadow-luxury-sm">
+              <div className="w-12 h-12 rounded-full bg-[#FAF6F1] border border-[#E8D6C5] flex items-center justify-center text-[#A26D57]">
                 <HeartHandshake className="w-6 h-6" />
               </div>
               <h3 className="font-editorial text-2xl text-[#392D29]">
@@ -162,16 +170,22 @@ export default async function AboutPage() {
               Vereinbare deinen ersten Termin oder schreibe uns eine Nachricht.
             </p>
             <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
-              <a href="/kontakt" className="btn-secondary-light text-xs w-full sm:w-auto">
+              <Link href="/kontakt" className="btn-secondary-light text-xs w-full sm:w-auto inline-flex items-center justify-center">
                 Kontakt aufnehmen
-              </a>
-              <a href="/termin" className="btn-primary text-xs w-full sm:w-auto">
+              </Link>
+              <Link href="/termin" className="btn-primary text-xs w-full sm:w-auto inline-flex items-center justify-center">
                 Termin online anfragen
-              </a>
+              </Link>
             </div>
           </div>
         </div>
       </main>
+
+      {/* Sticky Mobile Call & Booking CTA (Item 9) */}
+      <StickyMobileCta
+        phone={business.phone_display || business.phone}
+        whatsapp={business.whatsapp || business.phone}
+      />
 
       <Footer business={business} openingHours={openingHours} />
     </div>

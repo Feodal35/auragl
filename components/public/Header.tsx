@@ -85,6 +85,37 @@ export default function Header({ businessPhone = "+49 176 1234 5678" }: HeaderPr
           headerBackground
         )}
       >
+        {/* Top Announcement Bar / Header CTA (Item 2) */}
+        <div
+          className={cn(
+            "transition-all duration-300 overflow-hidden text-center border-b",
+            isScrolled
+              ? "max-h-0 opacity-0 border-transparent py-0"
+              : !isScrolled && isHome
+              ? "max-h-10 opacity-100 bg-[#211A18]/60 backdrop-blur-md border-white/10 text-white/90 py-1.5 px-4"
+              : "max-h-10 opacity-100 bg-[#EFE6DD] border-[#E8D6C5] text-[#392D29] py-1.5 px-4"
+          )}
+        >
+          <div className="max-w-7xl mx-auto flex items-center justify-between text-[11px] sm:text-xs tracking-wider">
+            <span className="hidden sm:inline font-light">
+              Königsallee Düsseldorf &bull; Exklusive Beauty &amp; Aesthetics
+            </span>
+            <span className="sm:hidden font-light truncate">
+              Aura Glow Düsseldorf
+            </span>
+            <Link
+              href="/termin"
+              className={cn(
+                "inline-flex items-center gap-1 font-medium underline underline-offset-4 decoration-[#B88770] hover:text-[#B88770] transition-colors ml-auto sm:ml-0 shrink-0",
+                !isScrolled && isHome ? "text-[#E8D6C5]" : "text-[#A26D57]"
+              )}
+            >
+              <span>Termine nach Vereinbarung &bull; Jetzt anfragen</span>
+              <ArrowRight className="w-3 h-3 ml-0.5" aria-hidden="true" />
+            </Link>
+          </div>
+        </div>
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           {/* Brand Logo */}
           <Link

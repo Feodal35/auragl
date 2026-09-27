@@ -3,13 +3,14 @@ import type { Metadata } from "next";
 import Header from "@/components/public/Header";
 import Footer from "@/components/public/Footer";
 import ContactForm from "@/components/public/ContactForm";
+import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import { getBusinessSettings, getOpeningHours } from "@/lib/db";
 import { MapPin, Phone, Mail, Clock3, MessageCircle, ArrowUpRight, Instagram } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Kontakt & Anfahrt",
+  title: "Kontakt, Anfahrt & Öffnungszeiten | Königsallee Düsseldorf",
   description:
-    "Kontaktiere Aura Glow by Mürvet in Düsseldorf. Wir freuen uns auf deine Nachricht, Fragen oder Terminwünsche.",
+    "Kontaktiere Aura Glow by Mürvet auf der Königsallee in Düsseldorf. Telefon, WhatsApp, Öffnungszeiten, Google Maps Routenplaner und Online-Anfrage.",
 };
 
 export const revalidate = 60;
@@ -25,6 +26,11 @@ export default async function ContactPage() {
       <Header businessPhone={business.phone_display || business.phone} />
 
       <main id="main-content" className="flex-grow pt-32 pb-24">
+        {/* Breadcrumbs */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
+          <Breadcrumbs items={[{ label: "Kontakt & Anfahrt" }]} />
+        </div>
+
         {/* Header */}
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 text-center">
           <div className="inline-flex items-center gap-3 mb-3">
@@ -189,6 +195,46 @@ export default async function ContactPage() {
               </div>
 
               <ContactForm />
+            </div>
+          </div>
+
+          {/* Google Maps Embed & Address Card (Item 14) */}
+          <div className="mt-14 bg-white border border-[#E8D6C5] rounded-[1px] p-6 sm:p-8 shadow-luxury-sm">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+              <div>
+                <span className="text-xs uppercase tracking-[0.2em] text-[#A26D57] font-medium block mb-1">
+                  Standort &amp; Route
+                </span>
+                <h3 className="font-editorial text-2xl sm:text-3xl text-[#392D29]">
+                  Aura Glow auf der Königsallee Düsseldorf
+                </h3>
+                <p className="text-xs sm:text-sm text-[#756A63] font-light mt-1">
+                  {business.street} &bull; {business.postal_code} {business.city}
+                </p>
+              </div>
+              <a
+                href={business.google_maps_url || "https://maps.google.com/?q=K%C3%B6nigsallee+42+40212+D%C3%BCsseldorf"}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary text-xs inline-flex items-center justify-center gap-1.5 shrink-0"
+              >
+                <span>Route in Google Maps planen</span>
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </a>
+            </div>
+
+            <div className="relative w-full h-[320px] sm:h-[420px] rounded-[1px] overflow-hidden border border-[#E8D6C5]">
+              <iframe
+                title="Aura Glow by Mürvet Google Maps Standort"
+                src="https://maps.google.com/maps?q=K%C3%B6nigsallee%2042,%2040212%20D%C3%BCsseldorf,%20Germany&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen={false}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="w-full h-full grayscale-[20%] contrast-[1.05]"
+              />
             </div>
           </div>
         </div>

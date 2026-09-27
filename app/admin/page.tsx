@@ -9,7 +9,7 @@ import {
   CalendarDays,
   MessageSquare,
   Sparkles,
-  Image,
+  Image as ImageIcon,
   ArrowRight,
   Clock3,
   CheckCircle2,
@@ -104,7 +104,7 @@ export default async function AdminDashboardPage() {
         <div className="bg-white p-6 border border-[#E8D6C5] rounded-[1px] shadow-luxury-sm space-y-2">
           <div className="flex items-center justify-between text-[#756A63]">
             <span className="text-xs uppercase tracking-wider font-medium">Galeriebilder</span>
-            <Image className="w-4 h-4 text-[#B88770]" />
+            <ImageIcon className="w-4 h-4 text-[#B88770]" />
           </div>
           <div className="flex items-baseline gap-2">
             <span className="font-editorial text-3xl text-[#392D29]">
@@ -141,7 +141,7 @@ export default async function AdminDashboardPage() {
             href="/admin/design"
             className="p-4 bg-[#FAF6F1] hover:bg-[#EFE6DD] border border-[#E8D6C5]/60 rounded-[1px] text-center transition-colors group"
           >
-            <Image className="w-5 h-5 mx-auto text-[#B88770] mb-2 group-hover:scale-110 transition-transform" />
+            <ImageIcon className="w-5 h-5 mx-auto text-[#B88770] mb-2 group-hover:scale-110 transition-transform" />
             <span className="text-xs font-medium text-[#392D29] block">Hintergründe ändern</span>
           </a>
 

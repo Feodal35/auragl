@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AppointmentRequestSchema, AppointmentRequestFormValues } from "@/lib/validations";
@@ -13,6 +14,7 @@ interface AppointmentFormProps {
 }
 
 export default function AppointmentForm({ services, initialTreatment = "" }: AppointmentFormProps) {
+  const router = useRouter();
   const [isSuccess, setIsSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -68,6 +70,7 @@ export default function AppointmentForm({ services, initialTreatment = "" }: App
 
       setIsSuccess(true);
       reset();
+      router.push("/danke?type=termin");
     } catch {
       setErrorMessage("Verbindungsfehler. Bitte überprüfe deine Internetverbindung.");
     }

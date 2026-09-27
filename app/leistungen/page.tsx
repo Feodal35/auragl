@@ -2,13 +2,16 @@ import React from "react";
 import type { Metadata } from "next";
 import Header from "@/components/public/Header";
 import Footer from "@/components/public/Footer";
+import Breadcrumbs from "@/components/ui/Breadcrumbs";
+import StickyMobileCta from "@/components/public/StickyMobileCta";
+import Link from "next/link";
 import { getCategories, getAllServices, getBusinessSettings, getOpeningHours } from "@/lib/db";
 import { Clock3, CalendarDays, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Behandlungen & Facials",
+  title: "Behandlungen & Facials | Wimpern, Brows & Glow Facials Düsseldorf",
   description:
-    "Entdecke unser exklusives Leistungsangebot: Wimpernverlängerung, Hollywood Glow, Microneedling, Permanent Make-up und Einzelschulungen in Düsseldorf.",
+    "Exklusives Leistungsangebot von Aura Glow by Mürvet in Düsseldorf: Wimpernverlängerung, Hollywood Glow, Microneedling, Powder Brows und zertifizierte Schulungen.",
 };
 
 export const revalidate = 60;
@@ -26,6 +29,11 @@ export default async function ServicesPage() {
       <Header businessPhone={business.phone_display || business.phone} />
 
       <main id="main-content" className="flex-grow pt-32 pb-24">
+        {/* Breadcrumbs */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
+          <Breadcrumbs items={[{ label: "Behandlungen" }]} />
+        </div>
+
         {/* Page Hero Header */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 sm:mb-20 text-center">
           <div className="inline-flex items-center gap-3 mb-3">
@@ -93,7 +101,7 @@ export default async function ServicesPage() {
                       <div className="relative aspect-[16/10] overflow-hidden bg-[#E8D6C5]/20">
                         <img
                           src={service.featured_image}
-                          alt={service.title}
+                          alt={`${service.title} - Exklusive Behandlung bei Aura Glow Düsseldorf`}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                           loading="lazy"
                         />
@@ -128,14 +136,14 @@ export default async function ServicesPage() {
 
                         {/* Action CTA */}
                         <div className="pt-4 border-t border-[#E8D6C5]/50 flex items-center justify-between">
-                          <a
+                          <Link
                             href={`/termin?behandlung=${encodeURIComponent(service.title)}`}
                             aria-label={`Termin für ${service.title} anfragen`}
                             className="btn-primary w-full inline-flex items-center justify-center gap-2 text-xs"
                           >
                             <CalendarDays className="w-4 h-4" aria-hidden="true" />
                             <span>Termin für diese Behandlung anfragen</span>
-                          </a>
+                          </Link>
                         </div>
                       </div>
                     </div>
@@ -144,8 +152,34 @@ export default async function ServicesPage() {
               </section>
             );
           })}
+
+          {/* Internal Cross-Linking Banner (Item 3) */}
+          <div className="bg-white border border-[#E8D6C5] rounded-[1px] p-8 sm:p-12 text-center shadow-luxury-sm mt-16">
+            <h3 className="font-editorial text-2xl sm:text-3xl text-[#392D29] mb-3">
+              Möchtest du alle Preise auf einen Blick vergleichen?
+            </h3>
+            <p className="text-sm text-[#756A63] font-light max-w-xl mx-auto mb-6 leading-relaxed">
+              Unsere transparente Preisübersicht enthält alle Optionen für Neuanlagen, regelmäßige Refills und Kur-Pakete.
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-4">
+              <Link href="/preise" className="btn-secondary text-xs inline-flex items-center gap-2">
+                <span>Zur Preisliste wechseln</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+              <Link href="/termin" className="btn-primary text-xs inline-flex items-center gap-2">
+                <CalendarDays className="w-3.5 h-3.5" />
+                <span>Wunschtermin anfragen</span>
+              </Link>
+            </div>
+          </div>
         </div>
       </main>
+
+      {/* Sticky Mobile Call & Booking CTA (Item 9) */}
+      <StickyMobileCta
+        phone={business.phone_display || business.phone}
+        whatsapp={business.whatsapp || business.phone}
+      />
 
       <Footer business={business} openingHours={openingHours} />
     </div>

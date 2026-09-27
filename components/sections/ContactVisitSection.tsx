@@ -144,6 +144,44 @@ export default function ContactVisitSection({ business, openingHours }: ContactV
             </div>
           </div>
         </div>
+
+        {/* Interactive Google Map Embed & Direction CTA (Item 14) */}
+        <div className="mt-12 bg-white border border-[#E8D6C5] rounded-[1px] p-4 sm:p-6 shadow-luxury-sm">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+            <div>
+              <span className="text-[11px] uppercase tracking-widest text-[#A26D57] font-medium block">
+                Zentrale Lage in Düsseldorf
+              </span>
+              <h3 className="font-editorial text-xl sm:text-2xl text-[#392D29]">
+                Königsallee 42 &bull; 40212 Düsseldorf
+              </h3>
+            </div>
+            <a
+              href={business.google_maps_url || "https://maps.google.com/?q=K%C3%B6nigsallee+42+40212+D%C3%BCsseldorf"}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary text-xs inline-flex items-center justify-center gap-1.5 shrink-0"
+              aria-label="Route in Google Maps App öffnen"
+            >
+              <span>Route in Google Maps öffnen</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </a>
+          </div>
+
+          <div className="relative w-full h-[280px] sm:h-[360px] rounded-[1px] overflow-hidden border border-[#E8D6C5]/70">
+            <iframe
+              title="Aura Glow by Mürvet Google Maps Standort Düsseldorf"
+              src="https://maps.google.com/maps?q=K%C3%B6nigsallee%2042,%2040212%20D%C3%BCsseldorf,%20Germany&t=&z=15&ie=UTF8&iwloc=&output=embed"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen={false}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="w-full h-full grayscale-[20%] contrast-[1.05]"
+            />
+          </div>
+        </div>
       </div>
     </section>
   );

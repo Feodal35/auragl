@@ -25,7 +25,7 @@ export default function AboutMurvetSection({ content }: AboutMurvetProps) {
             <div className="relative aspect-[3/4] overflow-hidden rounded-[1px] shadow-luxury-md bg-[#E8D6C5]">
               <img
                 src="/images/treatments/murvet-at-work.jpg"
-                alt="Mürvet — Gründerin von Aura Glow bei der Behandlung"
+                alt="Mürvet — Gründerin & Master Stylistin bei der Behandlung im Studio Aura Glow Düsseldorf"
                 className="w-full h-full object-cover object-center"
                 loading="lazy"
               />
