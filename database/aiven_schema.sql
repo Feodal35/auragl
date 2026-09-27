@@ -3,24 +3,7 @@
 -- 100% Pure Open-Source PostgreSQL Compatible (No Vendor Lock-In)
 -- ==============================================================================
 
--- 1. EXTENSIONS
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-CREATE EXTENSION IF NOT EXISTS "pgcrypto";
-
--- 2. ENUMS
-DO $$ BEGIN
-    CREATE TYPE appointment_status AS ENUM ('neu', 'bestaetigt', 'abgelehnt', 'erledigt');
-EXCEPTION
-    WHEN duplicate_object THEN null;
-END $$;
-
-DO $$ BEGIN
-    CREATE TYPE message_status AS ENUM ('neu', 'gelesen', 'beantwortet', 'archiviert');
-EXCEPTION
-    WHEN duplicate_object THEN null;
-END $$;
-
--- 3. PROFILES / ADMIN USERS
+-- 1. PROFILES / ADMIN USERS
 CREATE TABLE IF NOT EXISTS profiles (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     email TEXT UNIQUE NOT NULL,
@@ -126,13 +109,13 @@ CREATE TABLE IF NOT EXISTS appointment_requests (
     alternative_date DATE,
     notes TEXT,
     privacy_accepted BOOLEAN NOT NULL DEFAULT TRUE,
-    status appointment_status DEFAULT 'neu',
+    status TEXT DEFAULT 'neu' CHECK (status IN ('neu', 'bestaetigt', 'abgelehnt', 'erledigt')),
     internal_notes TEXT,
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- 10. CONTACT MESSAGES
+-- 8. CONTACT MESSAGES
 CREATE TABLE IF NOT EXISTS contact_messages (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name TEXT NOT NULL,
@@ -141,7 +124,7 @@ CREATE TABLE IF NOT EXISTS contact_messages (
     subject TEXT NOT NULL,
     message TEXT NOT NULL,
     privacy_accepted BOOLEAN NOT NULL DEFAULT TRUE,
-    status message_status DEFAULT 'neu',
+    status TEXT DEFAULT 'neu' CHECK (status IN ('neu', 'gelesen', 'beantwortet', 'archiviert')),
     internal_notes TEXT,
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
