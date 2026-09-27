@@ -1,7 +1,10 @@
+"use client";
+
 import React from "react";
 import AuraGlowLogo from "@/components/ui/AuraGlowLogo";
 import { CalendarDays, ArrowRight, ChevronDown } from "lucide-react";
 import { ContentSection, DesignSectionSetting } from "@/lib/types";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 interface HeroSectionProps {
   content?: ContentSection;
@@ -9,14 +12,30 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({ content, design }: HeroSectionProps) {
-  const headline = content?.headline || "Deine Schönheit.\nUnser Anspruch.";
-  const eyebrow = content?.eyebrow || "Beauty & Aesthetics by Mürvet";
+  const { t, locale } = useLanguage();
+
+  const headline =
+    locale === "en"
+      ? t.hero.headline
+      : content?.headline || "Deine Schönheit.\nUnser Anspruch.";
+  const eyebrow =
+    locale === "en"
+      ? t.hero.eyebrow
+      : content?.eyebrow || "Beauty & Aesthetics by Mürvet";
   const bodyText =
-    content?.body_text ||
-    "Entdecke individuelle Beauty-Behandlungen für deine natürliche Schönheit und ein strahlendes Selbstbewusstsein.";
-  const primaryCtaLabel = content?.primary_cta_label || "Termin anfragen";
+    locale === "en"
+      ? t.hero.bodyText
+      : content?.body_text ||
+        "Entdecke individuelle Beauty-Behandlungen für deine natürliche Schönheit und ein strahlendes Selbstbewusstsein.";
+  const primaryCtaLabel =
+    locale === "en"
+      ? t.hero.ctaPrimary
+      : content?.primary_cta_label || "Termin anfragen";
   const primaryCtaUrl = content?.primary_cta_url || "/termin";
-  const secondaryCtaLabel = content?.secondary_cta_label || "Behandlungen entdecken";
+  const secondaryCtaLabel =
+    locale === "en"
+      ? t.hero.ctaSecondary
+      : content?.secondary_cta_label || "Behandlungen entdecken";
   const secondaryCtaUrl = content?.secondary_cta_url || "/leistungen";
 
   const desktopBg =

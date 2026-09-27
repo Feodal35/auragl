@@ -4,13 +4,14 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { ChevronDown, HelpCircle, ArrowRight, MessageCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 interface FaqItem {
   question: string;
   answer: string;
 }
 
-const faqs: FaqItem[] = [
+const faqsDe: FaqItem[] = [
   {
     question: "Wie lange hält eine professionelle Wimpernverlängerung und wann sollte sie aufgefüllt werden?",
     answer:
@@ -38,8 +39,39 @@ const faqs: FaqItem[] = [
   },
 ];
 
+const faqsEn: FaqItem[] = [
+  {
+    question: "How long do professional eyelash extensions last and when should they be refilled?",
+    answer:
+      "Professionally applied eyelash extensions usually last 4 to 6 weeks, depending on your natural lash growth cycle. Because natural lashes shed and regrow continuously, we recommend a refill every 3 to 4 weeks. This keeps your lash line full, symmetrical, and immaculate.",
+  },
+  {
+    question: "Are treatments like Microneedling or Permanent Make-up painful?",
+    answer:
+      "No, your comfort is our top priority. For Microneedling and Permanent Make-up (such as Powder Brows), we work with state-of-the-art precision equipment and ultra-fine needle cartridges. Most clients describe the feeling as a gentle tickle or light vibration. We adjust the intensity to your individual sensitivity.",
+  },
+  {
+    question: "What should I keep in mind before and after my appointment?",
+    answer:
+      "Before lash treatments: Please arrive without eye make-up if possible and remove contact lenses. Before permanent make-up: Avoid alcohol, coffee, and blood-thinning medications for 24 hours prior. After treatment: Avoid saunas, tanning beds, intense workout sweating, and direct water contact on the treated area for 24 to 48 hours. Comprehensive aftercare instructions will be given to you personally.",
+  },
+  {
+    question: "Which products and hygiene standards are applied at Aura Glow?",
+    answer:
+      "We strictly adhere to German cosmetic and clinical hygiene guidelines. For all invasive procedures, only single-use sterile modules and premium, EU REACH-compliant pigments are utilized. Our skincare products are dermatologically tested, hypoallergenic, and free from harmful additives.",
+  },
+  {
+    question: "How does the appointment booking work and what is your cancellation policy?",
+    answer:
+      "You can easily request your preferred appointment online via our booking form, by phone, or via WhatsApp. We check our schedule and confirm your appointment personally. If you need to cancel or reschedule, please notify us at least 24 hours in advance so we can offer the slot to another client.",
+  },
+];
+
 export default function FaqSection() {
+  const { t, locale } = useLanguage();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+
+  const faqs = locale === "en" ? faqsEn : faqsDe;
 
   const toggleItem = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -78,18 +110,17 @@ export default function FaqSection() {
           <div className="inline-flex items-center gap-2 mb-3">
             <HelpCircle className="w-4 h-4 text-[#A26D57]" />
             <span className="text-xs uppercase tracking-[0.24em] text-[#A26D57] font-medium">
-              Häufige Fragen &amp; Antworten
+              {t.faq.eyebrow}
             </span>
           </div>
           <h2
             id="faq-heading"
             className="font-editorial text-3xl sm:text-5xl text-[#392D29] font-light mb-4"
           >
-            Wissenswertes zu deinen Behandlungen
+            {t.faq.title}
           </h2>
           <p className="text-base text-[#756A63] font-light max-w-xl mx-auto leading-relaxed">
-            Transparenz und Vertrauen sind das Fundament von Aura Glow. Hier findest du Antworten auf
-            die wichtigsten Fragen rund um Behandlungsablauf, Vorbereitung und Nachsorge.
+            {t.faq.subtitle}
           </p>
         </div>
 
@@ -143,14 +174,14 @@ export default function FaqSection() {
         {/* Bottom CTA in FAQ */}
         <div className="mt-12 text-center bg-[#FAF6F1] border border-[#E8D6C5] p-6 sm:p-8 rounded-[1px]">
           <p className="text-sm text-[#756A63] font-light mb-4">
-            Ist deine persönliche Frage noch nicht dabei? Kontaktiere uns direkt &ndash; wir beraten dich gerne unverbindlich.
+            {t.faq.stillQuestions} {locale === "en" ? "Contact us directly – we will gladly advise you." : "Kontaktiere uns direkt – wir beraten dich gerne unverbindlich."}
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Link
               href="/kontakt"
               className="btn-primary text-xs inline-flex items-center gap-2"
             >
-              <span>Kontakt aufnehmen</span>
+              <span>{t.faq.contactCta}</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
             <a
@@ -160,7 +191,7 @@ export default function FaqSection() {
               className="btn-secondary text-xs inline-flex items-center gap-2"
             >
               <MessageCircle className="w-3.5 h-3.5 text-[#25D366]" />
-              <span>Frage per WhatsApp</span>
+              <span>{locale === "en" ? "Ask via WhatsApp" : "Frage per WhatsApp"}</span>
             </a>
           </div>
         </div>

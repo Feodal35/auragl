@@ -9,6 +9,7 @@ import { AppointmentRequestSchema, AppointmentRequestFormValues } from "@/lib/va
 import { ServiceItem } from "@/lib/types";
 import { CheckCircle2, AlertCircle, CalendarDays, Loader2, Clock3 } from "lucide-react";
 import { trackFormConversion } from "@/lib/tracking";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 interface AppointmentFormProps {
   services: ServiceItem[];
@@ -16,6 +17,7 @@ interface AppointmentFormProps {
 }
 
 export default function AppointmentForm({ services, initialTreatment = "" }: AppointmentFormProps) {
+  const { t, locale } = useLanguage();
   const router = useRouter();
   const [isSuccess, setIsSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -93,11 +95,10 @@ export default function AppointmentForm({ services, initialTreatment = "" }: App
           <CheckCircle2 className="w-8 h-8" />
         </div>
         <h3 className="font-editorial text-3xl sm:text-4xl text-[#392D29]">
-          Vielen Dank für deine Anfrage.
+          {t.appointment.successTitle}
         </h3>
         <p className="text-base text-[#756A63] font-light max-w-md mx-auto leading-relaxed">
-          Wir haben deine Terminanfrage erfolgreich erhalten. Wir prüfen die Studioverfügbarkeit
-          und melden uns schnellstmöglich persönlich bei dir zur Bestätigung.
+          {t.appointment.successDesc}
         </p>
         <div className="pt-4">
           <button
@@ -105,7 +106,7 @@ export default function AppointmentForm({ services, initialTreatment = "" }: App
             onClick={() => setIsSuccess(false)}
             className="btn-secondary text-xs uppercase tracking-wider"
           >
-            Weitere Anfrage stellen
+            {locale === "en" ? "Submit another inquiry" : "Weitere Anfrage stellen"}
           </button>
         </div>
       </div>
@@ -133,12 +134,12 @@ export default function AppointmentForm({ services, initialTreatment = "" }: App
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div>
           <label htmlFor="first_name" className="block text-xs uppercase tracking-[0.14em] text-[#392D29] font-medium mb-2">
-            Vorname <span className="text-[#A26D57]">*</span>
+            {t.appointment.firstName} <span className="text-[#A26D57]">*</span>
           </label>
           <input
             id="first_name"
             type="text"
-            placeholder="Dein Vorname"
+            placeholder={locale === "en" ? "Your first name" : "Dein Vorname"}
             {...register("first_name")}
             className={inputClasses}
           />
@@ -149,12 +150,12 @@ export default function AppointmentForm({ services, initialTreatment = "" }: App
 
         <div>
           <label htmlFor="last_name" className="block text-xs uppercase tracking-[0.14em] text-[#392D29] font-medium mb-2">
-            Nachname <span className="text-[#A26D57]">*</span>
+            {t.appointment.lastName} <span className="text-[#A26D57]">*</span>
           </label>
           <input
             id="last_name"
             type="text"
-            placeholder="Dein Nachname"
+            placeholder={locale === "en" ? "Your last name" : "Dein Nachname"}
             {...register("last_name")}
             className={inputClasses}
           />
@@ -168,7 +169,7 @@ export default function AppointmentForm({ services, initialTreatment = "" }: App
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div>
           <label htmlFor="email" className="block text-xs uppercase tracking-[0.14em] text-[#392D29] font-medium mb-2">
-            E-Mail-Adresse <span className="text-[#A26D57]">*</span>
+            {t.appointment.email} <span className="text-[#A26D57]">*</span>
           </label>
           <input
             id="email"
@@ -184,7 +185,7 @@ export default function AppointmentForm({ services, initialTreatment = "" }: App
 
         <div>
           <label htmlFor="phone" className="block text-xs uppercase tracking-[0.14em] text-[#392D29] font-medium mb-2">
-            Telefonnummer <span className="text-[#A26D57]">*</span>
+            {t.appointment.phone} <span className="text-[#A26D57]">*</span>
           </label>
           <input
             id="phone"
@@ -202,7 +203,7 @@ export default function AppointmentForm({ services, initialTreatment = "" }: App
       {/* Treatment Selector */}
       <div>
         <label htmlFor="treatment_title" className="block text-xs uppercase tracking-[0.14em] text-[#392D29] font-medium mb-2">
-          Gewünschte Behandlung <span className="text-[#A26D57]">*</span>
+          {t.appointment.selectTreatment} <span className="text-[#A26D57]">*</span>
         </label>
         <select
           id="treatment_title"
@@ -215,7 +216,9 @@ export default function AppointmentForm({ services, initialTreatment = "" }: App
             </option>
           ))}
           <option value="Sonstige individuelle Beratung">
-            Sonstige individuelle Beratung / Mehrfachbehandlung
+            {locale === "en"
+              ? "Other custom consultation / multiple treatments"
+              : "Sonstige individuelle Beratung / Mehrfachbehandlung"}
           </option>
         </select>
         {errors.treatment_title && (
@@ -227,7 +230,7 @@ export default function AppointmentForm({ services, initialTreatment = "" }: App
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
         <div>
           <label htmlFor="preferred_date" className="block text-xs uppercase tracking-[0.14em] text-[#392D29] font-medium mb-2">
-            Wunschtermin <span className="text-[#A26D57]">*</span>
+            {t.appointment.preferredDate} <span className="text-[#A26D57]">*</span>
           </label>
           <input
             id="preferred_date"
@@ -243,23 +246,25 @@ export default function AppointmentForm({ services, initialTreatment = "" }: App
 
         <div>
           <label htmlFor="preferred_time" className="block text-xs uppercase tracking-[0.14em] text-[#392D29] font-medium mb-2">
-            Bevorzugte Tageszeit
+            {t.appointment.preferredTime}
           </label>
           <select
             id="preferred_time"
             {...register("preferred_time")}
             className={inputClasses}
           >
-            <option value="Vormittags (09:00 - 13:00)">Vormittags (09:00 - 13:00)</option>
-            <option value="Nachmittags (13:00 - 17:00)">Nachmittags (13:00 - 17:00)</option>
-            <option value="Abends (17:00 - 19:00)">Abends (17:00 - 19:00)</option>
-            <option value="Flexibel nach Vereinbarung">Flexibel nach Absprache</option>
+            <option value="Vormittags (09:00 - 13:00)">{t.appointment.timeMorning}</option>
+            <option value="Nachmittags (13:00 - 17:00)">{t.appointment.timeNoon}</option>
+            <option value="Abends (17:00 - 19:00)">{t.appointment.timeAfternoon}</option>
+            <option value="Flexibel nach Vereinbarung">
+              {locale === "en" ? "Flexible by agreement" : "Flexibel nach Absprache"}
+            </option>
           </select>
         </div>
 
         <div>
           <label htmlFor="alternative_date" className="block text-xs uppercase tracking-[0.14em] text-[#392D29] font-medium mb-2">
-            Alternativtermin (optional)
+            {t.appointment.altDate}
           </label>
           <input
             id="alternative_date"
@@ -274,12 +279,12 @@ export default function AppointmentForm({ services, initialTreatment = "" }: App
       {/* Notes */}
       <div>
         <label htmlFor="notes" className="block text-xs uppercase tracking-[0.14em] text-[#392D29] font-medium mb-2">
-          Besondere Hinweise oder Wünsche (optional)
+          {t.appointment.notes}
         </label>
         <textarea
           id="notes"
           rows={3}
-          placeholder="z. B. Allergien, Vorerfahrungen mit Wimpern oder Wunsch nach Farbberatung..."
+          placeholder={t.appointment.notesPlaceholder}
           {...register("notes")}
           className="w-full px-4 py-3 bg-white border border-[#E8D6C5] rounded-[1px] text-base sm:text-sm text-[#392D29] focus:outline-none focus:border-[#A26D57] focus:ring-1 focus:ring-[#A26D57] transition-all"
         />
@@ -296,15 +301,31 @@ export default function AppointmentForm({ services, initialTreatment = "" }: App
           />
         </div>
         <label htmlFor="termin-privacy" className="text-xs text-[#756A63] font-light leading-relaxed cursor-pointer select-none">
-          Ich habe die{" "}
-          <Link href="/datenschutz" target="_blank" rel="noopener noreferrer" className="underline hover:text-[#A26D57] font-medium">
-            Datenschutzerklärung
-          </Link>{" "}
-          und die{" "}
-          <Link href="/agb" target="_blank" rel="noopener noreferrer" className="underline hover:text-[#A26D57] font-medium">
-            AGB inklusive der Stornierungsbedingungen
-          </Link>{" "}
-          (kostenfreie Absage bis 24 Stunden vor dem Termin) zur Kenntnis genommen und erkläre mich mit diesen einverstanden. Die Anfrage ist zunächst unverbindlich; der Termin wird erst nach persönlicher Bestätigung durch das Studio verbindlich. <span className="text-[#A26D57]">*</span>
+          {locale === "en" ? (
+            <>
+              I have read the{" "}
+              <Link href="/datenschutz" target="_blank" rel="noopener noreferrer" className="underline hover:text-[#A26D57] font-medium">
+                Privacy Policy
+              </Link>{" "}
+              and the{" "}
+              <Link href="/agb" target="_blank" rel="noopener noreferrer" className="underline hover:text-[#A26D57] font-medium">
+                Terms &amp; Cancellation Policy
+              </Link>{" "}
+              (free cancellation up to 24 hours prior) and agree to them. The inquiry is non-binding until confirmed personally by the studio. <span className="text-[#A26D57]">*</span>
+            </>
+          ) : (
+            <>
+              Ich habe die{" "}
+              <Link href="/datenschutz" target="_blank" rel="noopener noreferrer" className="underline hover:text-[#A26D57] font-medium">
+                Datenschutzerklärung
+              </Link>{" "}
+              und die{" "}
+              <Link href="/agb" target="_blank" rel="noopener noreferrer" className="underline hover:text-[#A26D57] font-medium">
+                AGB inklusive der Stornierungsbedingungen
+              </Link>{" "}
+              (kostenfreie Absage bis 24 Stunden vor dem Termin) zur Kenntnis genommen und erkläre mich mit diesen einverstanden. Die Anfrage ist zunächst unverbindlich; der Termin wird erst nach persönlicher Bestätigung durch das Studio verbindlich. <span className="text-[#A26D57]">*</span>
+            </>
+          )}
         </label>
       </div>
       {errors.privacy_accepted && (
@@ -320,12 +341,12 @@ export default function AppointmentForm({ services, initialTreatment = "" }: App
         {isSubmitting ? (
           <>
             <Loader2 className="w-4 h-4 animate-spin" />
-            <span>Anfrage wird übermittelt...</span>
+            <span>{t.appointment.submittingBtn}</span>
           </>
         ) : (
           <>
             <CalendarDays className="w-4 h-4" />
-            <span>Terminanfrage senden</span>
+            <span>{t.appointment.submitBtn}</span>
           </>
         )}
       </button>

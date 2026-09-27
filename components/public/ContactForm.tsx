@@ -8,8 +8,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ContactMessageSchema, ContactMessageFormValues } from "@/lib/validations";
 import { CheckCircle2, AlertCircle, Send, Loader2 } from "lucide-react";
 import { trackFormConversion } from "@/lib/tracking";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 export default function ContactForm() {
+  const { t, locale } = useLanguage();
   const router = useRouter();
   const [isSuccess, setIsSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -80,18 +82,17 @@ export default function ContactForm() {
           <CheckCircle2 className="w-6 h-6" />
         </div>
         <h3 className="font-editorial text-2xl sm:text-3xl text-[#392D29]">
-          Vielen Dank für deine Nachricht.
+          {t.contact.successTitle}
         </h3>
         <p className="text-sm text-[#756A63] font-light max-w-md mx-auto leading-relaxed">
-          Wir haben deine Anfrage erhalten und melden uns so schnell wie möglich persönlich
-          bei dir zurück.
+          {t.contact.successDesc}
         </p>
         <button
           type="button"
           onClick={() => setIsSuccess(false)}
           className="btn-secondary text-xs uppercase tracking-wider min-h-[44px]"
         >
-          Weitere Nachricht senden
+          {t.contact.sendAnother}
         </button>
       </div>
     );
@@ -118,12 +119,12 @@ export default function ContactForm() {
         {/* Name */}
         <div>
           <label htmlFor="contact_name" className="block text-xs uppercase tracking-[0.14em] text-[#392D29] font-medium mb-2">
-            Dein Name <span className="text-[#A26D57]">*</span>
+            {t.contact.name} <span className="text-[#A26D57]">*</span>
           </label>
           <input
             id="contact_name"
             type="text"
-            placeholder="z. B. Sophie Müller"
+            placeholder={locale === "en" ? "e.g. Sarah Miller" : "z. B. Sophie Müller"}
             {...register("name")}
             className={inputClasses}
           />
@@ -135,7 +136,7 @@ export default function ContactForm() {
         {/* E-Mail */}
         <div>
           <label htmlFor="contact_email" className="block text-xs uppercase tracking-[0.14em] text-[#392D29] font-medium mb-2">
-            E-Mail-Adresse <span className="text-[#A26D57]">*</span>
+            {t.contact.emailAddress} <span className="text-[#A26D57]">*</span>
           </label>
           <input
             id="contact_email"
@@ -154,7 +155,7 @@ export default function ContactForm() {
         {/* Phone */}
         <div>
           <label htmlFor="contact_phone" className="block text-xs uppercase tracking-[0.14em] text-[#392D29] font-medium mb-2">
-            Telefonnummer (optional)
+            {t.contact.phoneOptional}
           </label>
           <input
             id="contact_phone"
@@ -168,12 +169,12 @@ export default function ContactForm() {
         {/* Subject */}
         <div>
           <label htmlFor="contact_subject" className="block text-xs uppercase tracking-[0.14em] text-[#392D29] font-medium mb-2">
-            Betreff <span className="text-[#A26D57]">*</span>
+            {t.contact.subject} <span className="text-[#A26D57]">*</span>
           </label>
           <input
             id="contact_subject"
             type="text"
-            placeholder="z. B. Beratung Wimpernverlängerung"
+            placeholder={locale === "en" ? "e.g. Consultation Lash Extensions" : "z. B. Beratung Wimpernverlängerung"}
             {...register("subject")}
             className={inputClasses}
           />
@@ -186,12 +187,12 @@ export default function ContactForm() {
       {/* Message */}
       <div>
         <label htmlFor="contact_message" className="block text-xs uppercase tracking-[0.14em] text-[#392D29] font-medium mb-2">
-          Deine Nachricht <span className="text-[#A26D57]">*</span>
+          {t.contact.message} <span className="text-[#A26D57]">*</span>
         </label>
         <textarea
           id="contact_message"
           rows={4}
-          placeholder="Wie können wir dir weiterhelfen? Beschreibe gerne deine Wünsche oder Fragen..."
+          placeholder={locale === "en" ? "How can we help you? Feel free to describe your wishes or questions..." : "Wie können wir dir weiterhelfen? Beschreibe gerne deine Wünsche oder Fragen..."}
           {...register("message")}
           className="w-full px-4 py-3 bg-white border border-[#E8D6C5] rounded-[1px] text-base sm:text-sm text-[#392D29] focus:outline-none focus:border-[#A26D57] focus:ring-1 focus:ring-[#A26D57] transition-all"
         />
@@ -211,12 +212,25 @@ export default function ContactForm() {
           />
         </div>
         <label htmlFor="kontakt-privacy" className="text-xs text-[#756A63] font-light leading-relaxed cursor-pointer select-none">
-          Ich habe die{" "}
-          <Link href="/datenschutz" target="_blank" rel="noopener noreferrer" className="underline hover:text-[#A26D57]">
-            Datenschutzerklärung
-          </Link>{" "}
-          gelesen und stimme der Verarbeitung meiner Daten zur Beantwortung meiner Anfrage zu.{" "}
-          <span className="text-[#A26D57]">*</span>
+          {locale === "en" ? (
+            <>
+              I have read the{" "}
+              <Link href="/datenschutz" target="_blank" rel="noopener noreferrer" className="underline hover:text-[#A26D57]">
+                Privacy Policy
+              </Link>{" "}
+              and agree to the processing of my details to answer my inquiry.{" "}
+              <span className="text-[#A26D57]">*</span>
+            </>
+          ) : (
+            <>
+              Ich habe die{" "}
+              <Link href="/datenschutz" target="_blank" rel="noopener noreferrer" className="underline hover:text-[#A26D57]">
+                Datenschutzerklärung
+              </Link>{" "}
+              gelesen und stimme der Verarbeitung meiner Daten zur Beantwortung meiner Anfrage zu.{" "}
+              <span className="text-[#A26D57]">*</span>
+            </>
+          )}
         </label>
       </div>
       {errors.privacy_accepted && (
@@ -232,12 +246,12 @@ export default function ContactForm() {
         {isSubmitting ? (
           <>
             <Loader2 className="w-4 h-4 animate-spin" />
-            <span>Nachricht wird gesendet...</span>
+            <span>{t.contact.sendingBtn}</span>
           </>
         ) : (
           <>
             <Send className="w-4 h-4" />
-            <span>Nachricht absenden</span>
+            <span>{t.contact.sendBtn}</span>
           </>
         )}
       </button>

@@ -1,6 +1,9 @@
+"use client";
+
 import React from "react";
 import { CalendarDays, ArrowRight } from "lucide-react";
 import { ContentSection, DesignSectionSetting } from "@/lib/types";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 interface FinalCtaProps {
   content?: ContentSection;
@@ -8,14 +11,28 @@ interface FinalCtaProps {
 }
 
 export default function FinalCtaSection({ content, design }: FinalCtaProps) {
-  const eyebrow = content?.eyebrow || "ZEIT FÜR DICH";
-  const headline = content?.headline || "Gönne dir deine persönliche Auszeit.";
+  const { locale, t } = useLanguage();
+
+  const eyebrow =
+    locale === "en" ? "TIME FOR YOU" : content?.eyebrow || "ZEIT FÜR DICH";
+  const headline =
+    locale === "en"
+      ? "Treat yourself to a personal getaway."
+      : content?.headline || "Gönne dir deine persönliche Auszeit.";
   const bodyText =
-    content?.body_text ||
-    "Vereinbare jetzt ganz unkompliziert deine individuelle Terminanfrage. Wir beraten dich typgerecht und finden die perfekte Behandlung für dich.";
-  const primaryCtaLabel = content?.primary_cta_label || "Jetzt Termin anfragen";
+    locale === "en"
+      ? "Easily request your individual appointment today. We offer personalized consultations to discover the perfect treatment tailored to your skin and beauty goals."
+      : content?.body_text ||
+        "Vereinbare jetzt ganz unkompliziert deine individuelle Terminanfrage. Wir beraten dich typgerecht und finden die perfekte Behandlung für dich.";
+  const primaryCtaLabel =
+    locale === "en"
+      ? t.hero.ctaPrimary
+      : content?.primary_cta_label || "Jetzt Termin anfragen";
   const primaryCtaUrl = content?.primary_cta_url || "/termin";
-  const secondaryCtaLabel = content?.secondary_cta_label || "Preise ansehen";
+  const secondaryCtaLabel =
+    locale === "en"
+      ? t.nav.pricing
+      : content?.secondary_cta_label || "Preise ansehen";
   const secondaryCtaUrl = content?.secondary_cta_url || "/preise";
 
   const bgImg =

@@ -1,6 +1,9 @@
+"use client";
+
 import React from "react";
 import { ArrowUpRight } from "lucide-react";
 import { ServiceCategory } from "@/lib/types";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 interface CategoriesSectionProps {
   categories: ServiceCategory[];
@@ -14,6 +17,8 @@ const categoryImages: Record<string, string> = {
 };
 
 export default function CategoriesSection({ categories }: CategoriesSectionProps) {
+  const { t } = useLanguage();
+
   return (
     <section className="py-24 sm:py-32 bg-[#F7F3EE]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -22,16 +27,15 @@ export default function CategoriesSection({ categories }: CategoriesSectionProps
             <div className="flex items-center gap-3 mb-3">
               <span className="w-8 h-[1px] bg-[#B88770]" />
               <span className="text-xs uppercase tracking-[0.24em] text-[#B88770] font-medium">
-                Portfolio Übersicht
+                {t.categories.eyebrow}
               </span>
             </div>
             <h2 className="font-editorial text-3xl sm:text-5xl font-light text-[#392D29]">
-              Unsere Fachbereiche
+              {t.categories.title}
             </h2>
           </div>
           <p className="text-sm text-[#756A63] font-light max-w-md">
-            Wähle einen Schwerpunkt und entdecke detaillierte Behandlungskonzepte,
-            Preise und Ablaufbeschreibungen.
+            {t.categories.subtitle}
           </p>
         </div>
 
@@ -74,7 +78,7 @@ export default function CategoriesSection({ categories }: CategoriesSectionProps
                     {cat.description}
                   </p>
                   <span className="inline-block text-[11px] uppercase tracking-[0.16em] text-[#D9A891] font-medium pt-2 group-hover:translate-x-1 transition-transform">
-                    Behandlungen ansehen &rarr;
+                    {t.categories.viewCategory} &rarr;
                   </span>
                 </div>
               </a>

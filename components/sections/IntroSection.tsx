@@ -1,20 +1,32 @@
+"use client";
+
 import React from "react";
 import AuraGlowLogo from "@/components/ui/AuraGlowLogo";
 import { ArrowRight } from "lucide-react";
 import { ContentSection } from "@/lib/types";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 interface IntroSectionProps {
   content?: ContentSection;
 }
 
 export default function IntroSection({ content }: IntroSectionProps) {
+  const { locale } = useLanguage();
+
   const eyebrow = content?.eyebrow || "AURA GLOW BY MÜRVET";
   const headline =
-    content?.headline || "Schönheit beginnt dort,\nwo du dich selbst wohlfühlst.";
+    locale === "en"
+      ? "Beauty begins the moment\nyou feel truly at ease."
+      : content?.headline || "Schönheit beginnt dort,\nwo du dich selbst wohlfühlst.";
   const bodyText =
-    content?.body_text ||
-    "In unserem Studio vereinen wir präzises Handwerk, meisterhafte Ästhetik und erstklassige Behandlungen zu einem ganzheitlichen Wohlfühlerlebnis. Jeder Blick, jede Kontur und jedes Hautbedürfnis ist einzigartig – genau so behandeln wir dich.";
-  const ctaLabel = content?.primary_cta_label || "Mehr über uns erfahren";
+    locale === "en"
+      ? "In our studio, we bring together meticulous craftsmanship, refined aesthetics, and world-class treatments for a holistic luxury experience. Every look, every contour, and every skincare need is unique — and that is exactly how we treat you."
+      : content?.body_text ||
+        "In unserem Studio vereinen wir präzises Handwerk, meisterhafte Ästhetik und erstklassige Behandlungen zu einem ganzheitlichen Wohlfühlerlebnis. Jeder Blick, jede Kontur und jedes Hautbedürfnis ist einzigartig – genau so behandeln wir dich.";
+  const ctaLabel =
+    locale === "en"
+      ? "Learn more about us"
+      : content?.primary_cta_label || "Mehr über uns erfahren";
   const ctaUrl = content?.primary_cta_url || "/ueber-uns";
 
   return (

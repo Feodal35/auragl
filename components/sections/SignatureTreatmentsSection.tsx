@@ -1,12 +1,17 @@
+"use client";
+
 import React from "react";
 import { ArrowUpRight, Clock3, CalendarDays } from "lucide-react";
 import { ServiceItem } from "@/lib/types";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 interface SignatureTreatmentsProps {
   services: ServiceItem[];
 }
 
 export default function SignatureTreatmentsSection({ services }: SignatureTreatmentsProps) {
+  const { t } = useLanguage();
+
   // Prioritize featured services showcasing real studio treatments
   const featuredList = services.filter((s) => s.is_featured);
   const featured = featuredList.length >= 4 ? featuredList.slice(0, 4) : services.slice(0, 4);
@@ -20,18 +25,18 @@ export default function SignatureTreatmentsSection({ services }: SignatureTreatm
             <div className="flex items-center gap-3 mb-3">
               <span className="w-8 h-[1px] bg-[#B88770]" />
               <span className="text-xs uppercase tracking-[0.24em] text-[#B88770] font-medium">
-                Signature Behandlungen
+                {t.signature.title}
               </span>
             </div>
             <h2 className="font-editorial text-3xl sm:text-5xl font-light text-[#392D29] leading-[1.15]">
-              Perfektion bis ins feinste Detail.
+              {t.signature.subtitle}
             </h2>
           </div>
           <a
             href="/leistungen"
             className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.14em] font-medium text-[#392D29] hover:text-[#A26D57] transition-colors pb-1 border-b border-[#392D29] hover:border-[#A26D57] min-h-[44px]"
           >
-            <span>Alle Behandlungen ansehen</span>
+            <span>{t.signature.viewAll}</span>
             <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
           </a>
         </div>
@@ -90,14 +95,14 @@ export default function SignatureTreatmentsSection({ services }: SignatureTreatm
                       className="inline-flex items-center gap-1.5 text-xs uppercase tracking-[0.14em] font-medium text-[#A26D57] hover:text-[#8E5A45] min-h-[44px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A26D57] rounded-sm"
                     >
                       <CalendarDays className="w-3.5 h-3.5" aria-hidden="true" />
-                      <span>Termin anfragen</span>
+                      <span>{t.signature.bookNow}</span>
                     </a>
                     <a
                       href="/leistungen"
                       aria-label={`Details zu allen Behandlungen anzeigen`}
                       className="text-xs text-[#756A63] hover:text-[#392D29] transition-colors inline-flex items-center gap-1 min-h-[44px] px-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A26D57] rounded-sm"
                     >
-                      <span>Details</span>
+                      <span>{t.gallery.viewDetails || "Details"}</span>
                       <ArrowUpRight className="w-3 h-3" aria-hidden="true" />
                     </a>
                   </div>

@@ -3,6 +3,7 @@ import { Cormorant_Garamond, Dancing_Script, Inter } from "next/font/google";
 import "./globals.css";
 import CookieConsent from "@/components/public/CookieConsent";
 import GoogleConsentMode, { GoogleTagManagerNoScript } from "@/components/analytics/GoogleConsentMode";
+import { LanguageProvider } from "@/lib/i18n/LanguageContext";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -108,6 +109,11 @@ export const metadata: Metadata = {
   manifest: "/manifest.webmanifest",
   alternates: {
     canonical: "./",
+    languages: {
+      "de": "./",
+      "en": "./?lang=en",
+      "x-default": "./",
+    },
   },
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || "lT-RA6-fE5zhMRWP56etSyMrv-lXDVN2pLJkh3ffC2Q",
@@ -126,8 +132,10 @@ export default function RootLayout({
       </head>
       <body className="antialiased bg-[#F7F3EE] text-[#392D29] min-h-screen selection:bg-[#E8D6C5] selection:text-[#211A18]">
         <GoogleTagManagerNoScript />
-        {children}
-        <CookieConsent />
+        <LanguageProvider>
+          {children}
+          <CookieConsent />
+        </LanguageProvider>
       </body>
     </html>
   );

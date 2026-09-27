@@ -8,6 +8,9 @@ import AppointmentForm from "@/components/public/AppointmentForm";
 import { getAllServices, getBusinessSettings, getOpeningHours } from "@/lib/db";
 import { Clock3, CalendarCheck, ShieldCheck } from "lucide-react";
 
+import TerminHeader from "@/components/public/TerminHeader";
+import TerminInfoCards from "@/components/public/TerminInfoCards";
+
 export const metadata: Metadata = {
   title: "Termin online anfragen | Wunschtermin in Düsseldorf sichern",
   description:
@@ -39,68 +42,15 @@ export default async function AppointmentPage({ searchParams }: PageProps) {
           <Breadcrumbs items={[{ label: "Terminanfrage" }]} />
         </div>
 
-        {/* Header */}
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 text-center">
-          <div className="inline-flex items-center gap-3 mb-3">
-            <span className="w-8 h-[1px] bg-[#B88770]" />
-            <span className="text-xs uppercase tracking-[0.24em] text-[#A26D57] font-medium">
-              Auszeit buchen
-            </span>
-            <span className="w-8 h-[1px] bg-[#B88770]" />
-          </div>
-          <h1 className="font-editorial text-4xl sm:text-6xl font-light text-[#392D29] mb-4">
-            Terminanfrage
-          </h1>
-          <p className="text-base sm:text-lg text-[#756A63] font-light max-w-xl mx-auto leading-relaxed">
-            Wähle deine bevorzugte Behandlung und teile uns deine Terminwünsche mit.
-            Wir melden uns umgehend persönlich bei dir.
-          </p>
-        </div>
+        {/* Header (Bilingual) */}
+        <TerminHeader />
 
         {/* Form Container */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
             {/* Left Column: Guidelines & Reassurance (4 cols) */}
             <div className="lg:col-span-4 space-y-6">
-              <div className="bg-white p-6 sm:p-8 border border-[#E8D6C5] rounded-[1px] shadow-luxury-sm space-y-4">
-                <div className="w-10 h-10 rounded-full bg-[#FAF6F1] border border-[#E8D6C5] flex items-center justify-center text-[#A26D57]">
-                  <CalendarCheck className="w-5 h-5" />
-                </div>
-                <h3 className="font-editorial text-xl text-[#392D29]">
-                  Verbindliche Bestätigung
-                </h3>
-                <p className="text-xs sm:text-sm text-[#756A63] font-light leading-relaxed">
-                  Deine Online-Anfrage ist zunächst unverbindlich. Nach Eingang prüfen wir den
-                  Studio-Kalender und bestätigen dir den Termin persönlich per WhatsApp, SMS
-                  oder Telefon.
-                </p>
-              </div>
-
-              <div className="bg-white p-6 sm:p-8 border border-[#E8D6C5] rounded-[1px] shadow-luxury-sm space-y-4">
-                <div className="w-10 h-10 rounded-full bg-[#FAF6F1] border border-[#E8D6C5] flex items-center justify-center text-[#A26D57]">
-                  <Clock3 className="w-5 h-5" />
-                </div>
-                <h3 className="font-editorial text-xl text-[#392D29]">
-                  Rechtzeitiges Erscheinen
-                </h3>
-                <p className="text-xs sm:text-sm text-[#756A63] font-light leading-relaxed">
-                  Um deine Behandlung voll auszukosten und eine entspannte Vorbereitung zu gewährleisten,
-                  bitten wir dich, etwa 5 Minuten vor deinem vereinbarten Termin da zu sein.
-                </p>
-              </div>
-
-              <div className="bg-white p-6 sm:p-8 border border-[#E8D6C5] rounded-[1px] shadow-luxury-sm space-y-4">
-                <div className="w-10 h-10 rounded-full bg-[#FAF6F1] border border-[#E8D6C5] flex items-center justify-center text-[#A26D57]">
-                  <ShieldCheck className="w-5 h-5" />
-                </div>
-                <h3 className="font-editorial text-xl text-[#392D29]">
-                  Datenschutz &amp; Diskretion
-                </h3>
-                <p className="text-xs sm:text-sm text-[#756A63] font-light leading-relaxed">
-                  Deine Kontaktdaten werden vertraulich behandelt und ausschließlich zur
-                  Terminabstimmung genutzt.
-                </p>
-              </div>
+              <TerminInfoCards />
 
               {business.whatsapp && (
                 <div className="bg-[#FAF6F1] p-6 border border-[#E8D6C5] rounded-[1px] space-y-2 text-xs">

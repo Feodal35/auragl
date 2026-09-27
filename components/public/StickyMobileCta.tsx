@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { Phone, CalendarDays, MessageCircle } from "lucide-react";
 import { trackContactChannelClick, trackCtaClick } from "@/lib/tracking";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 interface StickyMobileCtaProps {
   phone?: string;
@@ -14,6 +15,7 @@ export default function StickyMobileCta({
   phone = "+49 176 1234 5678",
   whatsapp = "+49 176 1234 5678",
 }: StickyMobileCtaProps) {
+  const { t } = useLanguage();
   const cleanPhone = phone.replace(/\s+/g, "");
   const cleanWhatsapp = whatsapp.replace(/\D/g, "");
 
@@ -31,7 +33,7 @@ export default function StickyMobileCta({
           aria-label="Studio telefonisch anrufen"
         >
           <Phone className="w-4 h-4 text-[#A26D57] mb-0.5" aria-hidden="true" />
-          <span className="text-[10px] uppercase tracking-wider font-medium">Anrufen</span>
+          <span className="text-[10px] uppercase tracking-wider font-medium">{t.stickyMobile.call}</span>
         </a>
 
         {/* WhatsApp button */}
@@ -44,7 +46,7 @@ export default function StickyMobileCta({
           aria-label="Nachricht über WhatsApp schreiben"
         >
           <MessageCircle className="w-4 h-4 text-[#25D366] mb-0.5" aria-hidden="true" />
-          <span className="text-[10px] uppercase tracking-wider font-medium">WhatsApp</span>
+          <span className="text-[10px] uppercase tracking-wider font-medium">{t.stickyMobile.whatsapp}</span>
         </a>
 
         {/* Book appointment button */}
@@ -55,7 +57,7 @@ export default function StickyMobileCta({
           aria-label="Termin online anfragen"
         >
           <CalendarDays className="w-4 h-4 mb-0.5" aria-hidden="true" />
-          <span className="text-[10px] uppercase tracking-wider font-semibold">Termin</span>
+          <span className="text-[10px] uppercase tracking-wider font-semibold">{t.stickyMobile.book}</span>
         </Link>
       </div>
     </aside>

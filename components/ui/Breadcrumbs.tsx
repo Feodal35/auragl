@@ -1,6 +1,9 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
 import { ChevronRight, Home } from "lucide-react";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 export interface BreadcrumbItem {
   label: string;
@@ -13,10 +16,11 @@ interface BreadcrumbsProps {
 }
 
 export default function Breadcrumbs({ items, className = "" }: BreadcrumbsProps) {
+  const { t } = useLanguage();
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://auraglow.de";
 
   const allItems: BreadcrumbItem[] = [
-    { label: "Startseite", href: "/" },
+    { label: t.nav.home, href: "/" },
     ...items,
   ];
 

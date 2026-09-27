@@ -1,6 +1,9 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
 import { Sparkles, CheckCircle2, Clock3, CalendarDays, ArrowRight } from "lucide-react";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 interface CaseStudy {
   id: string;
@@ -59,6 +62,8 @@ const caseStudies: CaseStudy[] = [
 ];
 
 export default function CaseStudySpotlight() {
+  const { t, locale } = useLanguage();
+
   return (
     <section
       id="fallstudien"
@@ -71,7 +76,7 @@ export default function CaseStudySpotlight() {
           <div className="inline-flex items-center gap-2 mb-3">
             <Sparkles className="w-4 h-4 text-[#A26D57]" />
             <span className="text-xs uppercase tracking-[0.24em] text-[#A26D57] font-medium">
-              Echte Verwandlungen &bull; Vaka Çalışmaları
+              {t.caseStudies.eyebrow}
             </span>
             <Sparkles className="w-4 h-4 text-[#A26D57]" />
           </div>
@@ -79,11 +84,10 @@ export default function CaseStudySpotlight() {
             id="case-studies-heading"
             className="font-editorial text-3xl sm:text-5xl lg:text-6xl text-[#392D29] font-light mb-5"
           >
-            Fallstudien &amp; Vorher-Nachher Einblicke
+            {t.caseStudies.title}
           </h2>
           <p className="text-base sm:text-lg text-[#756A63] font-light leading-relaxed">
-            Hinter jedem Resultat steht eine sorgfältige Analyse deiner individuellen Anatomie.
-            Entdecke, wie wir Haut- und Wimpernbedürfnisse in meisterhafte Ergebnisse verwandeln.
+            {t.caseStudies.subtitle}
           </p>
         </div>
 
@@ -110,7 +114,7 @@ export default function CaseStudySpotlight() {
                     loading="lazy"
                   />
                   <div className="absolute top-4 left-4 bg-[#211A18]/85 text-white backdrop-blur-sm px-3 py-1 text-xs font-mono tracking-widest uppercase">
-                    Vorher &bull; Nachher Fokus
+                    {locale === "en" ? "Before • After Spotlight" : "Vorher • Nachher Fokus"}
                   </div>
                 </div>
 
@@ -130,7 +134,7 @@ export default function CaseStudySpotlight() {
                     <div className="space-y-4 mb-8">
                       <div className="bg-[#FAF6F1] border-l-2 border-[#B88770] p-3.5 sm:p-4 rounded-r-sm">
                         <strong className="text-xs uppercase tracking-wider text-[#392D29] block mb-1">
-                          Ausgangslage
+                          {locale === "en" ? "Initial Situation" : "Ausgangslage"}
                         </strong>
                         <p className="text-xs sm:text-sm text-[#756A63] font-light leading-relaxed">
                           {study.problem}
@@ -139,7 +143,7 @@ export default function CaseStudySpotlight() {
 
                       <div className="bg-[#FAF6F1] border-l-2 border-[#A26D57] p-3.5 sm:p-4 rounded-r-sm">
                         <strong className="text-xs uppercase tracking-wider text-[#392D29] block mb-1">
-                          Angewandte Behandlung &amp; Technik
+                          {locale === "en" ? "Applied Treatment & Technique" : "Angewandte Behandlung & Technik"}
                         </strong>
                         <p className="text-xs sm:text-sm text-[#756A63] font-light leading-relaxed">
                           {study.solution}
@@ -150,7 +154,7 @@ export default function CaseStudySpotlight() {
                         <div className="flex items-center gap-1.5 mb-1">
                           <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                           <strong className="text-xs uppercase tracking-wider text-[#392D29]">
-                            Ergebnis &amp; Effekt
+                            {locale === "en" ? "Result & Effect" : "Ergebnis & Effekt"}
                           </strong>
                         </div>
                         <p className="text-xs sm:text-sm text-[#392D29] font-medium leading-relaxed">
@@ -163,11 +167,11 @@ export default function CaseStudySpotlight() {
                     <div className="flex flex-wrap gap-4 text-xs text-[#756A63] font-light pt-2 pb-6 border-b border-[#E8D6C5]/50">
                       <span className="inline-flex items-center gap-1.5">
                         <Clock3 className="w-3.5 h-3.5 text-[#A26D57]" />
-                        <span>Behandlungsdauer: {study.duration}</span>
+                        <span>{locale === "en" ? "Duration" : "Behandlungsdauer"}: {study.duration}</span>
                       </span>
                       <span className="inline-flex items-center gap-1.5">
                         <Sparkles className="w-3.5 h-3.5 text-[#A26D57]" />
-                        <span>Haltbarkeit: {study.longevity}</span>
+                        <span>{locale === "en" ? "Longevity" : "Haltbarkeit"}: {study.longevity}</span>
                       </span>
                     </div>
                   </div>
@@ -180,13 +184,13 @@ export default function CaseStudySpotlight() {
                       aria-label={`Termin für ${study.treatmentSlug} anfragen`}
                     >
                       <CalendarDays className="w-3.5 h-3.5" />
-                      <span>Termin für diesen Look anfragen</span>
+                      <span>{t.caseStudies.bookSimilar}</span>
                     </Link>
                     <Link
                       href="/galerie"
                       className="btn-secondary text-xs inline-flex items-center justify-center gap-1.5"
                     >
-                      <span>Mehr Ergebnisse ansehen</span>
+                      <span>{locale === "en" ? "View more results" : "Mehr Ergebnisse ansehen"}</span>
                       <ArrowRight className="w-3 h-3" />
                     </Link>
                   </div>

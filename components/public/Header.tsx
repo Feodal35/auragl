@@ -6,24 +6,27 @@ import Link from "next/link";
 import AuraGlowLogo from "@/components/ui/AuraGlowLogo";
 import { Menu, X, CalendarDays, Phone, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
+import LanguageSwitcher from "@/components/public/LanguageSwitcher";
 
 interface HeaderProps {
   businessPhone?: string;
 }
 
-const navLinks = [
-  { href: "/", label: "Startseite" },
-  { href: "/leistungen", label: "Behandlungen" },
-  { href: "/preise", label: "Preise" },
-  { href: "/galerie", label: "Galerie" },
-  { href: "/ueber-uns", label: "Über uns" },
-  { href: "/kontakt", label: "Kontakt" },
-];
-
 export default function Header({ businessPhone = "+49 176 1234 5678" }: HeaderProps) {
+  const { t } = useLanguage();
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const navLinks = [
+    { href: "/", label: t.nav.home },
+    { href: "/leistungen", label: t.nav.services },
+    { href: "/preise", label: t.nav.pricing },
+    { href: "/galerie", label: t.nav.gallery },
+    { href: "/ueber-uns", label: t.nav.about },
+    { href: "/kontakt", label: t.nav.contact },
+  ];
 
   // Detect scroll for transition
   useEffect(() => {
@@ -76,7 +79,7 @@ export default function Header({ businessPhone = "+49 176 1234 5678" }: HeaderPr
         href="#main-content"
         className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2.5 focus:bg-[#392D29] focus:text-white focus:text-xs focus:uppercase focus:tracking-widest focus:rounded-[1px] focus:shadow-luxury-lg focus:outline-none focus:ring-2 focus:ring-[#B88770]"
       >
-        Zum Hauptinhalt springen
+        {t.nav.skipToContent}
       </a>
 
       <header
@@ -98,10 +101,10 @@ export default function Header({ businessPhone = "+49 176 1234 5678" }: HeaderPr
         >
           <div className="max-w-7xl mx-auto flex items-center justify-between text-[11px] sm:text-xs tracking-wider">
             <span className="hidden sm:inline font-light">
-              Königsallee Düsseldorf &bull; Exklusive Beauty &amp; Aesthetics
+              {t.header.topAnnouncement}
             </span>
             <span className="sm:hidden font-light truncate">
-              Aura Glow Düsseldorf
+              {t.header.topAnnouncementShort}
             </span>
             <Link
               href="/termin"
@@ -110,7 +113,7 @@ export default function Header({ businessPhone = "+49 176 1234 5678" }: HeaderPr
                 !isScrolled && isHome ? "text-[#E8D6C5]" : "text-[#A26D57]"
               )}
             >
-              <span>Termine nach Vereinbarung &bull; Jetzt anfragen</span>
+              <span>{t.header.topAnnouncementCta}</span>
               <ArrowRight className="w-3 h-3 ml-0.5" aria-hidden="true" />
             </Link>
           </div>
@@ -121,7 +124,7 @@ export default function Header({ businessPhone = "+49 176 1234 5678" }: HeaderPr
           <Link
             href="/"
             className="group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B88770] rounded-sm p-0.5"
-            aria-label="Aura Glow by Mürvet Startseite"
+            aria-label={`Aura Glow by Mürvet ${t.nav.home}`}
           >
             <AuraGlowLogo
               size="md"
@@ -165,8 +168,16 @@ export default function Header({ businessPhone = "+49 176 1234 5678" }: HeaderPr
             })}
           </nav>
 
-          {/* CTA & Mobile Hamburger */}
-          <div className="flex items-center space-x-4">
+          {/* CTA, Language Switcher & Mobile Hamburger */}
+          <div className="flex items-center space-x-3 sm:space-x-4">
+            {/* Desktop Language Switcher */}
+            <div className="hidden sm:block">
+              <LanguageSwitcher
+                variant="header"
+                isTransparentHeader={!isScrolled && isHome}
+              />
+            </div>
+
             <Link
               href="/termin"
               className={cn(
@@ -177,7 +188,7 @@ export default function Header({ businessPhone = "+49 176 1234 5678" }: HeaderPr
               )}
             >
               <CalendarDays className="w-3.5 h-3.5" aria-hidden="true" />
-              <span>Termin anfragen</span>
+              <span>{t.nav.bookAppointment}</span>
             </Link>
 
             {/* Mobile Menu Toggle Button (minimum 44x44px touch target) */}
@@ -188,7 +199,7 @@ export default function Header({ businessPhone = "+49 176 1234 5678" }: HeaderPr
                 "lg:hidden min-w-[44px] min-h-[44px] flex items-center justify-center rounded-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B88770]",
                 !isScrolled && isHome ? "text-white hover:bg-white/10" : "text-[#392D29] hover:bg-[#EFE6DD]"
               )}
-              aria-label={isMobileMenuOpen ? "Menü schließen" : "Menü öffnen"}
+              aria-label={isMobileMenuOpen ? t.nav.closeMenu : t.nav.openMenu}
               aria-expanded={isMobileMenuOpen}
               aria-controls="mobile-navigation"
             >
@@ -226,14 +237,19 @@ export default function Header({ businessPhone = "+49 176 1234 5678" }: HeaderPr
               type="button"
               onClick={() => setIsMobileMenuOpen(false)}
               className="min-w-[44px] min-h-[44px] flex items-center justify-center text-[#756A63] hover:text-[#392D29] hover:bg-[#EFE6DD] rounded-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B88770]"
-              aria-label="Menü schließen"
+              aria-label={t.nav.closeMenu}
             >
               <X className="w-6 h-6" />
             </button>
           </div>
 
+          {/* Language Switcher in Mobile Drawer */}
+          <div className="mt-4">
+            <LanguageSwitcher variant="mobile" />
+          </div>
+
           {/* Nav links with >= 48px touch targets */}
-          <nav className="mt-8 flex flex-col space-y-1" aria-label="Mobile Navigation">
+          <nav className="mt-6 flex flex-col space-y-1" aria-label="Mobile Navigation">
             {navLinks.map((item) => {
               const isActive = pathname === item.href;
               return (
@@ -263,7 +279,7 @@ export default function Header({ businessPhone = "+49 176 1234 5678" }: HeaderPr
             className="w-full flex items-center justify-center gap-2 bg-[#A26D57] text-white min-h-[48px] py-3.5 text-xs uppercase tracking-[0.14em] font-medium rounded-sm shadow-luxury-md hover:bg-[#8B5742] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B88770]"
           >
             <CalendarDays className="w-4 h-4" />
-            <span>Termin anfragen</span>
+            <span>{t.nav.bookAppointment}</span>
           </Link>
 
           {businessPhone && (
