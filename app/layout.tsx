@@ -24,8 +24,14 @@ const inter = Inter({
   display: "swap",
 });
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : null) ||
+  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null) ||
+  "https://auragl.vercel.app";
+
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://auraglow.de"),
+  metadataBase: new URL(siteUrl),
   title: {
     default: "Aura Glow by Mürvet | Exklusive Beauty & Aesthetics",
     template: "%s | Aura Glow by Mürvet",
@@ -55,7 +61,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "de_DE",
-    url: "https://auraglow.de",
+    url: siteUrl,
     siteName: "Aura Glow by Mürvet",
     title: "Aura Glow by Mürvet | Exklusive Beauty & Aesthetics",
     description:
