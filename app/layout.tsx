@@ -102,7 +102,7 @@ export const metadata: Metadata = {
     canonical: "./",
   },
   verification: {
-    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || "google-site-verification-auraglow-murvet-aesthetic",
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || "lT-RA6-fE5zhMRWP56etSyMrv-lXDVN2pLJkh3ffC2Q",
   },
 };
 
