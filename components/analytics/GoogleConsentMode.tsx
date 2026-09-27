@@ -18,7 +18,7 @@ interface GoogleConsentModeProps {
  * 6. Google Tag Manager & Google Analytics 4 integration
  */
 export default function GoogleConsentMode({
-  gaId = process.env.NEXT_PUBLIC_GA_ID,
+  gaId = process.env.NEXT_PUBLIC_GA_ID || "G-LECJM53WBS",
   gtmId = process.env.NEXT_PUBLIC_GTM_ID || "GTM-KG93TJHK",
 }: GoogleConsentModeProps) {
   const syncInitScript = `
@@ -136,7 +136,7 @@ export default function GoogleConsentMode({
       )}
 
       {/* 3. Google Analytics 4 / Google Tag (if GA ID is provided) */}
-      {gaId && !gtmId && (
+      {gaId && (
         <>
           <Script
             src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
