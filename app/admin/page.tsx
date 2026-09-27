@@ -14,6 +14,7 @@ import {
   Clock3,
   CheckCircle2,
   AlertCircle,
+  BookOpen,
 } from "lucide-react";
 import { formatShortDate } from "@/lib/utils";
 
@@ -35,8 +36,8 @@ export default async function AdminDashboardPage() {
     <div className="space-y-10">
       {/* Header */}
       <div>
-        <span className="text-xs uppercase tracking-[0.2em] text-[#B88770] font-medium block mb-1">
-          Übersicht &amp; Kennzahlen
+        <span className="text-xs uppercase tracking-[0.2em] text-[#844C36] font-semibold block mb-1">
+          Übersicht &amp; Kennzahlen / Genel Bakış
         </span>
         <h1 className="font-editorial text-3xl sm:text-4xl text-[#392D29]">
           Studio Dashboard
@@ -44,6 +45,35 @@ export default async function AdminDashboardPage() {
         <p className="text-xs sm:text-sm text-[#756A63] font-light mt-1">
           Willkommen im Verwaltungsbereich von Aura Glow by Mürvet.
         </p>
+      </div>
+
+      {/* Guide Banner */}
+      <div className="bg-gradient-to-r from-white via-[#FAF6F1] to-white border border-[#E8D6C5] rounded-[1px] p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-luxury-xs">
+        <div className="flex items-start sm:items-center gap-3">
+          <div className="w-9 h-9 rounded-full bg-[#844C36]/10 text-[#844C36] flex items-center justify-center shrink-0">
+            <BookOpen className="w-4 h-4" />
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-semibold text-[#392D29]">
+                Admin Menüsü Nasıl Kullanılır? / Wie benutzt man das Admin-Menü?
+              </span>
+              <span className="text-[10px] bg-[#844C36] text-white px-2 py-0.2 rounded-full font-bold">
+                Rehber / Anleitung
+              </span>
+            </div>
+            <p className="text-xs text-[#756A63] font-light mt-0.5">
+              Tüm menülerin, randevu yönetiminin ve ayarların Türkçe &amp; Almanca detaylı kullanım kılavuzu.
+            </p>
+          </div>
+        </div>
+        <a
+          href="/admin/anleitung"
+          className="shrink-0 inline-flex items-center gap-2 bg-[#844C36] hover:bg-[#6C3D2B] text-white px-4 py-2 rounded-[1px] text-xs font-semibold uppercase tracking-wider transition-colors shadow-luxury-xs"
+        >
+          <span>Rehberi Aç / Anleitung</span>
+          <ArrowRight className="w-3.5 h-3.5" />
+        </a>
       </div>
 
       {/* Metrics Row (Strictly Real Data, No Fake Metrics!) */}

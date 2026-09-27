@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import AuraGlowLogo from "@/components/ui/AuraGlowLogo";
+import { useAdminLanguage } from "@/components/admin/AdminLanguageContext";
 import {
   LayoutDashboard,
   FileText,
@@ -19,27 +20,30 @@ import {
   ExternalLink,
   Menu,
   X,
+  BookOpen,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const adminNav = [
-  { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/admin/inhalte", label: "Inhalte", icon: FileText },
-  { href: "/admin/leistungen", label: "Behandlungen", icon: Sparkles },
-  { href: "/admin/preise", label: "Preise", icon: DollarSign },
-  { href: "/admin/galerie", label: "Galerie", icon: Image },
-  { href: "/admin/medien", label: "Mediathek", icon: FolderOpen },
-  { href: "/admin/design", label: "Design & Hintergründe", icon: Palette },
-  { href: "/admin/anfragen", label: "Terminanfragen", icon: CalendarDays },
-  { href: "/admin/nachrichten", label: "Nachrichten", icon: MessageSquare },
-  { href: "/admin/einstellungen", label: "Einstellungen", icon: Settings },
-  { href: "/admin/seo", label: "SEO & Meta", icon: Globe },
+  { href: "/admin", labelDe: "Dashboard", labelTr: "Genel Bakış", icon: LayoutDashboard },
+  { href: "/admin/inhalte", labelDe: "Inhalte", labelTr: "İçerikler & Metinler", icon: FileText },
+  { href: "/admin/leistungen", labelDe: "Behandlungen", labelTr: "Hizmetler & Tedaviler", icon: Sparkles },
+  { href: "/admin/preise", labelDe: "Preise", labelTr: "Fiyat Listesi", icon: DollarSign },
+  { href: "/admin/galerie", labelDe: "Galerie", labelTr: "Galeri", icon: Image },
+  { href: "/admin/medien", labelDe: "Mediathek", labelTr: "Medya & Görseller", icon: FolderOpen },
+  { href: "/admin/design", labelDe: "Design & Hintergründe", labelTr: "Tasarım & Arka Plan", icon: Palette },
+  { href: "/admin/anfragen", labelDe: "Terminanfragen", labelTr: "Randevu Talepleri", icon: CalendarDays },
+  { href: "/admin/nachrichten", labelDe: "Nachrichten", labelTr: "İletişim Mesajları", icon: MessageSquare },
+  { href: "/admin/einstellungen", labelDe: "Einstellungen", labelTr: "Ayarlar & Saatler", icon: Settings },
+  { href: "/admin/seo", labelDe: "SEO & Meta", labelTr: "SEO & Google", icon: Globe },
+  { href: "/admin/anleitung", labelDe: "Admin-Anleitung", labelTr: "Admin Rehberi", icon: BookOpen, isGuide: true },
 ];
 
 export default function AdminSidebar() {
   const pathname = usePathname();
   const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { adminLang, setAdminLang, isTr } = useAdminLanguage();
 
   const handleLogout = async () => {
     try {
@@ -52,14 +56,50 @@ export default function AdminSidebar() {
   };
 
   const navContent = (
-    <div className="flex flex-col h-full justify-between bg-white border-r border-[#E8D6C5] p-5 w-64">
-      <div className="space-y-6">
+    <div className="flex flex-col h-full justify-between bg-white border-r border-[#E8D6C5] p-5 w-64 overflow-y-auto">
+      <div className="space-y-4">
         {/* Brand Header */}
-        <div className="pb-4 border-b border-[#E8D6C5]">
+        <div className="pb-3 border-b border-[#E8D6C5]">
           <AuraGlowLogo size="sm" />
-          <span className="text-[10px] uppercase tracking-[0.2em] text-[#B88770] font-medium block mt-2">
-            Verwaltung &amp; CMS
+          <span className="text-[10px] uppercase tracking-[0.2em] text-[#844C36] font-semibold block mt-2">
+            {isTr ? "Yönetim Paneli & CMS" : "Verwaltung & CMS"}
           </span>
+
+          {/* Admin Language Switcher */}
+          <div className="flex items-center justify-between px-2.5 py-1.5 bg-[#FAF6F1] border border-[#E8D6C5] rounded-[2px] mt-3">
+            <span className="text-[11px] font-medium text-[#756A63] flex items-center gap-1.5">
+              <Globe className="w-3.5 h-3.5 text-[#844C36]" />
+              {isTr ? "Panel Dili:" : "Sprache:"}
+            </span>
+            <div className="flex items-center gap-0.5 bg-white p-0.5 rounded-[2px] border border-[#E8D6C5]">
+              <button
+                type="button"
+                onClick={() => setAdminLang("de")}
+                className={cn(
+                  "px-2 py-0.5 text-[10px] font-bold rounded-[1px] transition-all",
+                  !isTr
+                    ? "bg-[#844C36] text-white shadow-xs"
+                    : "text-[#756A63] hover:text-[#392D29]"
+                )}
+                title="Deutsch"
+              >
+                DE
+              </button>
+              <button
+                type="button"
+                onClick={() => setAdminLang("tr")}
+                className={cn(
+                  "px-2 py-0.5 text-[10px] font-bold rounded-[1px] transition-all",
+                  isTr
+                    ? "bg-[#844C36] text-white shadow-xs"
+                    : "text-[#756A63] hover:text-[#392D29]"
+                )}
+                title="Türkçe"
+              >
+                TR
+              </button>
+            </div>
+          </div>
         </div>
 
         {/* Links */}
@@ -67,20 +107,31 @@ export default function AdminSidebar() {
           {adminNav.map((item) => {
             const Icon = item.icon;
             const isActive = pathname === item.href;
+            const label = isTr ? item.labelTr : item.labelDe;
+
             return (
               <a
                 key={item.href}
                 href={item.href}
                 onClick={() => setMobileOpen(false)}
                 className={cn(
-                  "flex items-center gap-3 px-3.5 py-2.5 rounded-[1px] text-xs font-medium uppercase tracking-wider transition-colors",
+                  "flex items-center justify-between px-3 py-2 rounded-[1px] text-xs font-medium uppercase tracking-wider transition-colors",
                   isActive
-                    ? "bg-[#FAF6F1] text-[#B88770] border-l-2 border-[#B88770]"
+                    ? "bg-[#FAF6F1] text-[#844C36] border-l-2 border-[#844C36] font-semibold"
+                    : item.isGuide
+                    ? "text-[#844C36] bg-[#844C36]/5 hover:bg-[#844C36]/10 font-semibold"
                     : "text-[#756A63] hover:text-[#392D29] hover:bg-[#FAF6F1]"
                 )}
               >
-                <Icon className="w-4 h-4 shrink-0" />
-                <span>{item.label}</span>
+                <span className="flex items-center gap-2.5 truncate">
+                  <Icon className={cn("w-4 h-4 shrink-0", item.isGuide ? "text-[#844C36]" : "")} />
+                  <span className="truncate">{label}</span>
+                </span>
+                {item.isGuide && (
+                  <span className="text-[9px] bg-[#844C36] text-white px-1.5 py-0.2 rounded-full font-bold uppercase tracking-normal">
+                    {isTr ? "Yardım" : "Hilfe"}
+                  </span>
+                )}
               </a>
             );
           })}
@@ -88,26 +139,26 @@ export default function AdminSidebar() {
       </div>
 
       {/* Bottom Actions */}
-      <div className="pt-4 border-t border-[#E8D6C5] space-y-2">
+      <div className="pt-4 border-t border-[#E8D6C5] space-y-2 mt-4">
         <a
           href="/"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-between px-3.5 py-2 text-xs text-[#756A63] hover:text-[#392D29] rounded-[1px] transition-colors"
+          className="flex items-center justify-between px-3 py-2 text-xs text-[#756A63] hover:text-[#392D29] rounded-[1px] transition-colors"
         >
           <span className="flex items-center gap-2">
             <ExternalLink className="w-3.5 h-3.5" />
-            <span>Website ansehen</span>
+            <span>{isTr ? "Siteyi Görüntüle" : "Website ansehen"}</span>
           </span>
         </a>
 
         <button
           onClick={handleLogout}
           type="button"
-          className="w-full flex items-center gap-2 px-3.5 py-2 text-xs text-red-600 hover:bg-red-50 rounded-[1px] transition-colors"
+          className="w-full flex items-center gap-2 px-3 py-2 text-xs text-red-600 hover:bg-red-50 rounded-[1px] transition-colors"
         >
           <LogOut className="w-3.5 h-3.5" />
-          <span>Abmelden</span>
+          <span>{isTr ? "Çıkış Yap" : "Abmelden"}</span>
         </button>
       </div>
     </div>
@@ -122,11 +173,35 @@ export default function AdminSidebar() {
 
       {/* Mobile Top Bar */}
       <div className="lg:hidden bg-white border-b border-[#E8D6C5] px-4 py-3 flex items-center justify-between sticky top-0 z-30">
-        <AuraGlowLogo size="sm" variant="monogram" />
+        <div className="flex items-center gap-3">
+          <AuraGlowLogo size="sm" variant="monogram" />
+          <div className="flex items-center gap-1 bg-[#FAF6F1] px-1.5 py-0.5 rounded-[2px] border border-[#E8D6C5]">
+            <button
+              type="button"
+              onClick={() => setAdminLang("de")}
+              className={cn(
+                "px-1.5 py-0.5 text-[10px] font-bold rounded-[1px]",
+                !isTr ? "bg-[#844C36] text-white" : "text-[#756A63]"
+              )}
+            >
+              DE
+            </button>
+            <button
+              type="button"
+              onClick={() => setAdminLang("tr")}
+              className={cn(
+                "px-1.5 py-0.5 text-[10px] font-bold rounded-[1px]",
+                isTr ? "bg-[#844C36] text-white" : "text-[#756A63]"
+              )}
+            >
+              TR
+            </button>
+          </div>
+        </div>
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
           className="p-2 text-[#392D29] rounded-[1px]"
-          aria-label="Menü"
+          aria-label={isTr ? "Menüyü Aç/Kapat" : "Menü öffnen/schließen"}
         >
           {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </button>
