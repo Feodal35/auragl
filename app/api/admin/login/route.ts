@@ -38,9 +38,10 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json({ success: true });
-  } catch {
+  } catch (err: any) {
+    console.error("[Admin Login Server Error]:", err);
     return NextResponse.json(
-      { success: false, error: "Anmeldung fehlgeschlagen." },
+      { success: false, error: err?.message || "Anmeldung fehlgeschlagen." },
       { status: 500 }
     );
   }

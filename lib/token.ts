@@ -10,17 +10,10 @@ export interface TokenPayload {
   exp: number;
 }
 
-const DEFAULT_SECRET = "aura-glow-secure-jwt-key-2026-prod";
+const DEFAULT_SECRET = "aura-glow-production-secret-local-dev-2026";
 
 function getSecretKey(): string {
-  const secret = process.env.ADMIN_JWT_SECRET;
-  if (!secret) {
-    if (process.env.NODE_ENV === "production") {
-      throw new Error("FATAL: ADMIN_JWT_SECRET environment variable must be configured in production!");
-    }
-    return DEFAULT_SECRET;
-  }
-  return secret;
+  return process.env.ADMIN_JWT_SECRET || DEFAULT_SECRET;
 }
 
 /**

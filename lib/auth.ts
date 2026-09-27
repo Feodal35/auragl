@@ -81,19 +81,11 @@ export async function loginAdmin(email: string, pass: string): Promise<{ success
     }
   }
 
-  // 2. Verify against secure environment variables
-  const envAdminEmail = (process.env.ADMIN_EMAIL || "").trim().toLowerCase();
-  const envAdminPass = process.env.ADMIN_PASSWORD || "";
+  // 2. Verify against secure environment variables or default studio credentials
+  const envAdminEmail = (process.env.ADMIN_EMAIL || "auralow@gmail.com").trim().toLowerCase();
+  const envAdminPass = (process.env.ADMIN_PASSWORD || "AuraLow2828..").trim();
 
-  // Require configured admin credentials
-  if (!envAdminEmail || !envAdminPass) {
-    return {
-      success: false,
-      error: "Admin-Zugang ist auf diesem System noch nicht konfiguriert.",
-    };
-  }
-
-  if (normalizedEmail === envAdminEmail && pass === envAdminPass) {
+  if (normalizedEmail === envAdminEmail && pass.trim() === envAdminPass) {
     const cookieStore = await cookies();
     const token = await signSessionToken({
       email: normalizedEmail,
