@@ -246,7 +246,7 @@ export default function PricingManagerClient({ initialPricing, categories }: Pro
 
               <div>
                 <label className="block text-xs uppercase tracking-wider text-[#392D29] font-medium mb-1">
-                  Untergruppe (optional, z. B. 'Klassisch' oder 'Powder Brows')
+                  Untergruppe (optional, z. B. &apos;Klassisch&apos; oder &apos;Powder Brows&apos;)
                 </label>
                 <input
                   type="text"

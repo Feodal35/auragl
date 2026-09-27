@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import AuraGlowLogo from "@/components/ui/AuraGlowLogo";
 import { ArrowLeft, CalendarDays } from "lucide-react";
 
@@ -21,20 +22,20 @@ export default function NotFound() {
         </div>
 
         <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a
+          <Link
             href="/"
             className="w-full sm:w-auto btn-primary inline-flex items-center justify-center gap-2 text-xs"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Zur Startseite</span>
-          </a>
-          <a
+          </Link>
+          <Link
             href="/termin"
             className="w-full sm:w-auto btn-secondary inline-flex items-center justify-center gap-2 text-xs"
           >
             <CalendarDays className="w-4 h-4 text-[#B88770]" />
             <span>Termin anfragen</span>
-          </a>
+          </Link>
         </div>
       </div>
     </div>

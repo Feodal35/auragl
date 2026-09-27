@@ -1,0 +1,4 @@
+{
+  "extends": ["next/core-web-vitals"],
+  "ignorePatterns": ["artifactsgallery/**", "geo-seo-claude/**", ".next/**", "node_modules/**"]
+}

@@ -254,7 +254,7 @@ export default function ServicesManagerClient({ initialServices, categories }: P
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
                   <label className="block text-xs uppercase tracking-wider text-[#392D29] font-medium mb-1">
-                    Preisanzeige (z.B. "ab 60 €")
+                    Preisanzeige (z.B. &quot;ab 60 €&quot;)
                   </label>
                   <input
                     type="text"

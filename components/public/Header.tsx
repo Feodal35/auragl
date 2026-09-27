@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 import AuraGlowLogo from "@/components/ui/AuraGlowLogo";
 import { Menu, X, CalendarDays, Phone, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -86,7 +87,7 @@ export default function Header({ businessPhone = "+49 176 1234 5678" }: HeaderPr
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           {/* Brand Logo */}
-          <a
+          <Link
             href="/"
             className="group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B88770] rounded-sm p-0.5"
             aria-label="Aura Glow by Mürvet Startseite"
@@ -97,7 +98,7 @@ export default function Header({ businessPhone = "+49 176 1234 5678" }: HeaderPr
               textColor={!isScrolled && isHome ? "#FFFFFF" : "#392D29"}
               color={!isScrolled && isHome ? "#E2B19D" : "#B88770"}
             />
-          </a>
+          </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-8" aria-label="Hauptnavigation">
@@ -112,7 +113,7 @@ export default function Header({ businessPhone = "+49 176 1234 5678" }: HeaderPr
                 : "text-[#392D29] hover:text-[#A26D57]";
 
               return (
-                <a
+                <Link
                   key={item.href}
                   href={item.href}
                   className={cn(
@@ -128,14 +129,14 @@ export default function Header({ businessPhone = "+49 176 1234 5678" }: HeaderPr
                       aria-hidden="true"
                     />
                   )}
-                </a>
+                </Link>
               );
             })}
           </nav>
 
           {/* CTA & Mobile Hamburger */}
           <div className="flex items-center space-x-4">
-            <a
+            <Link
               href="/termin"
               className={cn(
                 "hidden sm:inline-flex items-center gap-2 text-xs font-medium tracking-[0.12em] uppercase px-5 py-2.5 rounded-sm transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B88770]",
@@ -146,7 +147,7 @@ export default function Header({ businessPhone = "+49 176 1234 5678" }: HeaderPr
             >
               <CalendarDays className="w-3.5 h-3.5" aria-hidden="true" />
               <span>Termin anfragen</span>
-            </a>
+            </Link>
 
             {/* Mobile Menu Toggle Button (minimum 44x44px touch target) */}
             <button
@@ -205,7 +206,7 @@ export default function Header({ businessPhone = "+49 176 1234 5678" }: HeaderPr
             {navLinks.map((item) => {
               const isActive = pathname === item.href;
               return (
-                <a
+                <Link
                   key={item.href}
                   href={item.href}
                   onClick={() => setIsMobileMenuOpen(false)}
@@ -217,7 +218,7 @@ export default function Header({ businessPhone = "+49 176 1234 5678" }: HeaderPr
                 >
                   <span>{item.label}</span>
                   <ArrowRight className="w-4 h-4 text-[#A26D57]/70" />
-                </a>
+                </Link>
               );
             })}
           </nav>
@@ -225,14 +226,14 @@ export default function Header({ businessPhone = "+49 176 1234 5678" }: HeaderPr
 
         {/* Bottom Drawer Actions */}
         <div className="pt-6 border-t border-[#E8D6C5]/60 space-y-4">
-          <a
+          <Link
             href="/termin"
             onClick={() => setIsMobileMenuOpen(false)}
             className="w-full flex items-center justify-center gap-2 bg-[#A26D57] text-white min-h-[48px] py-3.5 text-xs uppercase tracking-[0.14em] font-medium rounded-sm shadow-luxury-md hover:bg-[#8B5742] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B88770]"
           >
             <CalendarDays className="w-4 h-4" />
             <span>Termin anfragen</span>
-          </a>
+          </Link>
 
           {businessPhone && (
             <a

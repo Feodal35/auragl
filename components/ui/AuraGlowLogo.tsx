@@ -22,6 +22,8 @@ export default function AuraGlowLogo({
   customLogoUrl,
   forceVector = false,
 }: LogoProps) {
+  const gradientId = React.useId();
+
   // Primary brand presentation: Genuine 3D Rose-Gold Metallic Artwork
   if (!forceVector) {
     if (variant === "monogram") {
@@ -76,7 +78,6 @@ export default function AuraGlowLogo({
   };
   const { w, h } = sizes[size];
 
-  const gradientId = React.useId();
   const fillSource = useGradient ? `url(#${gradientId})` : color;
   const strokeSource = useGradient ? `url(#${gradientId})` : color;
   const resolvedTextColor = textColor || (color === "#FFFFFF" ? "#FFFFFF" : "#392D29");

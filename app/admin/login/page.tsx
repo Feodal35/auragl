@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import AuraGlowLogo from "@/components/ui/AuraGlowLogo";
 import { Lock, Mail, Loader2, AlertCircle } from "lucide-react";
 
@@ -115,12 +116,12 @@ export default function AdminLoginPage() {
         </form>
 
         <div className="pt-2 text-center border-t border-[#E8D6C5]/50">
-          <a
+          <Link
             href="/"
             className="text-xs text-[#756A63] hover:text-[#B88770] transition-colors"
           >
             &larr; Zurück zur Website
-          </a>
+          </Link>
         </div>
       </div>
     </div>
