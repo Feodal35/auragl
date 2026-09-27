@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { updateAppointmentStatus } from "@/lib/db";
+import { updateAppointmentStatus, deleteAppointmentRequest } from "@/lib/db";
 import { getAdminSession } from "@/lib/auth";
 
 export async function PATCH(
@@ -15,6 +15,24 @@ export async function PATCH(
   const body = await request.json();
 
   const success = await updateAppointmentStatus(id, body.status, body.internal_notes);
+  if (!success) {
+    return NextResponse.json({ success: false, error: "Anfrage nicht gefunden." }, { status: 404 });
+  }
+
+  return NextResponse.json({ success: true });
+}
+
+export async function DELETE(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const session = await getAdminSession();
+  if (!session) {
+    return NextResponse.json({ success: false, error: "Nicht autorisiert." }, { status: 401 });
+  }
+
+  const { id } = await params;
+  const success = await deleteAppointmentRequest(id);
   if (!success) {
     return NextResponse.json({ success: false, error: "Anfrage nicht gefunden." }, { status: 404 });
   }

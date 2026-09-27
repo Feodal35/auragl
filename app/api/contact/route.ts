@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
 import { ContactMessageSchema } from "@/lib/validations";
 import { createContactMessage } from "@/lib/db";
-import { checkRateLimit } from "@/lib/rate-limit";
+import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
+import { sendContactNotification } from "@/lib/email";
 
 export async function POST(request: Request) {
   try {
-    const ip = request.headers.get("x-forwarded-for") || "local-ip";
+    const ip = getClientIp(request);
     const rateLimit = checkRateLimit(`contact-${ip}`, 5, 600000);
 
     if (!rateLimit.success) {
@@ -45,6 +46,11 @@ export async function POST(request: Request) {
       message: validated.data.message,
       privacy_accepted: validated.data.privacy_accepted,
     });
+
+    // Dispatch notification
+    sendContactNotification(validated.data).catch((err) =>
+      console.error("[Contact Notification Error]:", err)
+    );
 
     return NextResponse.json({
       success: true,

@@ -44,17 +44,34 @@ const state = {
   media: [] as MediaItem[],
 };
 
+/**
+ * Returns a Supabase database client.
+ * When requireAdmin is true, prefers createAdminClient() with service_role privileges
+ * to reliably execute administrative operations and bypass strict RLS from the server.
+ */
+async function getDbClient(requireAdmin: boolean = false) {
+  if (!hasSupabaseConfigured()) {
+    if (process.env.NODE_ENV === "production" && requireAdmin) {
+      console.warn("[PRODUCTION WARNING] Supabase is not configured. Operations are stored in temporary server memory.");
+    }
+    return null;
+  }
+  if (requireAdmin) {
+    const admin = createAdminClient();
+    if (admin) return admin;
+  }
+  return await createServerSideClient();
+}
+
 // ── 1. SERVICE CATEGORIES ──
 export async function getCategories(): Promise<ServiceCategory[]> {
-  if (hasSupabaseConfigured()) {
-    const supabase = await createServerSideClient();
-    if (supabase) {
-      const { data, error } = await supabase
-        .from("service_categories")
-        .select("*")
-        .order("display_order", { ascending: true });
-      if (!error && data && data.length > 0) return data as ServiceCategory[];
-    }
+  const supabase = await getDbClient(false);
+  if (supabase) {
+    const { data, error } = await supabase
+      .from("service_categories")
+      .select("*")
+      .order("display_order", { ascending: true });
+    if (!error && data && data.length > 0) return data as ServiceCategory[];
   }
   return state.categories.filter((c) => c.is_active);
 }
@@ -534,28 +551,26 @@ export async function createAppointmentRequest(data: Omit<AppointmentRequest, "i
     created_at: new Date().toISOString(),
   };
 
-  if (hasSupabaseConfigured()) {
-    const supabase = await createServerSideClient();
-    if (supabase) {
-      const { data: inserted, error } = await supabase
-        .from("appointment_requests")
-        .insert({
-          first_name: data.first_name,
-          last_name: data.last_name,
-          email: data.email,
-          phone: data.phone,
-          treatment_title: data.treatment_title,
-          preferred_date: data.preferred_date,
-          preferred_time: data.preferred_time || null,
-          alternative_date: data.alternative_date || null,
-          notes: data.notes || null,
-          privacy_accepted: data.privacy_accepted,
-          status: "neu",
-        })
-        .select()
-        .single();
-      if (!error && inserted) return inserted as AppointmentRequest;
-    }
+  const supabase = await getDbClient(true);
+  if (supabase) {
+    const { data: inserted, error } = await supabase
+      .from("appointment_requests")
+      .insert({
+        first_name: data.first_name,
+        last_name: data.last_name,
+        email: data.email,
+        phone: data.phone,
+        treatment_title: data.treatment_title,
+        preferred_date: data.preferred_date,
+        preferred_time: data.preferred_time || null,
+        alternative_date: data.alternative_date || null,
+        notes: data.notes || null,
+        privacy_accepted: data.privacy_accepted,
+        status: "neu",
+      })
+      .select()
+      .single();
+    if (!error && inserted) return inserted as AppointmentRequest;
   }
 
   state.appointments.unshift(newAppointment);
@@ -563,15 +578,13 @@ export async function createAppointmentRequest(data: Omit<AppointmentRequest, "i
 }
 
 export async function getAppointmentRequests(): Promise<AppointmentRequest[]> {
-  if (hasSupabaseConfigured()) {
-    const supabase = await createServerSideClient();
-    if (supabase) {
-      const { data, error } = await supabase
-        .from("appointment_requests")
-        .select("*")
-        .order("created_at", { ascending: false });
-      if (!error && data) return data as AppointmentRequest[];
-    }
+  const supabase = await getDbClient(true);
+  if (supabase) {
+    const { data, error } = await supabase
+      .from("appointment_requests")
+      .select("*")
+      .order("created_at", { ascending: false });
+    if (!error && data) return data as AppointmentRequest[];
   }
   return state.appointments;
 }
@@ -581,17 +594,15 @@ export async function updateAppointmentStatus(
   status: AppointmentRequest["status"],
   internalNotes?: string
 ): Promise<boolean> {
-  if (hasSupabaseConfigured()) {
-    const supabase = await createServerSideClient();
-    if (supabase) {
-      const updateData: Record<string, unknown> = { status };
-      if (internalNotes !== undefined) updateData.internal_notes = internalNotes;
-      const { error } = await supabase
-        .from("appointment_requests")
-        .update(updateData)
-        .eq("id", id);
-      if (!error) return true;
-    }
+  const supabase = await getDbClient(true);
+  if (supabase) {
+    const updateData: Record<string, unknown> = { status };
+    if (internalNotes !== undefined) updateData.internal_notes = internalNotes;
+    const { error } = await supabase
+      .from("appointment_requests")
+      .update(updateData)
+      .eq("id", id);
+    if (!error) return true;
   }
   const appt = state.appointments.find((a) => a.id === id);
   if (appt) {
@@ -611,24 +622,22 @@ export async function createContactMessage(data: Omit<ContactMessage, "id" | "st
     created_at: new Date().toISOString(),
   };
 
-  if (hasSupabaseConfigured()) {
-    const supabase = await createServerSideClient();
-    if (supabase) {
-      const { data: inserted, error } = await supabase
-        .from("contact_messages")
-        .insert({
-          name: data.name,
-          email: data.email,
-          phone: data.phone || null,
-          subject: data.subject,
-          message: data.message,
-          privacy_accepted: data.privacy_accepted,
-          status: "neu",
-        })
-        .select()
-        .single();
-      if (!error && inserted) return inserted as ContactMessage;
-    }
+  const supabase = await getDbClient(true);
+  if (supabase) {
+    const { data: inserted, error } = await supabase
+      .from("contact_messages")
+      .insert({
+        name: data.name,
+        email: data.email,
+        phone: data.phone || null,
+        subject: data.subject,
+        message: data.message,
+        privacy_accepted: data.privacy_accepted,
+        status: "neu",
+      })
+      .select()
+      .single();
+    if (!error && inserted) return inserted as ContactMessage;
   }
 
   state.messages.unshift(newMessage);
@@ -636,15 +645,13 @@ export async function createContactMessage(data: Omit<ContactMessage, "id" | "st
 }
 
 export async function getContactMessages(): Promise<ContactMessage[]> {
-  if (hasSupabaseConfigured()) {
-    const supabase = await createServerSideClient();
-    if (supabase) {
-      const { data, error } = await supabase
-        .from("contact_messages")
-        .select("*")
-        .order("created_at", { ascending: false });
-      if (!error && data) return data as ContactMessage[];
-    }
+  const supabase = await getDbClient(true);
+  if (supabase) {
+    const { data, error } = await supabase
+      .from("contact_messages")
+      .select("*")
+      .order("created_at", { ascending: false });
+    if (!error && data) return data as ContactMessage[];
   }
   return state.messages;
 }
@@ -654,22 +661,48 @@ export async function updateMessageStatus(
   status: ContactMessage["status"],
   internalNotes?: string
 ): Promise<boolean> {
-  if (hasSupabaseConfigured()) {
-    const supabase = await createServerSideClient();
-    if (supabase) {
-      const updateData: Record<string, unknown> = { status };
-      if (internalNotes !== undefined) updateData.internal_notes = internalNotes;
-      const { error } = await supabase
-        .from("contact_messages")
-        .update(updateData)
-        .eq("id", id);
-      if (!error) return true;
-    }
+  const supabase = await getDbClient(true);
+  if (supabase) {
+    const updateData: Record<string, unknown> = { status };
+    if (internalNotes !== undefined) updateData.internal_notes = internalNotes;
+    const { error } = await supabase
+      .from("contact_messages")
+      .update(updateData)
+      .eq("id", id);
+    if (!error) return true;
   }
   const msg = state.messages.find((m) => m.id === id);
   if (msg) {
     msg.status = status;
     if (internalNotes !== undefined) msg.internal_notes = internalNotes;
+    return true;
+  }
+  return false;
+}
+
+export async function deleteAppointmentRequest(id: string): Promise<boolean> {
+  const supabase = await getDbClient(true);
+  if (supabase) {
+    const { error } = await supabase.from("appointment_requests").delete().eq("id", id);
+    if (!error) return true;
+  }
+  const idx = state.appointments.findIndex((a) => a.id === id);
+  if (idx !== -1) {
+    state.appointments.splice(idx, 1);
+    return true;
+  }
+  return false;
+}
+
+export async function deleteContactMessage(id: string): Promise<boolean> {
+  const supabase = await getDbClient(true);
+  if (supabase) {
+    const { error } = await supabase.from("contact_messages").delete().eq("id", id);
+    if (!error) return true;
+  }
+  const idx = state.messages.findIndex((m) => m.id === id);
+  if (idx !== -1) {
+    state.messages.splice(idx, 1);
     return true;
   }
   return false;

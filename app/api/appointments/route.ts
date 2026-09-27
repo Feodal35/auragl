@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
 import { AppointmentRequestSchema } from "@/lib/validations";
 import { createAppointmentRequest } from "@/lib/db";
-import { checkRateLimit } from "@/lib/rate-limit";
+import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
+import { sendAppointmentNotification } from "@/lib/email";
 
 export async function POST(request: Request) {
   try {
-    const ip = request.headers.get("x-forwarded-for") || "local-ip";
+    const ip = getClientIp(request);
     const rateLimit = checkRateLimit(`appointment-${ip}`, 5, 600000);
 
     if (!rateLimit.success) {
@@ -49,6 +50,11 @@ export async function POST(request: Request) {
       notes: validated.data.notes,
       privacy_accepted: validated.data.privacy_accepted,
     });
+
+    // Dispatch notification
+    sendAppointmentNotification(validated.data).catch((err) =>
+      console.error("[Appointment Notification Error]:", err)
+    );
 
     return NextResponse.json({
       success: true,

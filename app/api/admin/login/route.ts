@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
 import { AdminLoginSchema } from "@/lib/validations";
 import { loginAdmin } from "@/lib/auth";
-import { checkRateLimit } from "@/lib/rate-limit";
+import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 
 export async function POST(request: Request) {
   try {
-    const ip = request.headers.get("x-forwarded-for") || "local-ip";
+    const ip = getClientIp(request);
     const rateLimit = checkRateLimit(`login-${ip}`, 5, 900000); // 5 attempts per 15 minutes
 
     if (!rateLimit.success) {

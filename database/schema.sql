@@ -264,17 +264,29 @@ CREATE POLICY "Public Read SEO Settings" ON seo_settings FOR SELECT USING (true)
 CREATE POLICY "Public Insert Appointments" ON appointment_requests FOR INSERT WITH CHECK (true);
 CREATE POLICY "Public Insert Contact Messages" ON contact_messages FOR INSERT WITH CHECK (true);
 
--- Admin Full Access Policies (authenticated users)
-CREATE POLICY "Admin All Service Categories" ON service_categories FOR ALL TO authenticated USING (true) WITH CHECK (true);
-CREATE POLICY "Admin All Services" ON services FOR ALL TO authenticated USING (true) WITH CHECK (true);
-CREATE POLICY "Admin All Pricing" ON pricing FOR ALL TO authenticated USING (true) WITH CHECK (true);
-CREATE POLICY "Admin All Media" ON media FOR ALL TO authenticated USING (true) WITH CHECK (true);
-CREATE POLICY "Admin All Gallery" ON gallery_items FOR ALL TO authenticated USING (true) WITH CHECK (true);
-CREATE POLICY "Admin All Appointments" ON appointment_requests FOR ALL TO authenticated USING (true) WITH CHECK (true);
-CREATE POLICY "Admin All Messages" ON contact_messages FOR ALL TO authenticated USING (true) WITH CHECK (true);
-CREATE POLICY "Admin All Hours" ON opening_hours FOR ALL TO authenticated USING (true) WITH CHECK (true);
-CREATE POLICY "Admin All Site Settings" ON site_settings FOR ALL TO authenticated USING (true) WITH CHECK (true);
-CREATE POLICY "Admin All Design Settings" ON design_settings FOR ALL TO authenticated USING (true) WITH CHECK (true);
-CREATE POLICY "Admin All Content Sections" ON content_sections FOR ALL TO authenticated USING (true) WITH CHECK (true);
-CREATE POLICY "Admin All SEO Settings" ON seo_settings FOR ALL TO authenticated USING (true) WITH CHECK (true);
-CREATE POLICY "Admin All Activity Logs" ON admin_activity_logs FOR ALL TO authenticated USING (true) WITH CHECK (true);
+-- Helper function to verify admin role from profiles table
+CREATE OR REPLACE FUNCTION is_admin()
+RETURNS BOOLEAN AS $$
+BEGIN
+    RETURN EXISTS (
+        SELECT 1 FROM profiles
+        WHERE profiles.id = auth.uid() AND profiles.role = 'admin'
+    );
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+-- Admin Full Access Policies (strictly users with role='admin' in profiles)
+CREATE POLICY "Admin All Service Categories" ON service_categories FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin());
+CREATE POLICY "Admin All Services" ON services FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin());
+CREATE POLICY "Admin All Pricing" ON pricing FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin());
+CREATE POLICY "Admin All Media" ON media FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin());
+CREATE POLICY "Admin All Gallery" ON gallery_items FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin());
+CREATE POLICY "Admin All Appointments" ON appointment_requests FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin());
+CREATE POLICY "Admin All Messages" ON contact_messages FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin());
+CREATE POLICY "Admin All Hours" ON opening_hours FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin());
+CREATE POLICY "Admin All Site Settings" ON site_settings FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin());
+CREATE POLICY "Admin All Design Settings" ON design_settings FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin());
+CREATE POLICY "Admin All Content Sections" ON content_sections FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin());
+CREATE POLICY "Admin All SEO Settings" ON seo_settings FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin());
+CREATE POLICY "Admin All Activity Logs" ON admin_activity_logs FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin());
+

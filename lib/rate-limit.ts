@@ -52,3 +52,22 @@ export function checkRateLimit(
     resetAt: record.resetAt,
   };
 }
+
+/**
+ * Extracts and sanitizes real client IP address across reverse proxies and Cloudflare
+ */
+export function getClientIp(request: Request): string {
+  const cfIp = request.headers.get("cf-connecting-ip");
+  if (cfIp) return cfIp.trim();
+
+  const realIp = request.headers.get("x-real-ip");
+  if (realIp) return realIp.trim();
+
+  const forwarded = request.headers.get("x-forwarded-for");
+  if (forwarded) {
+    const firstIp = forwarded.split(",")[0].trim();
+    if (firstIp) return firstIp;
+  }
+
+  return "127.0.0.1";
+}

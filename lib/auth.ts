@@ -1,9 +1,8 @@
 import { cookies } from "next/headers";
 import { hasSupabaseConfigured, createServerSideClient } from "./supabase";
+import { signSessionToken, verifySessionToken } from "./token";
 
 const SESSION_COOKIE_NAME = "aura_admin_session";
-const FALLBACK_ADMIN_EMAIL = "auralow@gmail.com";
-const FALLBACK_ADMIN_PASS = "AuraLow2828..";
 
 export interface AdminUser {
   email: string;
@@ -12,6 +11,8 @@ export interface AdminUser {
 
 /**
  * Checks server-side if current request has a valid admin session.
+ * 1. Checks Supabase Auth session if configured.
+ * 2. Checks cryptographically signed HMAC session cookie.
  */
 export async function getAdminSession(): Promise<AdminUser | null> {
   const cookieStore = await cookies();
@@ -32,40 +33,40 @@ export async function getAdminSession(): Promise<AdminUser | null> {
         }
       }
     } catch {
-      // Fallback to cookie check below
+      // Fallback to signed cookie check below
     }
   }
 
-  // 2. Check local secure session cookie
+  // 2. Check HMAC-signed secure session cookie
   const sessionCookie = cookieStore.get(SESSION_COOKIE_NAME)?.value;
   if (!sessionCookie) return null;
 
-  try {
-    const decoded = JSON.parse(Buffer.from(sessionCookie, "base64").toString("utf-8"));
-    if (decoded && decoded.email && decoded.exp > Date.now()) {
-      return {
-        email: decoded.email,
-        role: "admin",
-      };
-    }
-  } catch {
-    return null;
+  const verified = await verifySessionToken(sessionCookie);
+  if (verified && verified.email) {
+    return {
+      email: verified.email,
+      role: verified.role || "admin",
+    };
   }
 
   return null;
 }
 
 /**
- * Server-side login handler
+ * Server-side login handler.
+ * Validates credentials via Supabase Auth or secure environment variables.
+ * Issues an HMAC-SHA256 signed HTTP-only cookie upon success.
  */
 export async function loginAdmin(email: string, pass: string): Promise<{ success: boolean; error?: string }> {
-  // If Supabase is configured, authenticate through Supabase Auth
+  const normalizedEmail = email.trim().toLowerCase();
+
+  // 1. If Supabase is configured, authenticate through Supabase Auth
   if (hasSupabaseConfigured()) {
     try {
       const supabase = await createServerSideClient();
       if (supabase) {
         const { data, error } = await supabase.auth.signInWithPassword({
-          email,
+          email: normalizedEmail,
           password: pass,
         });
         if (error) {
@@ -76,25 +77,35 @@ export async function loginAdmin(email: string, pass: string): Promise<{ success
         }
       }
     } catch {
-      // Proceed to fallback check
+      // Fallback to env-configured credentials
     }
   }
 
-  // Fallback verification for local / initial setup
-  if (email.toLowerCase() === FALLBACK_ADMIN_EMAIL.toLowerCase() && pass === FALLBACK_ADMIN_PASS) {
-    const cookieStore = await cookies();
-    const tokenPayload = {
-      email: FALLBACK_ADMIN_EMAIL,
-      exp: Date.now() + 7 * 24 * 60 * 60 * 1000, // 7 days
+  // 2. Verify against secure environment variables
+  const envAdminEmail = (process.env.ADMIN_EMAIL || "").trim().toLowerCase();
+  const envAdminPass = process.env.ADMIN_PASSWORD || "";
+
+  // Require configured admin credentials
+  if (!envAdminEmail || !envAdminPass) {
+    return {
+      success: false,
+      error: "Admin-Zugang ist auf diesem System noch nicht konfiguriert.",
     };
-    const token = Buffer.from(JSON.stringify(tokenPayload)).toString("base64");
+  }
+
+  if (normalizedEmail === envAdminEmail && pass === envAdminPass) {
+    const cookieStore = await cookies();
+    const token = await signSessionToken({
+      email: normalizedEmail,
+      role: "admin",
+    });
 
     cookieStore.set(SESSION_COOKIE_NAME, token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       path: "/",
-      maxAge: 7 * 24 * 60 * 60,
+      maxAge: 7 * 24 * 60 * 60, // 7 days
     });
 
     return { success: true };
@@ -104,7 +115,7 @@ export async function loginAdmin(email: string, pass: string): Promise<{ success
 }
 
 /**
- * Logout handler
+ * Logout handler.
  */
 export async function logoutAdmin(): Promise<void> {
   const cookieStore = await cookies();
