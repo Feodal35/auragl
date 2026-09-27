@@ -44,8 +44,7 @@ Open [http://localhost:3000](http://localhost:3000) to view the website.
 
 ### 2. Admin Login
 - URL: `http://localhost:3000/admin/login`
-- E-Mail: `auralow@gmail.com`
-- Password: `AuraLow2828..`
+- Configure `ADMIN_EMAIL` and `ADMIN_PASSWORD` in `.env.local` (refer to `.env.example`).
 
 ### 3. Production Build
 ```bash

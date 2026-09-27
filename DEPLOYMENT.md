@@ -72,9 +72,7 @@ Die Datenbankstruktur ist in zwei SQL-Dateien unter `database/` hinterlegt:
 Der Verwaltungsbereich ist unter folgendem Pfad erreichbar:
 
 - **Login-URL:** `https://auraglow.de/admin/login` (lokal: `http://localhost:3000/admin/login`)
-- **Standard-Zugangsdaten:**
-  - **E-Mail:** `auralow@gmail.com`
-  - **Passwort:** `AuraLow2828..`
+- **Zugangsdaten:** Werden über `ADMIN_EMAIL` und `ADMIN_PASSWORD` in den Umgebungsvariablen (`.env.local` bzw. Vercel Environment Variables) konfiguriert.
 
 ### Administrations-Module:
 - **`/admin` (Dashboard):** Echte Kennzahlen (Terminanfragen gesamt, Neue Anfragen, Kontaktnachrichten, Aktive Behandlungen, Galeriebilder), Übersicht der neuesten Anfragen und Schnellaktionen.
