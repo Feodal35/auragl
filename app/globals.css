@@ -106,7 +106,7 @@
   align-items: center;
   justify-content: center;
   min-height: 46px;
-  background-color: #A26D57;
+  background-color: #844C36;
   color: #FFFFFF;
   padding: 0.875rem 2rem;
   font-size: 0.8125rem;
@@ -115,19 +115,28 @@
   text-transform: uppercase;
   border-radius: 2px;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 14px rgba(162, 109, 87, 0.25);
+  box-shadow: 0 4px 14px rgba(132, 76, 54, 0.25);
   user-select: none;
   touch-action: manipulation;
 }
 
 .btn-primary:hover {
-  background-color: #8B5742;
+  background-color: #6C3D2B;
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(162, 109, 87, 0.35);
+  box-shadow: 0 6px 20px rgba(132, 76, 54, 0.35);
 }
 
 .btn-primary:active {
   transform: translateY(0) scale(0.98);
+}
+
+/* Accessible high-contrast copper/terracotta on light cream & white backgrounds (WCAG AA 6.0:1+) */
+.text-\[\#A26D57\] {
+  color: #844C36 !important;
+}
+
+.text-\[\#B88770\] {
+  color: #844C36 !important;
 }
 
 .btn-secondary {

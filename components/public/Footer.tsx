@@ -248,7 +248,7 @@ export default function Footer({ business, openingHours }: FooterProps) {
             <span className="text-white/20 hidden sm:inline" aria-hidden="true">|</span>
             <Link
               href="/admin/login"
-              className="hover:text-[#D9A891] transition-colors text-white/40 min-h-[40px] inline-flex items-center"
+              className="hover:text-white transition-colors text-[#EFE6DD]/70 min-h-[40px] inline-flex items-center"
             >
               {t.footer.admin}
             </Link>

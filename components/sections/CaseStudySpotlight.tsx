@@ -107,12 +107,16 @@ export default function CaseStudySpotlight() {
                 <div className={`lg:col-span-5 relative min-h-[320px] sm:min-h-[400px] overflow-hidden bg-[#E8D6C5]/20 ${
                   isReversed ? "lg:order-2" : "lg:order-1"
                 }`}>
-                  <img
-                    src={study.image}
-                    alt={study.imageAlt}
-                    className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105"
-                    loading="lazy"
-                  />
+                  <picture>
+                    <source srcSet={study.image.replace(/\.(jpg|png|jpeg)$/, ".webp")} type="image/webp" />
+                    <img
+                      src={study.image}
+                      alt={study.imageAlt}
+                      className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </picture>
                   <div className="absolute top-4 left-4 bg-[#211A18]/85 text-white backdrop-blur-sm px-3 py-1 text-xs font-mono tracking-widest uppercase">
                     {locale === "en" ? "Before • After Spotlight" : "Vorher • Nachher Fokus"}
                   </div>

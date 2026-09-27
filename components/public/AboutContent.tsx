@@ -55,12 +55,16 @@ export default function AboutContent({ aboutContent }: AboutContentProps) {
           {/* Portrait Image */}
           <div className="lg:col-span-5 relative">
             <div className="relative aspect-[3/4] overflow-hidden rounded-[1px] shadow-luxury-md bg-[#E8D6C5]">
-              <img
-                src="/images/treatments/murvet-at-work.jpg"
-                alt="Mürvet — Gründerin von Aura Glow bei der Behandlung im Düsseldorfer Studio"
-                className="w-full h-full object-cover object-center"
-                loading="lazy"
-              />
+              <picture>
+                <source srcSet="/images/treatments/murvet-at-work.webp" type="image/webp" />
+                <img
+                  src="/images/treatments/murvet-at-work.jpg"
+                  alt="Mürvet — Gründerin von Aura Glow bei der Behandlung im Düsseldorfer Studio"
+                  className="w-full h-full object-cover object-center"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </picture>
             </div>
             <div className="absolute -bottom-4 -right-4 w-full h-full border border-[#B88770]/40 -z-10 hidden sm:block" />
           </div>

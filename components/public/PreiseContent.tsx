@@ -135,7 +135,7 @@ export default function PreiseContent({ categories, pricing }: PreiseContentProp
                                   `${row.treatment_name}${row.variant_name ? ` (${row.variant_name})` : ""}`
                                 )}`}
                                 aria-label={`${t.pricingPage.bookBtn} für ${row.treatment_name}${row.variant_name ? ` (${row.variant_name})` : ""}`}
-                                className="inline-flex items-center justify-center gap-1.5 min-h-[44px] px-3.5 py-1.5 rounded-full bg-[#A26D57]/10 text-xs uppercase tracking-[0.14em] text-[#A26D57] hover:bg-[#A26D57] hover:text-white active:scale-[0.98] transition-all font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A26D57]"
+                                className="inline-flex items-center justify-center gap-1.5 min-h-[44px] px-3.5 py-1.5 rounded-full bg-[#844C36]/10 text-xs uppercase tracking-[0.14em] text-[#844C36] hover:bg-[#844C36] hover:text-white active:scale-[0.98] transition-all font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#844C36]"
                               >
                                 <CalendarDays className="w-3.5 h-3.5" aria-hidden="true" />
                                 <span>{t.pricingPage.bookBtn}</span>
@@ -154,10 +154,10 @@ export default function PreiseContent({ categories, pricing }: PreiseContentProp
       </div>
 
       {/* PAngV Legal Note & Cancellation reminder */}
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 text-center text-xs text-[#756A63] font-light leading-relaxed">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 text-center text-xs text-[#5C524C] font-normal leading-relaxed">
         <p>
           {t.pricingPage.pangvLegal}{" "}
-          <Link href="/agb" className="underline hover:text-[#A26D57]">
+          <Link href="/agb" className="underline hover:text-[#844C36]">
             {t.pricingPage.agbLink}
           </Link>
           ).

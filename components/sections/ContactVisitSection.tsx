@@ -46,7 +46,7 @@ export default function ContactVisitSection({ business, openingHours }: ContactV
                         href={business.google_maps_url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 text-xs text-[#B88770] hover:text-[#936650] mt-2 font-medium tracking-wide"
+                        className="inline-flex items-center gap-1.5 text-xs text-[#844C36] hover:text-[#6C3D2B] mt-2 font-semibold tracking-wide"
                       >
                         <span>Route auf Google Maps öffnen</span>
                         <ArrowUpRight className="w-3.5 h-3.5" />
@@ -58,7 +58,7 @@ export default function ContactVisitSection({ business, openingHours }: ContactV
 
               {business.phone && (
                 <div className="flex items-start gap-4">
-                  <div className="w-9 h-9 rounded-full bg-[#FAF6F1] border border-[#E8D6C5] flex items-center justify-center text-[#B88770] shrink-0 mt-1">
+                  <div className="w-9 h-9 rounded-full bg-[#FAF6F1] border border-[#E8D6C5] flex items-center justify-center text-[#844C36] shrink-0 mt-1">
                     <Phone className="w-4 h-4" />
                   </div>
                   <div>
@@ -77,7 +77,7 @@ export default function ContactVisitSection({ business, openingHours }: ContactV
                           href={`https://wa.me/${business.whatsapp.replace(/\D/g, "")}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 text-xs text-[#25D366] font-medium"
+                          className="inline-flex items-center gap-1 text-xs text-[#128C7E] hover:text-[#075E54] font-semibold"
                         >
                           <MessageCircle className="w-3.5 h-3.5" />
                           <span>WhatsApp Chat</span>
@@ -90,7 +90,7 @@ export default function ContactVisitSection({ business, openingHours }: ContactV
 
               {business.email && (
                 <div className="flex items-start gap-4">
-                  <div className="w-9 h-9 rounded-full bg-[#FAF6F1] border border-[#E8D6C5] flex items-center justify-center text-[#B88770] shrink-0 mt-1">
+                  <div className="w-9 h-9 rounded-full bg-[#FAF6F1] border border-[#E8D6C5] flex items-center justify-center text-[#844C36] shrink-0 mt-1">
                     <Mail className="w-4 h-4" />
                   </div>
                   <div>
@@ -112,7 +112,7 @@ export default function ContactVisitSection({ business, openingHours }: ContactV
           {/* Right Column: Opening Hours Table & Note (6 cols) */}
           <div className="lg:col-span-6 bg-white p-8 sm:p-10 border border-[#E8D6C5] rounded-[1px] shadow-luxury-sm space-y-6">
             <div className="flex items-center gap-3 pb-4 border-b border-[#E8D6C5]">
-              <Clock3 className="w-5 h-5 text-[#B88770]" />
+              <Clock3 className="w-5 h-5 text-[#844C36]" />
               <h3 className="font-editorial text-2xl text-[#392D29]">
                 Öffnungszeiten
               </h3>
@@ -124,7 +124,7 @@ export default function ContactVisitSection({ business, openingHours }: ContactV
                   <span className="font-light text-[#392D29]">{h.day_name}</span>
                   <span className="font-medium text-[#756A63]">
                     {h.is_closed ? (
-                      <span className="text-[#B88770]">
+                      <span className="text-[#844C36] font-medium">
                         {h.custom_label || "Geschlossen"}
                       </span>
                     ) : (

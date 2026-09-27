@@ -1,7 +1,4 @@
-import { NextResponse } from "next/server";
-
-export async function GET() {
-  const content = `# Aura Glow by Mürvet
+# Aura Glow by Mürvet
 
 > Exklusives Beauty & Aesthetics Studio für Wimpernverlängerung, Permanent Make-up, Hollywood Glow Facials und zertifizierte Masterclasses in Düsseldorf.
 
@@ -23,12 +20,3 @@ export async function GET() {
 - [Datenschutzerklärung](https://auraglow.de/datenschutz): DSGVO-konforme Datenschutzerklärung und Cookie-Präferenzen
 - [Allgemeine Geschäftsbedingungen](https://auraglow.de/agb): AGB und Stornobedingungen
 - [Widerrufsbelehrung](https://auraglow.de/widerruf): Gesetzliche Widerrufsbelehrung und Muster-Widerrufsformular
-`;
-
-  return new NextResponse(content, {
-    headers: {
-      "Content-Type": "text/plain; charset=utf-8",
-      "Cache-Control": "public, max-age=86400, stale-while-revalidate=604800",
-    },
-  });
-}

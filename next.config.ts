@@ -41,7 +41,16 @@ const nextConfig: NextConfig = {
           },
           {
             key: "Content-Security-Policy",
-            value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; connect-src 'self' https:; frame-src 'self' https://maps.google.com https://www.google.com; frame-ancestors 'self';",
+            value: [
+              "default-src 'self'",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://tagmanager.google.com https://*.google-analytics.com https://google-analytics.com https://*.google.com https://*.googleadservices.com",
+              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://tagmanager.google.com",
+              "font-src 'self' https://fonts.gstatic.com data:",
+              "img-src 'self' data: https: blob: https://www.googletagmanager.com https://*.google-analytics.com https://*.google.com https://*.googleadservices.com",
+              "connect-src 'self' https: https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://*.google.com https://*.googleadservices.com",
+              "frame-src 'self' https://maps.google.com https://www.google.com https://www.googletagmanager.com",
+              "frame-ancestors 'self'",
+            ].join("; "),
           },
         ],
       },

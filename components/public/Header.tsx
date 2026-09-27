@@ -129,6 +129,7 @@ export default function Header({ businessPhone = "+49 176 1234 5678" }: HeaderPr
             <AuraGlowLogo
               size="md"
               variant="full"
+              priority={true}
               textColor={!isScrolled && isHome ? "#FFFFFF" : "#392D29"}
               color={!isScrolled && isHome ? "#E2B19D" : "#B88770"}
             />

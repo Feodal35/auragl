@@ -69,7 +69,7 @@ export default function SelectedPricingSection({ pricing }: SelectedPricingProps
                 <a
                   href={`/termin?behandlung=${encodeURIComponent(row.treatment_name)}`}
                   aria-label={`Termin für ${row.treatment_name} anfragen`}
-                  className="inline-flex items-center justify-center gap-1.5 min-h-[44px] px-3.5 py-1.5 rounded-full bg-[#A26D57]/10 text-xs uppercase tracking-[0.14em] text-[#A26D57] hover:bg-[#A26D57] hover:text-white active:scale-[0.98] transition-all font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A26D57]"
+                  className="inline-flex items-center justify-center gap-1.5 min-h-[44px] px-3.5 py-1.5 rounded-full bg-[#844C36]/10 text-xs uppercase tracking-[0.14em] text-[#844C36] hover:bg-[#844C36] hover:text-white active:scale-[0.98] transition-all font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#844C36]"
                 >
                   <CalendarDays className="w-3.5 h-3.5" aria-hidden="true" />
                   <span>{t.pricing.book}</span>
@@ -80,7 +80,7 @@ export default function SelectedPricingSection({ pricing }: SelectedPricingProps
         </div>
 
         {/* PAngV legal note */}
-        <p className="mt-8 text-center text-xs text-[#756A63]/80 font-light">
+        <p className="mt-8 text-center text-xs text-[#5C524C] font-normal">
           {t.pricing.pangv}
         </p>
 

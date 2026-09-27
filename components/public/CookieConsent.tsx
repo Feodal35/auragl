@@ -161,12 +161,12 @@ export default function CookieConsent() {
 
             {/* Quick feature pill tags */}
             <div className="flex flex-wrap gap-2 pt-1">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#EFE6DD]/70 text-[11px] text-[#756A63]">
-                <ShieldCheck className="w-3 h-3 text-[#A26D57]" />
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#EFE6DD] text-[11px] text-[#392D29] font-medium">
+                <ShieldCheck className="w-3.5 h-3.5 text-[#844C36]" />
                 {locale === "en" ? "No data transfer without consent" : "Keine Datenübertragung ohne Einwilligung"}
               </span>
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#EFE6DD]/70 text-[11px] text-[#756A63]">
-                <Lock className="w-3 h-3 text-[#A26D57]" />
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#EFE6DD] text-[11px] text-[#392D29] font-medium">
+                <Lock className="w-3.5 h-3.5 text-[#844C36]" />
                 {locale === "en" ? "Revocable anytime in footer" : "Jederzeit im Footer widerrufbar"}
               </span>
             </div>
@@ -178,12 +178,12 @@ export default function CookieConsent() {
             <div className="p-3.5 bg-white border border-[#E8D6C5] rounded-[1px] space-y-1.5">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <Lock className="w-3.5 h-3.5 text-[#A26D57]" />
+                  <Lock className="w-3.5 h-3.5 text-[#844C36]" />
                   <span className="text-xs uppercase tracking-wider font-medium text-[#392D29]">
                     {t.cookie.categoryNecessary}
                   </span>
                 </div>
-                <span className="text-[10px] uppercase font-mono tracking-wider px-2 py-0.5 bg-[#FAF6F1] text-[#A26D57] border border-[#E8D6C5] rounded">
+                <span className="text-[10px] uppercase font-mono tracking-wider px-2 py-0.5 bg-[#FAF6F1] text-[#844C36] font-semibold border border-[#E8D6C5] rounded">
                   {t.cookie.alwaysActive}
                 </span>
               </div>

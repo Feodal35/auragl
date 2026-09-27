@@ -53,7 +53,7 @@ export default function StickyMobileCta({
         <Link
           href="/termin"
           onClick={() => trackCtaClick("Sticky Mobile Termin", "/termin")}
-          className="min-h-[44px] flex flex-col items-center justify-center py-1.5 px-2 rounded-sm bg-[#A26D57] text-white hover:bg-[#8B5742] active:scale-[0.98] transition-all text-center shadow-luxury-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A26D57]"
+          className="min-h-[44px] flex flex-col items-center justify-center py-1.5 px-2 rounded-sm bg-[#844C36] text-white hover:bg-[#6C3D2B] active:scale-[0.98] transition-all text-center shadow-luxury-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#844C36]"
           aria-label="Termin online anfragen"
         >
           <CalendarDays className="w-4 h-4 mb-0.5" aria-hidden="true" />

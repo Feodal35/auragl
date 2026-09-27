@@ -44,7 +44,7 @@ export default function LanguageSwitcher({
             className={cn(
               "px-2 py-0.5 text-[11px] font-medium tracking-wider uppercase rounded-sm transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#D9A891]",
               locale === "de"
-                ? "bg-[#A26D57] text-white shadow-xs"
+                ? "bg-[#844C36] text-white shadow-xs"
                 : "text-[#EFE6DD]/60 hover:text-white"
             )}
             aria-pressed={locale === "de"}
@@ -61,7 +61,7 @@ export default function LanguageSwitcher({
             className={cn(
               "px-2 py-0.5 text-[11px] font-medium tracking-wider uppercase rounded-sm transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#D9A891]",
               locale === "en"
-                ? "bg-[#A26D57] text-white shadow-xs"
+                ? "bg-[#844C36] text-white shadow-xs"
                 : "text-[#EFE6DD]/60 hover:text-white"
             )}
             aria-pressed={locale === "en"}
@@ -95,7 +95,7 @@ export default function LanguageSwitcher({
             className={cn(
               "min-w-[40px] min-h-[32px] px-2.5 py-1 text-xs font-semibold tracking-wider uppercase rounded-sm transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#A26D57]",
               locale === "de"
-                ? "bg-[#A26D57] text-white shadow-xs"
+                ? "bg-[#844C36] text-white shadow-xs"
                 : "text-[#756A63] hover:text-[#392D29]"
             )}
             aria-pressed={locale === "de"}
@@ -112,7 +112,7 @@ export default function LanguageSwitcher({
             className={cn(
               "min-w-[40px] min-h-[32px] px-2.5 py-1 text-xs font-semibold tracking-wider uppercase rounded-sm transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#A26D57]",
               locale === "en"
-                ? "bg-[#A26D57] text-white shadow-xs"
+                ? "bg-[#844C36] text-white shadow-xs"
                 : "text-[#756A63] hover:text-[#392D29]"
             )}
             aria-pressed={locale === "en"}
@@ -146,7 +146,7 @@ export default function LanguageSwitcher({
           locale === "de"
             ? isTransparentHeader
               ? "bg-white text-[#211A18] font-bold shadow-xs"
-              : "bg-[#A26D57] text-white font-bold shadow-xs"
+              : "bg-[#844C36] text-white font-bold shadow-xs"
             : isTransparentHeader
             ? "text-white/70 hover:text-white"
             : "text-[#756A63] hover:text-[#392D29]"
@@ -173,7 +173,7 @@ export default function LanguageSwitcher({
           locale === "en"
             ? isTransparentHeader
               ? "bg-white text-[#211A18] font-bold shadow-xs"
-              : "bg-[#A26D57] text-white font-bold shadow-xs"
+              : "bg-[#844C36] text-white font-bold shadow-xs"
             : isTransparentHeader
             ? "text-white/70 hover:text-white"
             : "text-[#756A63] hover:text-[#392D29]"

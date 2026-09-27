@@ -10,6 +10,7 @@ interface LogoProps {
   useGradient?: boolean;
   customLogoUrl?: string | null;
   forceVector?: boolean;
+  priority?: boolean;
 }
 
 export default function AuraGlowLogo({
@@ -21,6 +22,7 @@ export default function AuraGlowLogo({
   useGradient = true,
   customLogoUrl,
   forceVector = false,
+  priority = false,
 }: LogoProps) {
   const gradientId = React.useId();
 
@@ -33,18 +35,30 @@ export default function AuraGlowLogo({
         lg: "w-16 h-16",
         xl: "w-20 h-20",
       };
+      const dimensions = {
+        sm: 32,
+        md: 44,
+        lg: 64,
+        xl: 80,
+      };
+      const dim = dimensions[size];
       return (
-        <img
-          src={customLogoUrl || "/icon-192x192.png"}
-          alt="Aura Glow by Mürvet Monogramm"
-          width={192}
-          height={192}
-          className={cn(
-            "object-contain select-none transition-transform duration-300 drop-shadow-sm",
-            monoSizes[size],
-            className
-          )}
-        />
+        <picture>
+          <source srcSet="/icon-192x192.webp" type="image/webp" />
+          <img
+            src={customLogoUrl || "/icon-192x192.png"}
+            alt="Aura Glow by Mürvet Monogramm"
+            width={dim}
+            height={dim}
+            loading={priority ? "eager" : "lazy"}
+            decoding="async"
+            className={cn(
+              "object-contain select-none transition-transform duration-300 drop-shadow-sm",
+              monoSizes[size],
+              className
+            )}
+          />
+        </picture>
       );
     }
 
@@ -54,18 +68,31 @@ export default function AuraGlowLogo({
       lg: "h-16 sm:h-20",
       xl: "h-22 sm:h-28",
     };
+    const dimensions = {
+      sm: { w: 68, h: 50 },
+      md: { w: 115, h: 84 },
+      lg: { w: 164, h: 120 },
+      xl: { w: 232, h: 170 },
+    };
+    const { w, h } = dimensions[size];
     return (
-      <img
-        src={customLogoUrl || "/images/aura-glow-logo.png"}
-        alt="Aura Glow by Mürvet - Beauty & Aesthetics Studio Düsseldorf Logo"
-        width={1003}
-        height={735}
-        className={cn(
-          "w-auto object-contain select-none transition-transform duration-300 drop-shadow-sm",
-          imgHeights[size],
-          className
-        )}
-      />
+      <picture>
+        <source srcSet="/images/aura-glow-logo.webp" type="image/webp" />
+        <img
+          src={customLogoUrl || "/images/aura-glow-logo.png"}
+          alt="Aura Glow by Mürvet - Beauty & Aesthetics Studio Düsseldorf Logo"
+          width={w}
+          height={h}
+          loading={priority ? "eager" : "lazy"}
+          decoding="async"
+          fetchPriority={priority ? "high" : "auto"}
+          className={cn(
+            "w-auto object-contain select-none transition-transform duration-300 drop-shadow-sm",
+            imgHeights[size],
+            className
+          )}
+        />
+      </picture>
     );
   }
 

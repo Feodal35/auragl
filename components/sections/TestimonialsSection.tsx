@@ -61,8 +61,8 @@ export default function TestimonialsSection() {
         {/* Header */}
         <div className="max-w-3xl mx-auto text-center mb-16 sm:mb-20">
           <div className="inline-flex items-center gap-2 mb-3">
-            <HeartHandshake className="w-4 h-4 text-[#A26D57]" />
-            <span className="text-xs uppercase tracking-[0.24em] text-[#A26D57] font-medium">
+            <HeartHandshake className="w-4 h-4 text-[#844C36]" />
+            <span className="text-xs uppercase tracking-[0.24em] text-[#844C36] font-semibold">
               Echtes Kundenvertrauen &bull; Müşteri Yorumları
             </span>
           </div>
@@ -79,9 +79,9 @@ export default function TestimonialsSection() {
 
           {/* Aggregate Rating Badge */}
           <div className="mt-8 inline-flex flex-wrap items-center justify-center gap-3 bg-white border border-[#E8D6C5] px-6 py-3 rounded-full shadow-luxury-sm">
-            <div className="flex items-center gap-1 text-[#A26D57]">
+            <div className="flex items-center gap-1 text-[#844C36]">
               {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-4 h-4 fill-[#A26D57] text-[#A26D57]" aria-hidden="true" />
+                <Star key={i} className="w-4 h-4 fill-[#844C36] text-[#844C36]" aria-hidden="true" />
               ))}
             </div>
             <span className="text-xs font-semibold text-[#392D29]">
@@ -98,16 +98,16 @@ export default function TestimonialsSection() {
           {testimonials.map((review) => (
             <div
               key={review.id}
-              className="bg-white border border-[#E8D6C5] rounded-[1px] p-8 sm:p-10 shadow-luxury-sm flex flex-col justify-between hover:border-[#A26D57]/60 transition-all duration-300"
+              className="bg-white border border-[#E8D6C5] rounded-[1px] p-8 sm:p-10 shadow-luxury-sm flex flex-col justify-between hover:border-[#844C36]/60 transition-all duration-300"
             >
               <div>
                 {/* Header row with rating stars and quote icon */}
                 <div className="flex items-center justify-between mb-6">
-                  <div className="flex items-center gap-1 text-[#A26D57]">
+                  <div className="flex items-center gap-1 text-[#844C36]">
                     {[...Array(review.rating)].map((_, i) => (
                       <Star
                         key={i}
-                        className="w-4 h-4 fill-[#A26D57] text-[#A26D57]"
+                        className="w-4 h-4 fill-[#844C36] text-[#844C36]"
                         aria-hidden="true"
                       />
                     ))}
@@ -139,7 +139,7 @@ export default function TestimonialsSection() {
                 </div>
 
                 <div className="text-right">
-                  <span className="text-[11px] uppercase tracking-wider text-[#A26D57] font-medium block">
+                  <span className="text-[11px] uppercase tracking-wider text-[#844C36] font-semibold block">
                     {review.treatment}
                   </span>
                 </div>

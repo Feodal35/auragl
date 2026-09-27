@@ -126,7 +126,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="de" className={`${cormorant.variable} ${dancing.variable} ${inter.variable}`}>
+    <html
+      lang="de"
+      suppressHydrationWarning
+      className={`${cormorant.variable} ${dancing.variable} ${inter.variable}`}
+    >
       <head>
         <GoogleConsentMode />
       </head>
