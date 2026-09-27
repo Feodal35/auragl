@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Cormorant_Garamond, Dancing_Script, Inter } from "next/font/google";
 import "./globals.css";
 import CookieConsent from "@/components/public/CookieConsent";
+import GoogleConsentMode from "@/components/analytics/GoogleConsentMode";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -114,6 +115,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="de" className={`${cormorant.variable} ${dancing.variable} ${inter.variable}`}>
+      <head>
+        <GoogleConsentMode />
+      </head>
       <body className="antialiased bg-[#F7F3EE] text-[#392D29] min-h-screen selection:bg-[#E8D6C5] selection:text-[#211A18]">
         {children}
         <CookieConsent />

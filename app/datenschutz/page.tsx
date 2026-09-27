@@ -148,20 +148,34 @@ export default async function PrivacyPage() {
               </p>
             </div>
 
-            {/* 5. Cookies & Lokale Speicherung nach § 25 TDDDG */}
+            {/* 5. Cookies & Lokale Speicherung nach § 25 TDDDG sowie Google Consent Mode v2 */}
             <div>
               <h2 className="font-editorial text-2xl text-[#392D29] mb-3">
-                5. Cookies und Endgeräte-Speicherung (§ 25 TDDDG)
+                5. Cookies, Endgeräte-Speicherung (§ 25 TDDDG) und Google Consent Mode v2
               </h2>
               <p>
                 Unsere Website verwendet Cookies und lokale Speichertechnologien (LocalStorage). Cookies sind kleine Textdateien, die auf deinem Endgerät abgelegt werden und die dein Browser speichert.
               </p>
               <p className="mt-2">
-                <strong>Technisch notwendige Cookies / Speicherungen:</strong> Wir setzen ausschließlich solche Speicherfunktionen ein, die für den Betrieb der Website technisch unbedingt erforderlich sind (z.&nbsp;B. Speicherung deiner Cookie-Präferenz oder CSRF-Sicherheitsmerkmale). Rechtsgrundlage hierfür ist § 25 Abs. 2 Nr. 2 TDDDG i.&nbsp;V.&nbsp;m. Art. 6 Abs. 1 lit. f DSGVO.
+                <strong>Technisch notwendige Cookies / Speicherungen:</strong> Wir setzen Speicherfunktionen ein, die für den Betrieb der Website technisch unbedingt erforderlich sind (z.&nbsp;B. Speicherung deiner Cookie-Präferenz oder CSRF-Sicherheitsmerkmale). Rechtsgrundlage hierfür ist § 25 Abs. 2 Nr. 2 TDDDG i.&nbsp;V.&nbsp;m. Art. 6 Abs. 1 lit. f DSGVO.
               </p>
-              <p className="mt-2">
-                Es werden <strong>keine invasiven Tracking- oder Werbe-Cookies</strong> ohne deine vorherige, ausdrückliche und freiwillige Einwilligung (§ 25 Abs. 1 TDDDG) gesetzt.
-              </p>
+              <div className="mt-3 p-4 bg-[#FAF6F1] border-l-2 border-[#A26D57] rounded-r-sm space-y-2">
+                <strong className="text-[#392D29] font-medium block">
+                  Integration von Google Consent Mode v2 (Google Tag &amp; Google Analytics)
+                </strong>
+                <p className="text-xs leading-relaxed">
+                  Wir setzen den aktuellen <strong>Google Consent Mode v2</strong> ein. Dieser Standard garantiert, dass Google Tags (wie Google Analytics oder Google Ads) deine Privatsphäre-Entscheidung strikt und in Echtzeit respektieren. Standardmäßig werden beim Seitenaufruf sämtliche einwilligungspflichtigen Signale auf <code>denied</code> (abgelehnt) gesetzt:
+                </p>
+                <ul className="list-disc pl-5 text-xs space-y-1">
+                  <li><code>analytics_storage</code>: Speicherung zu Analysezwecken (nur nach Einwilligung)</li>
+                  <li><code>ad_storage</code>: Speicherung zu Werbezwecken (nur nach Einwilligung)</li>
+                  <li><code>ad_user_data</code>: Übermittlung von Nutzerdaten an Google zu Werbezwecken (nur nach Einwilligung)</li>
+                  <li><code>ad_personalization</code>: Personalisierte Werbung und Remarketing (nur nach Einwilligung)</li>
+                </ul>
+                <p className="text-xs leading-relaxed">
+                  Erst wenn du im Cookie-Banner ausdrücklich auf &bdquo;Alle akzeptieren&ldquo; klickst oder in den Einstellungen die entsprechende Kategorie aktivierst, werden die Signale auf <code>granted</code> gesetzt. Du kannst deine Entscheidung jederzeit im Seitenfuß über den Button <strong>&bdquo;Cookie-Einstellungen&ldquo;</strong> einsehen und mit Wirkung für die Zukunft ändern oder widerrufen.
+                </p>
+              </div>
             </div>
 
             {/* 6. Schriftarten (Google Fonts lokal) */}

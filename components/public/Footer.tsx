@@ -14,6 +14,7 @@ import {
   Cookie,
 } from "lucide-react";
 import { BusinessSettings, OpeningHour } from "@/lib/types";
+import { openConsentSettings } from "@/lib/consent";
 
 interface FooterProps {
   business: BusinessSettings;
@@ -24,9 +25,7 @@ export default function Footer({ business, openingHours }: FooterProps) {
   const currentYear = new Date().getFullYear();
 
   const handleOpenCookieSettings = () => {
-    if (typeof window !== "undefined") {
-      window.dispatchEvent(new Event("openCookieSettings"));
-    }
+    openConsentSettings();
   };
 
   return (
