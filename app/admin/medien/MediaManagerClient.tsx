@@ -2,6 +2,8 @@
 
 import React, { useState } from "react";
 import { MediaItem } from "@/lib/types";
+import { useAdminLanguage } from "@/components/admin/AdminLanguageContext";
+import { getAdminDict } from "@/lib/i18n/adminDict";
 import { Upload, Copy, CheckCircle2, Trash2, Loader2, Image as ImageIcon } from "lucide-react";
 
 interface Props {
@@ -9,6 +11,9 @@ interface Props {
 }
 
 export default function MediaManagerClient({ initialMedia }: Props) {
+  const { adminLang } = useAdminLanguage();
+  const d = getAdminDict(adminLang);
+
   const [media, setMedia] = useState<MediaItem[]>(initialMedia);
   const [uploading, setUploading] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);
@@ -33,13 +38,13 @@ export default function MediaManagerClient({ initialMedia }: Props) {
       const data = await res.json();
       if (res.ok && data.success) {
         setMedia((prev) => [data.media, ...prev]);
-        setFeedback("Datei erfolgreich hochgeladen.");
+        setFeedback(adminLang === "tr" ? "Dosya başarıyla yüklendi." : "Datei erfolgreich hochgeladen.");
         setTimeout(() => setFeedback(null), 3000);
       } else {
-        alert(data.error || "Fehler beim Upload.");
+        alert(data.error || (adminLang === "tr" ? "Yükleme hatası." : "Fehler beim Upload."));
       }
     } catch {
-      alert("Fehler beim Hochladen der Datei.");
+      alert(adminLang === "tr" ? "Dosya yüklenirken hata oluştu." : "Fehler beim Hochladen der Datei.");
     } finally {
       setUploading(false);
       e.target.value = "";
@@ -48,7 +53,7 @@ export default function MediaManagerClient({ initialMedia }: Props) {
 
   const copyToClipboard = (url: string) => {
     navigator.clipboard.writeText(url);
-    setFeedback("URL in die Zwischenablage kopiert.");
+    setFeedback(d.media.urlCopied);
     setTimeout(() => setFeedback(null), 2500);
   };
 
@@ -62,14 +67,14 @@ export default function MediaManagerClient({ initialMedia }: Props) {
       )}
 
       {/* Upload Dropzone */}
-      <div className="bg-white border-2 border-dashed border-[#E8D6C5] rounded-[1px] p-8 text-center space-y-3 hover:border-[#B88770] transition-colors">
-        <div className="w-12 h-12 rounded-full bg-[#FAF6F1] text-[#B88770] flex items-center justify-center mx-auto">
+      <div className="bg-white border-2 border-dashed border-[#E8D6C5] rounded-[1px] p-8 text-center space-y-3 hover:border-[#844C36] transition-colors">
+        <div className="w-12 h-12 rounded-full bg-[#FAF6F1] text-[#844C36] flex items-center justify-center mx-auto">
           {uploading ? <Loader2 className="w-6 h-6 animate-spin" /> : <Upload className="w-6 h-6" />}
         </div>
         <div>
           <label className="cursor-pointer">
-            <span className="text-xs uppercase tracking-wider font-medium text-[#B88770] hover:text-[#936650] underline">
-              Klicke hier zum Hochladen
+            <span className="text-xs uppercase tracking-wider font-semibold text-[#844C36] hover:text-[#6C3D2B] underline">
+              {adminLang === "tr" ? "Yüklemek için buraya tıklayın veya fotoğraf seçin" : "Klicke hier zum Hochladen"}
             </span>
             <input
               type="file"
@@ -80,7 +85,9 @@ export default function MediaManagerClient({ initialMedia }: Props) {
             />
           </label>
           <span className="text-xs text-[#756A63] block mt-1">
-            Unterstützt: JPG, PNG, WEBP (Maximal 5 MB)
+            {adminLang === "tr"
+              ? "Desteklenen formatlar: JPG, PNG, WEBP (Maksimum 5 MB)"
+              : "Unterstützt: JPG, PNG, WEBP (Maximal 5 MB)"}
           </span>
         </div>
       </div>
@@ -108,11 +115,11 @@ export default function MediaManagerClient({ initialMedia }: Props) {
                 <button
                   type="button"
                   onClick={() => copyToClipboard(item.public_url)}
-                  className="inline-flex items-center gap-1 text-[#B88770] hover:text-[#936650] font-medium"
-                  title="URL kopieren"
+                  className="inline-flex items-center gap-1 text-[#844C36] hover:text-[#6C3D2B] font-semibold"
+                  title={d.media.copyUrl}
                 >
                   <Copy className="w-3.5 h-3.5" />
-                  <span>Kopieren</span>
+                  <span>{adminLang === "tr" ? "Kopyala" : "Kopieren"}</span>
                 </button>
               </div>
             </div>
@@ -122,7 +129,9 @@ export default function MediaManagerClient({ initialMedia }: Props) {
 
       {media.length === 0 && (
         <div className="text-center py-12 text-sm text-[#756A63] font-light bg-white border border-[#E8D6C5] rounded-[1px]">
-          Noch keine eigenen Medien hochgeladen. Lade oben ein Bild hoch, um es überall einzusetzen.
+          {adminLang === "tr"
+            ? "Henüz medya dosyası yüklenmedi. Yukarıdan görsel yükleyerek sitede kullanabilirsiniz."
+            : "Noch keine eigenen Medien hochgeladen. Lade oben ein Bild hoch, um es überall einzusetzen."}
         </div>
       )}
     </div>

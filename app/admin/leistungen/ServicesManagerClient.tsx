@@ -2,6 +2,8 @@
 
 import React, { useState } from "react";
 import { ServiceItem, ServiceCategory } from "@/lib/types";
+import { useAdminLanguage } from "@/components/admin/AdminLanguageContext";
+import { getAdminDict } from "@/lib/i18n/adminDict";
 import { Plus, Pencil, Trash2, CheckCircle2, Clock3, Sparkles, X, Save, AlertCircle } from "lucide-react";
 
 interface Props {
@@ -10,6 +12,9 @@ interface Props {
 }
 
 export default function ServicesManagerClient({ initialServices, categories }: Props) {
+  const { adminLang } = useAdminLanguage();
+  const d = getAdminDict(adminLang);
+
   const [services, setServices] = useState<ServiceItem[]>(initialServices);
   const [editingService, setEditingService] = useState<Partial<ServiceItem> | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -40,16 +45,16 @@ export default function ServicesManagerClient({ initialServices, categories }: P
   };
 
   const handleDelete = async (id: number) => {
-    if (!confirm("Möchtest du diese Behandlung wirklich unwiderruflich löschen?")) return;
+    if (!confirm(d.common.confirmDelete)) return;
     try {
       const res = await fetch(`/api/admin/services/${id}`, { method: "DELETE" });
       if (res.ok) {
         setServices((prev) => prev.filter((s) => s.id !== id));
-        setFeedback("Behandlung gelöscht.");
+        setFeedback(d.services.deletedSuccess);
         setTimeout(() => setFeedback(null), 3000);
       }
     } catch {
-      alert("Fehler beim Löschen.");
+      alert(d.common.errorDeleting);
     }
   };
 
@@ -76,17 +81,17 @@ export default function ServicesManagerClient({ initialServices, categories }: P
           setServices((prev) =>
             prev.map((s) => (s.id === editingService.id ? data.data : s))
           );
-          setFeedback("Behandlung aktualisiert.");
+          setFeedback(d.services.savedSuccess);
         } else {
           setServices((prev) => [...prev, data.data]);
-          setFeedback("Neue Behandlung angelegt.");
+          setFeedback(d.services.savedSuccess);
         }
         setIsModalOpen(false);
         setEditingService(null);
         setTimeout(() => setFeedback(null), 3000);
       }
     } catch {
-      alert("Fehler beim Speichern der Behandlung.");
+      alert(d.common.errorSaving);
     } finally {
       setLoading(false);
     }
@@ -102,16 +107,16 @@ export default function ServicesManagerClient({ initialServices, categories }: P
       )}
 
       {/* Action Bar */}
-      <div className="flex justify-between items-center bg-white p-4 border border-[#E8D6C5] rounded-[1px]">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white p-4 border border-[#E8D6C5] rounded-[1px] gap-3">
         <span className="text-xs text-[#756A63]">
-          {services.length} Behandlungen im System
+          {d.services.totalCount.replace("{count}", String(services.length))}
         </span>
         <button
           onClick={handleNew}
-          className="btn-primary inline-flex items-center gap-2 text-xs py-2 px-4"
+          className="btn-primary inline-flex items-center gap-2 text-xs py-2 px-4 shadow-luxury-xs"
         >
           <Plus className="w-4 h-4" />
-          <span>Neue Behandlung hinzufügen</span>
+          <span>{d.services.addBtn}</span>
         </button>
       </div>
 
@@ -120,13 +125,13 @@ export default function ServicesManagerClient({ initialServices, categories }: P
         <table className="w-full text-left text-xs">
           <thead className="border-b border-[#E8D6C5] text-[#756A63] uppercase tracking-wider bg-[#FAF6F1]">
             <tr>
-              <th className="py-3 px-4">Bild</th>
-              <th className="py-3 px-4">Titel &amp; Kategorie</th>
-              <th className="py-3 px-4">Dauer</th>
-              <th className="py-3 px-4">Preis</th>
-              <th className="py-3 px-4">Featured</th>
-              <th className="py-3 px-4">Status</th>
-              <th className="py-3 px-4 text-right">Aktionen</th>
+              <th className="py-3 px-4">{adminLang === "tr" ? "Görsel" : "Bild"}</th>
+              <th className="py-3 px-4">{adminLang === "tr" ? "Başlık & Kategori" : "Titel & Kategorie"}</th>
+              <th className="py-3 px-4">{d.services.colDuration}</th>
+              <th className="py-3 px-4">{d.services.colPrice}</th>
+              <th className="py-3 px-4">{adminLang === "tr" ? "Öne Çıkan" : "Featured"}</th>
+              <th className="py-3 px-4">{d.services.colStatus}</th>
+              <th className="py-3 px-4 text-right">{d.common.actions}</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-[#E8D6C5]/50">
@@ -142,16 +147,18 @@ export default function ServicesManagerClient({ initialServices, categories }: P
                 <td className="py-3 px-4">
                   <strong className="text-sm text-[#392D29] block">{item.title}</strong>
                   <span className="text-[11px] text-[#756A63]">
-                    {categories.find((c) => c.id === item.category_id)?.name || "Kategorie"}
+                    {categories.find((c) => c.id === item.category_id)?.name || (adminLang === "tr" ? "Kategori" : "Kategorie")}
                   </span>
                 </td>
-                <td className="py-3 px-4 text-[#756A63]">{item.duration_minutes} Min.</td>
+                <td className="py-3 px-4 text-[#756A63]">
+                  {item.duration_minutes} {adminLang === "tr" ? "Dk." : "Min."}
+                </td>
                 <td className="py-3 px-4 font-medium text-[#392D29]">{item.price_display}</td>
                 <td className="py-3 px-4">
                   {item.is_featured ? (
-                    <span className="inline-flex items-center gap-1 text-[10px] text-[#B88770] font-medium bg-[#FAF6F1] px-2 py-0.5 rounded-full">
+                    <span className="inline-flex items-center gap-1 text-[10px] text-[#844C36] font-semibold bg-[#844C36]/10 px-2 py-0.5 rounded-full">
                       <Sparkles className="w-3 h-3" />
-                      <span>Featured</span>
+                      <span>{adminLang === "tr" ? "Öne Çıkan" : "Featured"}</span>
                     </span>
                   ) : (
                     <span className="text-[11px] text-[#756A63]">-</span>
@@ -159,25 +166,25 @@ export default function ServicesManagerClient({ initialServices, categories }: P
                 </td>
                 <td className="py-3 px-4">
                   <span
-                    className={`inline-block px-2.5 py-0.5 rounded-full text-[10px] uppercase tracking-wider font-medium ${
+                    className={`inline-block px-2.5 py-0.5 rounded-full text-[10px] uppercase tracking-wider font-semibold ${
                       item.is_active ? "bg-emerald-100 text-emerald-800" : "bg-gray-100 text-gray-700"
                     }`}
                   >
-                    {item.is_active ? "Aktiv" : "Inaktiv"}
+                    {item.is_active ? d.common.active : d.common.inactive}
                   </span>
                 </td>
                 <td className="py-3 px-4 text-right space-x-2">
                   <button
                     onClick={() => handleEdit(item)}
-                    className="p-1.5 text-[#392D29] hover:text-[#B88770] hover:bg-[#FAF6F1] rounded-[1px] transition-colors"
-                    title="Bearbeiten"
+                    className="p-1.5 text-[#392D29] hover:text-[#844C36] hover:bg-[#FAF6F1] rounded-[1px] transition-colors"
+                    title={d.common.edit}
                   >
                     <Pencil className="w-4 h-4" />
                   </button>
                   <button
                     onClick={() => handleDelete(item.id)}
                     className="p-1.5 text-red-600 hover:bg-red-50 rounded-[1px] transition-colors"
-                    title="Löschen"
+                    title={d.common.delete}
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
@@ -198,7 +205,7 @@ export default function ServicesManagerClient({ initialServices, categories }: P
           >
             <div className="flex items-center justify-between pb-4 border-b border-[#E8D6C5]">
               <h2 className="font-editorial text-2xl text-[#392D29]">
-                {editingService.id ? "Behandlung bearbeiten" : "Neue Behandlung anlegen"}
+                {editingService.id ? d.services.modalEditTitle : d.services.modalNewTitle}
               </h2>
               <button
                 onClick={() => setIsModalOpen(false)}
@@ -212,7 +219,7 @@ export default function ServicesManagerClient({ initialServices, categories }: P
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs uppercase tracking-wider text-[#392D29] font-medium mb-1">
-                    Kategorie
+                    {d.services.fieldCategory}
                   </label>
                   <select
                     value={editingService.category_id}
@@ -231,7 +238,7 @@ export default function ServicesManagerClient({ initialServices, categories }: P
 
                 <div>
                   <label className="block text-xs uppercase tracking-wider text-[#392D29] font-medium mb-1">
-                    Behandlungstitel
+                    {d.services.fieldTitle}
                   </label>
                   <input
                     type="text"
@@ -254,7 +261,7 @@ export default function ServicesManagerClient({ initialServices, categories }: P
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
                   <label className="block text-xs uppercase tracking-wider text-[#392D29] font-medium mb-1">
-                    Preisanzeige (z.B. &quot;ab 60 €&quot;)
+                    {d.services.fieldPriceDisplay}
                   </label>
                   <input
                     type="text"
@@ -269,7 +276,7 @@ export default function ServicesManagerClient({ initialServices, categories }: P
 
                 <div>
                   <label className="block text-xs uppercase tracking-wider text-[#392D29] font-medium mb-1">
-                    Numerischer Preis (€)
+                    {d.services.fieldPriceValue}
                   </label>
                   <input
                     type="number"
@@ -283,7 +290,7 @@ export default function ServicesManagerClient({ initialServices, categories }: P
 
                 <div>
                   <label className="block text-xs uppercase tracking-wider text-[#392D29] font-medium mb-1">
-                    Dauer (Minuten)
+                    {d.services.fieldDuration}
                   </label>
                   <input
                     type="number"
@@ -298,7 +305,7 @@ export default function ServicesManagerClient({ initialServices, categories }: P
 
               <div>
                 <label className="block text-xs uppercase tracking-wider text-[#392D29] font-medium mb-1">
-                  Bild-URL (z. B. Unsplash oder Mediathek)
+                  {adminLang === "tr" ? "Görsel URL (Medyatür veya Unsplash)" : "Bild-URL (z. B. Unsplash oder Mediathek)"}
                 </label>
                 <input
                   type="url"
@@ -313,7 +320,7 @@ export default function ServicesManagerClient({ initialServices, categories }: P
 
               <div>
                 <label className="block text-xs uppercase tracking-wider text-[#392D29] font-medium mb-1">
-                  Kurzbeschreibung (Übersicht)
+                  {d.services.fieldShortDesc}
                 </label>
                 <textarea
                   rows={2}
@@ -328,7 +335,7 @@ export default function ServicesManagerClient({ initialServices, categories }: P
 
               <div>
                 <label className="block text-xs uppercase tracking-wider text-[#392D29] font-medium mb-1">
-                  Ausführliche Beschreibung (Detail)
+                  {d.services.fieldFullDesc}
                 </label>
                 <textarea
                   rows={3}
@@ -348,9 +355,11 @@ export default function ServicesManagerClient({ initialServices, categories }: P
                     onChange={(e) =>
                       setEditingService({ ...editingService, is_featured: e.target.checked })
                     }
-                    className="h-4 w-4 text-[#B88770] rounded border-[#E8D6C5]"
+                    className="h-4 w-4 text-[#844C36] rounded border-[#E8D6C5]"
                   />
-                  <span className="text-xs text-[#392D29]">Auf Startseite hervorheben (Featured)</span>
+                  <span className="text-xs text-[#392D29]">
+                    {d.services.fieldFeatured}
+                  </span>
                 </label>
 
                 <label className="flex items-center gap-2 cursor-pointer">
@@ -360,9 +369,11 @@ export default function ServicesManagerClient({ initialServices, categories }: P
                     onChange={(e) =>
                       setEditingService({ ...editingService, is_active: e.target.checked })
                     }
-                    className="h-4 w-4 text-[#B88770] rounded border-[#E8D6C5]"
+                    className="h-4 w-4 text-[#844C36] rounded border-[#E8D6C5]"
                   />
-                  <span className="text-xs text-[#392D29]">Öffentlich sichtbar (Aktiv)</span>
+                  <span className="text-xs text-[#392D29]">
+                    {d.services.fieldActive}
+                  </span>
                 </label>
               </div>
 
@@ -372,7 +383,7 @@ export default function ServicesManagerClient({ initialServices, categories }: P
                   onClick={() => setIsModalOpen(false)}
                   className="btn-secondary text-xs py-2 px-4"
                 >
-                  Abbrechen
+                  {d.common.cancel}
                 </button>
                 <button
                   type="submit"
@@ -380,7 +391,11 @@ export default function ServicesManagerClient({ initialServices, categories }: P
                   className="btn-primary text-xs py-2 px-5 inline-flex items-center gap-2"
                 >
                   <Save className="w-4 h-4" />
-                  <span>{editingService.id ? "Änderungen speichern" : "Behandlung anlegen"}</span>
+                  <span>
+                    {editingService.id
+                      ? d.common.save
+                      : d.services.addBtn}
+                  </span>
                 </button>
               </div>
             </form>

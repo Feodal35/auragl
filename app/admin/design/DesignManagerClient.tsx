@@ -2,6 +2,8 @@
 
 import React, { useState } from "react";
 import { DesignSectionSetting } from "@/lib/types";
+import { useAdminLanguage } from "@/components/admin/AdminLanguageContext";
+import { getAdminDict } from "@/lib/i18n/adminDict";
 import { Save, CheckCircle2, RotateCcw, Eye } from "lucide-react";
 
 interface Props {
@@ -9,6 +11,9 @@ interface Props {
 }
 
 export default function DesignManagerClient({ initialDesign }: Props) {
+  const { adminLang } = useAdminLanguage();
+  const d = getAdminDict(adminLang);
+
   const [design, setDesign] = useState<Record<string, DesignSectionSetting>>(initialDesign);
   const [activeSection, setActiveSection] = useState<string>("hero");
   const [feedback, setFeedback] = useState<string | null>(null);
@@ -46,21 +51,21 @@ export default function DesignManagerClient({ initialDesign }: Props) {
         body: JSON.stringify(current),
       });
       if (res.ok) {
-        setFeedback(`Design für '${activeSection}' gespeichert.`);
+        setFeedback(d.design.savedSuccess);
         setTimeout(() => setFeedback(null), 3000);
       }
     } catch {
-      alert("Fehler beim Speichern.");
+      alert(d.common.errorSaving);
     } finally {
       setSaving(false);
     }
   };
 
   const sectionsList = [
-    { id: "hero", label: "Startseite Hero" },
-    { id: "intro", label: "Startseite Einleitung" },
-    { id: "philosophy", label: "Startseite Philosophie" },
-    { id: "appointment_cta", label: "Terminabschluss CTA" },
+    { id: "hero", labelDe: "Startseite Hero", labelTr: "Ana Sayfa Manşet (Hero)" },
+    { id: "intro", labelDe: "Startseite Einleitung", labelTr: "Ana Sayfa Giriş (Intro)" },
+    { id: "philosophy", labelDe: "Startseite Philosophie", labelTr: "Felsefe & Vizyon" },
+    { id: "appointment_cta", labelDe: "Terminabschluss CTA", labelTr: "Randevu Çağrısı (CTA)" },
   ];
 
   return (
@@ -80,11 +85,11 @@ export default function DesignManagerClient({ initialDesign }: Props) {
             onClick={() => setActiveSection(sec.id)}
             className={`text-xs uppercase tracking-wider px-4 py-2 font-medium transition-colors rounded-[1px] ${
               activeSection === sec.id
-                ? "bg-[#B88770] text-white shadow-luxury-sm"
+                ? "bg-[#844C36] text-white shadow-xs"
                 : "bg-white text-[#756A63] hover:text-[#392D29] border border-[#E8D6C5]"
             }`}
           >
-            {sec.label}
+            {adminLang === "tr" ? sec.labelTr : sec.labelDe}
           </button>
         ))}
       </div>
@@ -97,7 +102,7 @@ export default function DesignManagerClient({ initialDesign }: Props) {
         >
           <div>
             <label className="block text-xs uppercase tracking-wider text-[#392D29] font-medium mb-1.5">
-              Desktop Hintergrundbild URL
+              {adminLang === "tr" ? "Masaüstü Arka Plan Görseli URL" : "Desktop Hintergrundbild URL"}
             </label>
             <input
               type="url"
@@ -110,7 +115,7 @@ export default function DesignManagerClient({ initialDesign }: Props) {
 
           <div>
             <label className="block text-xs uppercase tracking-wider text-[#392D29] font-medium mb-1.5">
-              Mobiles Hintergrundbild URL (optional)
+              {adminLang === "tr" ? "Mobil Arka Plan Görseli URL (İsteğe bağlı)" : "Mobiles Hintergrundbild URL (optional)"}
             </label>
             <input
               type="url"
@@ -124,7 +129,7 @@ export default function DesignManagerClient({ initialDesign }: Props) {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs uppercase tracking-wider text-[#392D29] font-medium mb-1.5">
-                Hintergrundfarbe (Fallback)
+                {adminLang === "tr" ? "Arka Plan Rengi" : "Hintergrundfarbe (Fallback)"}
               </label>
               <div className="flex items-center gap-2">
                 <input
@@ -144,7 +149,7 @@ export default function DesignManagerClient({ initialDesign }: Props) {
 
             <div>
               <label className="block text-xs uppercase tracking-wider text-[#392D29] font-medium mb-1.5">
-                Textfarbe
+                {adminLang === "tr" ? "Metin Rengi" : "Textfarbe"}
               </label>
               <div className="flex items-center gap-2">
                 <input
@@ -166,7 +171,7 @@ export default function DesignManagerClient({ initialDesign }: Props) {
           <div className="grid grid-cols-2 gap-4 pt-2 border-t border-[#E8D6C5]/50">
             <div>
               <label className="block text-xs uppercase tracking-wider text-[#392D29] font-medium mb-1.5">
-                Overlay-Farbe
+                {adminLang === "tr" ? "Karartma (Overlay) Rengi" : "Overlay-Farbe"}
               </label>
               <div className="flex items-center gap-2">
                 <input
@@ -186,7 +191,7 @@ export default function DesignManagerClient({ initialDesign }: Props) {
 
             <div>
               <label className="block text-xs uppercase tracking-wider text-[#392D29] font-medium mb-1.5">
-                Overlay-Deckkraft: {Math.round((current.overlay_opacity || 0) * 100)}%
+                {adminLang === "tr" ? "Karartma Opaklığı:" : "Overlay-Deckkraft:"} {Math.round((current.overlay_opacity || 0) * 100)}%
               </label>
               <input
                 type="range"
@@ -195,7 +200,7 @@ export default function DesignManagerClient({ initialDesign }: Props) {
                 step="0.05"
                 value={current.overlay_opacity !== undefined ? current.overlay_opacity : 0.5}
                 onChange={(e) => handleChange("overlay_opacity", parseFloat(e.target.value))}
-                className="w-full h-2 bg-[#FAF6F1] rounded-lg cursor-pointer accent-[#B88770] mt-3"
+                className="w-full h-2 bg-[#FAF6F1] rounded-lg cursor-pointer accent-[#844C36] mt-3"
               />
             </div>
           </div>
@@ -204,19 +209,19 @@ export default function DesignManagerClient({ initialDesign }: Props) {
             <button
               type="submit"
               disabled={saving}
-              className="btn-primary text-xs py-2.5 px-6 inline-flex items-center gap-2"
+              className="btn-primary text-xs py-2.5 px-6 inline-flex items-center gap-2 shadow-luxury-xs"
             >
               <Save className="w-4 h-4" />
-              <span>{saving ? "Wird gespeichert..." : "Design speichern"}</span>
+              <span>{saving ? d.common.saving : d.design.saveBtn}</span>
             </button>
           </div>
         </form>
 
         {/* Live Preview Column (5 cols) */}
         <div className="lg:col-span-5 bg-white border border-[#E8D6C5] rounded-[1px] p-6 shadow-luxury-sm space-y-4">
-          <div className="flex items-center gap-2 text-xs uppercase tracking-wider text-[#392D29] font-medium">
-            <Eye className="w-4 h-4 text-[#B88770]" />
-            <span>Echtzeit-Vorschau</span>
+          <div className="flex items-center gap-2 text-xs uppercase tracking-wider text-[#392D29] font-semibold">
+            <Eye className="w-4 h-4 text-[#844C36]" />
+            <span>{adminLang === "tr" ? "Canlı Önizleme" : "Echtzeit-Vorschau"}</span>
           </div>
 
           <div
@@ -244,20 +249,24 @@ export default function DesignManagerClient({ initialDesign }: Props) {
               className="relative z-10 space-y-2 max-w-xs"
               style={{ color: current.text_color || "#FFFFFF" }}
             >
-              <span className="text-[10px] uppercase tracking-widest block opacity-80">
+              <span className="text-[10px] uppercase tracking-widest block opacity-80 font-bold">
                 AURA GLOW
               </span>
               <h3 className="font-editorial text-2xl font-light leading-tight">
-                Deine Schönheit. Unser Anspruch.
+                {adminLang === "tr" ? "Güzelliğiniz. Bizim Tutkumuz." : "Deine Schönheit. Unser Anspruch."}
               </h3>
               <p className="text-xs opacity-80 font-light">
-                Beispielhafter Text zur Prüfung von Kontrast und Lesbarkeit.
+                {adminLang === "tr"
+                  ? "Kontrast ve okunabilirliği test etmek için örnek metin."
+                  : "Beispielhafter Text zur Prüfung von Kontrast und Lesbarkeit."}
               </p>
             </div>
           </div>
 
           <p className="text-[11px] text-[#756A63] font-light italic text-center">
-            Prüfe hier direkt, ob der Kontrast zwischen Text und Hintergrundbild optimal lesbar bleibt.
+            {adminLang === "tr"
+              ? "Yazıların arka plan fotoğrafı üzerinde rahat okunup okunmadığını buradan kontrol edebilirsiniz."
+              : "Prüfe hier direkt, ob der Kontrast zwischen Text und Hintergrundbild optimal lesbar bleibt."}
           </p>
         </div>
       </div>

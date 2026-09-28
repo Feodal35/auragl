@@ -2,6 +2,8 @@
 
 import React, { useState } from "react";
 import { ContentSection } from "@/lib/types";
+import { useAdminLanguage } from "@/components/admin/AdminLanguageContext";
+import { getAdminDict } from "@/lib/i18n/adminDict";
 import { Save, CheckCircle2 } from "lucide-react";
 
 interface Props {
@@ -9,6 +11,9 @@ interface Props {
 }
 
 export default function ContentManagerClient({ initialSections }: Props) {
+  const { adminLang } = useAdminLanguage();
+  const d = getAdminDict(adminLang);
+
   const [sections, setSections] = useState<Record<string, ContentSection>>(initialSections);
   const [activeTab, setActiveTab] = useState<string>("hero");
   const [feedback, setFeedback] = useState<string | null>(null);
@@ -46,22 +51,22 @@ export default function ContentManagerClient({ initialSections }: Props) {
         body: JSON.stringify(current),
       });
       if (res.ok) {
-        setFeedback(`Abschnitt '${activeTab}' erfolgreich gespeichert.`);
+        setFeedback(d.content.savedSuccess);
         setTimeout(() => setFeedback(null), 3000);
       }
     } catch {
-      alert("Fehler beim Speichern.");
+      alert(d.common.errorSaving);
     } finally {
       setSaving(false);
     }
   };
 
   const tabs = [
-    { id: "hero", label: "Hero (Startseite)" },
-    { id: "intro", label: "Einleitung & Philosophie" },
-    { id: "philosophy", label: "Studio-Leitgedanke" },
-    { id: "about_murvet", label: "Über Mürvet" },
-    { id: "appointment_cta", label: "Abschluss-CTA" },
+    { id: "hero", labelDe: "Hero (Startseite)", labelTr: "Manşet (Hero / Giriş)" },
+    { id: "intro", labelDe: "Einleitung & Philosophie", labelTr: "Giriş & Felsefe" },
+    { id: "philosophy", labelDe: "Studio-Leitgedanke", labelTr: "Stüdyo Vizyonu" },
+    { id: "about_murvet", labelDe: "Über Mürvet", labelTr: "Mürvet Hakkında" },
+    { id: "appointment_cta", labelDe: "Abschluss-CTA", labelTr: "Alt Randevu Çağrısı (CTA)" },
   ];
 
   return (
@@ -81,11 +86,11 @@ export default function ContentManagerClient({ initialSections }: Props) {
             onClick={() => setActiveTab(tab.id)}
             className={`text-xs uppercase tracking-wider px-4 py-2 font-medium transition-colors rounded-[1px] ${
               activeTab === tab.id
-                ? "bg-[#B88770] text-white shadow-luxury-sm"
+                ? "bg-[#844C36] text-white shadow-xs"
                 : "bg-white text-[#756A63] hover:text-[#392D29] border border-[#E8D6C5]"
             }`}
           >
-            {tab.label}
+            {adminLang === "tr" ? tab.labelTr : tab.labelDe}
           </button>
         ))}
       </div>
@@ -95,7 +100,7 @@ export default function ContentManagerClient({ initialSections }: Props) {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div>
             <label className="block text-xs uppercase tracking-wider text-[#392D29] font-medium mb-1.5">
-              Eyebrow / Dachzeile
+              {adminLang === "tr" ? "Üst Başlık (Eyebrow / Dachzeile)" : "Eyebrow / Dachzeile"}
             </label>
             <input
               type="text"
@@ -107,7 +112,7 @@ export default function ContentManagerClient({ initialSections }: Props) {
 
           <div>
             <label className="block text-xs uppercase tracking-wider text-[#392D29] font-medium mb-1.5">
-              Interner Titel
+              {adminLang === "tr" ? "Dahili Başlık / Bölüm Adı" : "Interner Titel"}
             </label>
             <input
               type="text"
@@ -120,7 +125,9 @@ export default function ContentManagerClient({ initialSections }: Props) {
 
         <div>
           <label className="block text-xs uppercase tracking-wider text-[#392D29] font-medium mb-1.5">
-            Hauptüberschrift (Headline, Umbrüche mit Zeilenwechsel möglich)
+            {adminLang === "tr"
+              ? "Ana Manşet Başlığı (Headline, Enter tuşuyla alt satıra geçilebilir)"
+              : "Hauptüberschrift (Headline, Umbrüche mit Zeilenwechsel möglich)"}
           </label>
           <textarea
             rows={2}
@@ -132,7 +139,7 @@ export default function ContentManagerClient({ initialSections }: Props) {
 
         <div>
           <label className="block text-xs uppercase tracking-wider text-[#392D29] font-medium mb-1.5">
-            Fließtext / Beschreibung
+            {adminLang === "tr" ? "Açıklama / Metin Gövdesi" : "Fließtext / Beschreibung"}
           </label>
           <textarea
             rows={4}
@@ -145,7 +152,7 @@ export default function ContentManagerClient({ initialSections }: Props) {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2 border-t border-[#E8D6C5]/50">
           <div>
             <label className="block text-xs uppercase tracking-wider text-[#392D29] font-medium mb-1.5">
-              Primärer Button-Text
+              {adminLang === "tr" ? "Birincil Buton Metni" : "Primärer Button-Text"}
             </label>
             <input
               type="text"
@@ -157,7 +164,7 @@ export default function ContentManagerClient({ initialSections }: Props) {
 
           <div>
             <label className="block text-xs uppercase tracking-wider text-[#392D29] font-medium mb-1.5">
-              Primärer Button-Link (z. B. /termin)
+              {adminLang === "tr" ? "Birincil Buton Bağlantısı (Örn: /termin)" : "Primärer Button-Link (z. B. /termin)"}
             </label>
             <input
               type="text"
@@ -172,7 +179,7 @@ export default function ContentManagerClient({ initialSections }: Props) {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2">
             <div>
               <label className="block text-xs uppercase tracking-wider text-[#392D29] font-medium mb-1.5">
-                Sekundärer Button-Text
+                {adminLang === "tr" ? "İkincil Buton Metni" : "Sekundärer Button-Text"}
               </label>
               <input
                 type="text"
@@ -184,7 +191,7 @@ export default function ContentManagerClient({ initialSections }: Props) {
 
             <div>
               <label className="block text-xs uppercase tracking-wider text-[#392D29] font-medium mb-1.5">
-                Sekundärer Button-Link (z. B. /leistungen)
+                {adminLang === "tr" ? "İkincil Buton Bağlantısı (Örn: /leistungen)" : "Sekundärer Button-Link (z. B. /leistungen)"}
               </label>
               <input
                 type="text"
@@ -200,10 +207,16 @@ export default function ContentManagerClient({ initialSections }: Props) {
           <button
             type="submit"
             disabled={saving}
-            className="btn-primary text-xs py-2.5 px-6 inline-flex items-center gap-2"
+            className="btn-primary text-xs py-2.5 px-6 inline-flex items-center gap-2 shadow-luxury-xs"
           >
             <Save className="w-4 h-4" />
-            <span>{saving ? "Wird gespeichert..." : "Änderungen veröffentlichen"}</span>
+            <span>
+              {saving
+                ? d.common.saving
+                : adminLang === "tr"
+                ? "Değişiklikleri Yayınla"
+                : "Änderungen veröffentlichen"}
+            </span>
           </button>
         </div>
       </form>

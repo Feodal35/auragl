@@ -2,6 +2,8 @@
 
 import React, { useState } from "react";
 import { GalleryItem } from "@/lib/types";
+import { useAdminLanguage } from "@/components/admin/AdminLanguageContext";
+import { getAdminDict } from "@/lib/i18n/adminDict";
 import { Plus, Trash2, CheckCircle2, X, Save } from "lucide-react";
 
 interface Props {
@@ -9,6 +11,9 @@ interface Props {
 }
 
 export default function GalleryManagerClient({ initialItems }: Props) {
+  const { adminLang } = useAdminLanguage();
+  const d = getAdminDict(adminLang);
+
   const [items, setItems] = useState<GalleryItem[]>(initialItems);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newItem, setNewItem] = useState<Partial<GalleryItem>>({
@@ -20,19 +25,24 @@ export default function GalleryManagerClient({ initialItems }: Props) {
   const [feedback, setFeedback] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
 
-  const categories = ["Wimpern", "Gesichtsreinigung & Pflege", "Permanent Make-up", "Studio"];
+  const categoryOptions = [
+    { de: "Wimpern", tr: "Kirpik / İpek Kirpik" },
+    { de: "Gesichtsreinigung & Pflege", tr: "Cilt Bakımı & Temizlik" },
+    { de: "Permanent Make-up", tr: "Kalıcı Makyaj" },
+    { de: "Studio", tr: "Stüdyo & Ambiyans" },
+  ];
 
   const handleDelete = async (id: number) => {
-    if (!confirm("Möchtest du dieses Bild wirklich aus der Galerie entfernen?")) return;
+    if (!confirm(d.common.confirmDelete)) return;
     try {
       const res = await fetch(`/api/admin/gallery/${id}`, { method: "DELETE" });
       if (res.ok) {
         setItems((prev) => prev.filter((i) => i.id !== id));
-        setFeedback("Bild aus Galerie gelöscht.");
+        setFeedback(d.gallery.deletedSuccess);
         setTimeout(() => setFeedback(null), 3000);
       }
     } catch {
-      alert("Fehler beim Löschen.");
+      alert(d.common.errorDeleting);
     }
   };
 
@@ -51,11 +61,11 @@ export default function GalleryManagerClient({ initialItems }: Props) {
         setItems((prev) => [...prev, data.data]);
         setIsModalOpen(false);
         setNewItem({ image_url: "", caption: "", category: "Wimpern", is_active: true });
-        setFeedback("Neues Galeriebild hinzugefügt.");
+        setFeedback(d.gallery.savedSuccess);
         setTimeout(() => setFeedback(null), 3000);
       }
     } catch {
-      alert("Fehler beim Speichern.");
+      alert(d.common.errorSaving);
     } finally {
       setSaving(false);
     }
@@ -71,14 +81,16 @@ export default function GalleryManagerClient({ initialItems }: Props) {
       )}
 
       {/* Action Bar */}
-      <div className="flex justify-between items-center bg-white p-4 border border-[#E8D6C5] rounded-[1px]">
-        <span className="text-xs text-[#756A63]">{items.length} Bilder veröffentlicht</span>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white p-4 border border-[#E8D6C5] rounded-[1px] gap-3">
+        <span className="text-xs text-[#756A63]">
+          {d.gallery.totalCount.replace("{count}", String(items.length))}
+        </span>
         <button
           onClick={() => setIsModalOpen(true)}
-          className="btn-primary inline-flex items-center gap-2 text-xs py-2 px-4"
+          className="btn-primary inline-flex items-center gap-2 text-xs py-2 px-4 shadow-luxury-xs"
         >
           <Plus className="w-4 h-4" />
-          <span>Neues Bild hinzufügen</span>
+          <span>{d.gallery.uploadBtn}</span>
         </button>
       </div>
 
@@ -97,18 +109,18 @@ export default function GalleryManagerClient({ initialItems }: Props) {
               />
             </div>
             <div className="p-4 space-y-2">
-              <span className="text-[10px] uppercase tracking-wider text-[#B88770] font-medium block">
-                {item.category}
+              <span className="text-[10px] uppercase tracking-wider text-[#844C36] font-semibold block">
+                {categoryOptions.find((c) => c.de === item.category)?.[adminLang] || item.category}
               </span>
               <p className="text-xs text-[#392D29] font-medium line-clamp-2">{item.caption}</p>
               <div className="pt-2 border-t border-[#E8D6C5]/50 flex justify-between items-center">
-                <span className="text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">
-                  Aktiv
+                <span className="text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full font-medium">
+                  {d.common.active}
                 </span>
                 <button
                   onClick={() => handleDelete(item.id)}
                   className="p-1 text-red-600 hover:bg-red-50 rounded-[1px]"
-                  title="Löschen"
+                  title={d.common.delete}
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>
@@ -123,7 +135,9 @@ export default function GalleryManagerClient({ initialItems }: Props) {
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-white border border-[#E8D6C5] rounded-[1px] max-w-md w-full p-6 sm:p-8 space-y-5 shadow-2xl">
             <div className="flex items-center justify-between pb-3 border-b border-[#E8D6C5]">
-              <h2 className="font-editorial text-2xl text-[#392D29]">Neues Galeriebild</h2>
+              <h2 className="font-editorial text-2xl text-[#392D29]">
+                {d.gallery.uploadBtn}
+              </h2>
               <button onClick={() => setIsModalOpen(false)} className="p-1 text-[#756A63]">
                 <X className="w-5 h-5" />
               </button>
@@ -132,16 +146,16 @@ export default function GalleryManagerClient({ initialItems }: Props) {
             <form onSubmit={handleSave} className="space-y-4">
               <div>
                 <label className="block text-xs uppercase tracking-wider text-[#392D29] font-medium mb-1">
-                  Kategorie
+                  {d.gallery.fieldCategory}
                 </label>
                 <select
                   value={newItem.category}
                   onChange={(e) => setNewItem({ ...newItem, category: e.target.value })}
                   className="w-full px-3 py-2 bg-[#FAF6F1] border border-[#E8D6C5] rounded-[1px] text-xs text-[#392D29]"
                 >
-                  {categories.map((c) => (
-                    <option key={c} value={c}>
-                      {c}
+                  {categoryOptions.map((c) => (
+                    <option key={c.de} value={c.de}>
+                      {c[adminLang]}
                     </option>
                   ))}
                 </select>
@@ -149,7 +163,7 @@ export default function GalleryManagerClient({ initialItems }: Props) {
 
               <div>
                 <label className="block text-xs uppercase tracking-wider text-[#392D29] font-medium mb-1">
-                  Bild-URL
+                  {d.gallery.fieldImageUrl}
                 </label>
                 <input
                   type="url"
@@ -163,14 +177,14 @@ export default function GalleryManagerClient({ initialItems }: Props) {
 
               <div>
                 <label className="block text-xs uppercase tracking-wider text-[#392D29] font-medium mb-1">
-                  Bildunterschrift / Caption
+                  {d.gallery.fieldCaption}
                 </label>
                 <input
                   type="text"
                   required
                   value={newItem.caption}
                   onChange={(e) => setNewItem({ ...newItem, caption: e.target.value })}
-                  placeholder="z. B. Klassische Wimpern 1:1"
+                  placeholder={adminLang === "tr" ? "Örn: Klasik İpek Kirpik 1:1" : "z. B. Klassische Wimpern 1:1"}
                   className="w-full px-3 py-2 bg-[#FAF6F1] border border-[#E8D6C5] rounded-[1px] text-xs text-[#392D29]"
                 />
               </div>
@@ -181,7 +195,7 @@ export default function GalleryManagerClient({ initialItems }: Props) {
                   onClick={() => setIsModalOpen(false)}
                   className="btn-secondary text-xs py-2 px-4"
                 >
-                  Abbrechen
+                  {d.common.cancel}
                 </button>
                 <button
                   type="submit"
@@ -189,7 +203,7 @@ export default function GalleryManagerClient({ initialItems }: Props) {
                   className="btn-primary text-xs py-2 px-5 inline-flex items-center gap-2"
                 >
                   <Save className="w-4 h-4" />
-                  <span>Hinzufügen</span>
+                  <span>{d.common.add}</span>
                 </button>
               </div>
             </form>

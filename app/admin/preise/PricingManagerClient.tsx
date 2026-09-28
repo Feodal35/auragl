@@ -2,6 +2,8 @@
 
 import React, { useState } from "react";
 import { PriceRow, ServiceCategory } from "@/lib/types";
+import { useAdminLanguage } from "@/components/admin/AdminLanguageContext";
+import { getAdminDict } from "@/lib/i18n/adminDict";
 import { Plus, Pencil, Trash2, CheckCircle2, X, Save } from "lucide-react";
 
 interface Props {
@@ -10,6 +12,9 @@ interface Props {
 }
 
 export default function PricingManagerClient({ initialPricing, categories }: Props) {
+  const { adminLang } = useAdminLanguage();
+  const d = getAdminDict(adminLang);
+
   const [pricing, setPricing] = useState<PriceRow[]>(initialPricing);
   const [selectedCategory, setSelectedCategory] = useState<number>(0);
   const [editingRow, setEditingRow] = useState<Partial<PriceRow> | null>(null);
@@ -43,16 +48,16 @@ export default function PricingManagerClient({ initialPricing, categories }: Pro
   };
 
   const handleDelete = async (id: number) => {
-    if (!confirm("Möchtest du diesen Preispunkt wirklich löschen?")) return;
+    if (!confirm(d.common.confirmDelete)) return;
     try {
       const res = await fetch(`/api/admin/pricing/${id}`, { method: "DELETE" });
       if (res.ok) {
         setPricing((prev) => prev.filter((p) => p.id !== id));
-        setFeedback("Preiseintrag gelöscht.");
+        setFeedback(d.pricing.deletedSuccess);
         setTimeout(() => setFeedback(null), 3000);
       }
     } catch {
-      alert("Fehler beim Löschen.");
+      alert(d.common.errorDeleting);
     }
   };
 
@@ -75,17 +80,17 @@ export default function PricingManagerClient({ initialPricing, categories }: Pro
       if (res.ok && data.success) {
         if (editingRow.id) {
           setPricing((prev) => prev.map((p) => (p.id === editingRow.id ? data.data : p)));
-          setFeedback("Preis aktualisiert.");
+          setFeedback(d.pricing.savedSuccess);
         } else {
           setPricing((prev) => [...prev, data.data]);
-          setFeedback("Neuer Preis angelegt.");
+          setFeedback(d.pricing.savedSuccess);
         }
         setIsModalOpen(false);
         setEditingRow(null);
         setTimeout(() => setFeedback(null), 3000);
       }
     } catch {
-      alert("Fehler beim Speichern des Preises.");
+      alert(d.common.errorSaving);
     } finally {
       setLoading(false);
     }
@@ -107,11 +112,11 @@ export default function PricingManagerClient({ initialPricing, categories }: Pro
             onClick={() => setSelectedCategory(0)}
             className={`text-xs px-3 py-1.5 rounded-full font-medium transition-colors ${
               selectedCategory === 0
-                ? "bg-[#B88770] text-white"
+                ? "bg-[#844C36] text-white shadow-xs"
                 : "bg-[#FAF6F1] text-[#756A63] hover:text-[#392D29]"
             }`}
           >
-            Alle ({pricing.length})
+            {d.common.all} ({pricing.length})
           </button>
           {categories.map((c) => (
             <button
@@ -119,7 +124,7 @@ export default function PricingManagerClient({ initialPricing, categories }: Pro
               onClick={() => setSelectedCategory(c.id)}
               className={`text-xs px-3 py-1.5 rounded-full font-medium transition-colors ${
                 selectedCategory === c.id
-                  ? "bg-[#B88770] text-white"
+                  ? "bg-[#844C36] text-white shadow-xs"
                   : "bg-[#FAF6F1] text-[#756A63] hover:text-[#392D29]"
               }`}
             >
@@ -130,11 +135,16 @@ export default function PricingManagerClient({ initialPricing, categories }: Pro
 
         <button
           onClick={handleNew}
-          className="btn-primary inline-flex items-center gap-2 text-xs py-2 px-4 shrink-0"
+          className="btn-primary inline-flex items-center gap-2 text-xs py-2 px-4 shrink-0 shadow-luxury-xs"
         >
           <Plus className="w-4 h-4" />
-          <span>Neuen Preispunkt anlegen</span>
+          <span>{d.pricing.addBtn}</span>
         </button>
+      </div>
+
+      {/* PAngV Legal Notice Banner */}
+      <div className="bg-[#FAF6F1] border border-[#E8D6C5]/70 p-3 rounded-[1px] text-xs text-[#5C524C]">
+        {d.pricing.pangvNote}
       </div>
 
       {/* Table */}
@@ -142,14 +152,14 @@ export default function PricingManagerClient({ initialPricing, categories }: Pro
         <table className="w-full text-left text-xs">
           <thead className="border-b border-[#E8D6C5] text-[#756A63] uppercase tracking-wider bg-[#FAF6F1]">
             <tr>
-              <th className="py-3 px-4">Kategorie</th>
-              <th className="py-3 px-4">Untergruppe</th>
-              <th className="py-3 px-4">Behandlung</th>
-              <th className="py-3 px-4">Variante</th>
-              <th className="py-3 px-4">Dauer</th>
-              <th className="py-3 px-4">Preis</th>
-              <th className="py-3 px-4">Status</th>
-              <th className="py-3 px-4 text-right">Aktionen</th>
+              <th className="py-3 px-4">{adminLang === "tr" ? "Kategori" : "Kategorie"}</th>
+              <th className="py-3 px-4">{adminLang === "tr" ? "Alt Grup" : "Untergruppe"}</th>
+              <th className="py-3 px-4">{d.pricing.colTreatment}</th>
+              <th className="py-3 px-4">{d.pricing.colVariant}</th>
+              <th className="py-3 px-4">{d.pricing.colDuration}</th>
+              <th className="py-3 px-4">{d.pricing.colPrice}</th>
+              <th className="py-3 px-4">{d.pricing.colStatus}</th>
+              <th className="py-3 px-4 text-right">{d.common.actions}</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-[#E8D6C5]/50">
@@ -158,7 +168,7 @@ export default function PricingManagerClient({ initialPricing, categories }: Pro
                 <td className="py-3 px-4 text-[#756A63]">
                   {categories.find((c) => c.id === item.category_id)?.name || "-"}
                 </td>
-                <td className="py-3 px-4 font-medium text-[#B88770]">
+                <td className="py-3 px-4 font-semibold text-[#844C36]">
                   {item.subcategory_name || "-"}
                 </td>
                 <td className="py-3 px-4 font-medium text-[#392D29]">
@@ -175,25 +185,25 @@ export default function PricingManagerClient({ initialPricing, categories }: Pro
                 </td>
                 <td className="py-3 px-4">
                   <span
-                    className={`inline-block px-2 py-0.5 rounded-full text-[10px] uppercase tracking-wider font-medium ${
+                    className={`inline-block px-2 py-0.5 rounded-full text-[10px] uppercase tracking-wider font-semibold ${
                       item.is_active ? "bg-emerald-100 text-emerald-800" : "bg-gray-100 text-gray-700"
                     }`}
                   >
-                    {item.is_active ? "Aktiv" : "Inaktiv"}
+                    {item.is_active ? d.common.active : d.common.inactive}
                   </span>
                 </td>
                 <td className="py-3 px-4 text-right space-x-2">
                   <button
                     onClick={() => handleEdit(item)}
-                    className="p-1.5 text-[#392D29] hover:text-[#B88770] rounded-[1px]"
-                    title="Bearbeiten"
+                    className="p-1.5 text-[#392D29] hover:text-[#844C36] rounded-[1px]"
+                    title={d.common.edit}
                   >
                     <Pencil className="w-4 h-4" />
                   </button>
                   <button
                     onClick={() => handleDelete(item.id)}
                     className="p-1.5 text-red-600 hover:bg-red-50 rounded-[1px]"
-                    title="Löschen"
+                    title={d.common.delete}
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
@@ -214,7 +224,7 @@ export default function PricingManagerClient({ initialPricing, categories }: Pro
           >
             <div className="flex items-center justify-between pb-4 border-b border-[#E8D6C5]">
               <h2 className="font-editorial text-2xl text-[#392D29]">
-                {editingRow.id ? "Preis bearbeiten" : "Neuen Preis anlegen"}
+                {editingRow.id ? d.pricing.modalEditTitle : d.pricing.modalNewTitle}
               </h2>
               <button
                 onClick={() => setIsModalOpen(false)}
@@ -227,7 +237,7 @@ export default function PricingManagerClient({ initialPricing, categories }: Pro
             <form onSubmit={handleSave} className="space-y-4">
               <div>
                 <label className="block text-xs uppercase tracking-wider text-[#392D29] font-medium mb-1">
-                  Kategorie
+                  {adminLang === "tr" ? "Kategori" : "Kategorie"}
                 </label>
                 <select
                   value={editingRow.category_id}
@@ -246,7 +256,9 @@ export default function PricingManagerClient({ initialPricing, categories }: Pro
 
               <div>
                 <label className="block text-xs uppercase tracking-wider text-[#392D29] font-medium mb-1">
-                  Untergruppe (optional, z. B. &apos;Klassisch&apos; oder &apos;Powder Brows&apos;)
+                  {adminLang === "tr"
+                    ? "Alt Grup (İsteğe bağlı, örn: 'Klasik' veya 'Powder Brows')"
+                    : "Untergruppe (optional, z. B. 'Klassisch' oder 'Powder Brows')"}
                 </label>
                 <input
                   type="text"
@@ -254,14 +266,14 @@ export default function PricingManagerClient({ initialPricing, categories }: Pro
                   onChange={(e) =>
                     setEditingRow({ ...editingRow, subcategory_name: e.target.value || null })
                   }
-                  placeholder="z. B. Klassisch"
+                  placeholder={adminLang === "tr" ? "Örn: Klasik" : "z. B. Klassisch"}
                   className="w-full px-3 py-2 bg-[#FAF6F1] border border-[#E8D6C5] rounded-[1px] text-xs text-[#392D29]"
                 />
               </div>
 
               <div>
                 <label className="block text-xs uppercase tracking-wider text-[#392D29] font-medium mb-1">
-                  Behandlungsname
+                  {d.pricing.fieldTreatment}
                 </label>
                 <input
                   type="text"
@@ -270,7 +282,7 @@ export default function PricingManagerClient({ initialPricing, categories }: Pro
                   onChange={(e) =>
                     setEditingRow({ ...editingRow, treatment_name: e.target.value })
                   }
-                  placeholder="z. B. Klassische Wimpernverlängerung"
+                  placeholder={adminLang === "tr" ? "Örn: Klasik İpek Kirpik" : "z. B. Klassische Wimpernverlängerung"}
                   className="w-full px-3 py-2 bg-[#FAF6F1] border border-[#E8D6C5] rounded-[1px] text-xs text-[#392D29]"
                 />
               </div>
@@ -278,7 +290,7 @@ export default function PricingManagerClient({ initialPricing, categories }: Pro
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs uppercase tracking-wider text-[#392D29] font-medium mb-1">
-                    Variante
+                    {d.pricing.fieldVariant}
                   </label>
                   <input
                     type="text"
@@ -286,14 +298,14 @@ export default function PricingManagerClient({ initialPricing, categories }: Pro
                     onChange={(e) =>
                       setEditingRow({ ...editingRow, variant_name: e.target.value || null })
                     }
-                    placeholder="z. B. Neuset oder Auffüllen"
+                    placeholder={adminLang === "tr" ? "Örn: Yeni Set veya Bakım" : "z. B. Neuset oder Auffüllen"}
                     className="w-full px-3 py-2 bg-[#FAF6F1] border border-[#E8D6C5] rounded-[1px] text-xs text-[#392D29]"
                   />
                 </div>
 
                 <div>
                   <label className="block text-xs uppercase tracking-wider text-[#392D29] font-medium mb-1">
-                    Dauer (optional)
+                    {d.pricing.fieldDuration}
                   </label>
                   <input
                     type="text"
@@ -301,7 +313,7 @@ export default function PricingManagerClient({ initialPricing, categories }: Pro
                     onChange={(e) =>
                       setEditingRow({ ...editingRow, duration: e.target.value || null })
                     }
-                    placeholder="z. B. 60 Min."
+                    placeholder={adminLang === "tr" ? "Örn: 60 Dk." : "z. B. 60 Min."}
                     className="w-full px-3 py-2 bg-[#FAF6F1] border border-[#E8D6C5] rounded-[1px] text-xs text-[#392D29]"
                   />
                 </div>
@@ -310,7 +322,7 @@ export default function PricingManagerClient({ initialPricing, categories }: Pro
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs uppercase tracking-wider text-[#392D29] font-medium mb-1">
-                    Preis (€ Zahl)
+                    {d.pricing.fieldPrice}
                   </label>
                   <input
                     type="number"
@@ -329,7 +341,7 @@ export default function PricingManagerClient({ initialPricing, categories }: Pro
 
                 <div>
                   <label className="block text-xs uppercase tracking-wider text-[#392D29] font-medium mb-1">
-                    Preisanzeige
+                    {d.pricing.fieldPriceDisplay}
                   </label>
                   <input
                     type="text"
@@ -338,7 +350,7 @@ export default function PricingManagerClient({ initialPricing, categories }: Pro
                     onChange={(e) =>
                       setEditingRow({ ...editingRow, price_display: e.target.value })
                     }
-                    placeholder="z. B. 60 € oder ab 80 €"
+                    placeholder={adminLang === "tr" ? "Örn: 60 € veya 80 €'dan başlayan" : "z. B. 60 € oder ab 80 €"}
                     className="w-full px-3 py-2 bg-[#FAF6F1] border border-[#E8D6C5] rounded-[1px] text-xs text-[#392D29]"
                   />
                 </div>
@@ -352,9 +364,11 @@ export default function PricingManagerClient({ initialPricing, categories }: Pro
                     onChange={(e) =>
                       setEditingRow({ ...editingRow, is_active: e.target.checked })
                     }
-                    className="h-4 w-4 text-[#B88770] rounded border-[#E8D6C5]"
+                    className="h-4 w-4 text-[#844C36] rounded border-[#E8D6C5]"
                   />
-                  <span className="text-xs text-[#392D29]">In Preisliste anzeigen (Aktiv)</span>
+                  <span className="text-xs text-[#392D29]">
+                    {adminLang === "tr" ? "Fiyat listesinde aktif olarak göster" : "In Preisliste anzeigen (Aktiv)"}
+                  </span>
                 </label>
               </div>
 
@@ -364,7 +378,7 @@ export default function PricingManagerClient({ initialPricing, categories }: Pro
                   onClick={() => setIsModalOpen(false)}
                   className="btn-secondary text-xs py-2 px-4"
                 >
-                  Abbrechen
+                  {d.common.cancel}
                 </button>
                 <button
                   type="submit"
@@ -372,7 +386,7 @@ export default function PricingManagerClient({ initialPricing, categories }: Pro
                   className="btn-primary text-xs py-2 px-5 inline-flex items-center gap-2"
                 >
                   <Save className="w-4 h-4" />
-                  <span>Speichern</span>
+                  <span>{d.common.save}</span>
                 </button>
               </div>
             </form>

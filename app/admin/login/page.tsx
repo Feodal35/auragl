@@ -1,17 +1,41 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import AuraGlowLogo from "@/components/ui/AuraGlowLogo";
-import { Lock, Mail, Loader2, AlertCircle } from "lucide-react";
+import { Lock, Mail, Loader2, AlertCircle, Globe } from "lucide-react";
+import { getAdminDict, AdminLang } from "@/lib/i18n/adminDict";
 
 export default function AdminLoginPage() {
   const router = useRouter();
+  const [lang, setLang] = useState<AdminLang>("de");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("aura_admin_lang") as AdminLang | null;
+      if (saved === "de" || saved === "tr") {
+        setLang(saved);
+      }
+    } catch {
+      // ignore
+    }
+  }, []);
+
+  const handleLangChange = (newLang: AdminLang) => {
+    setLang(newLang);
+    try {
+      localStorage.setItem("aura_admin_lang", newLang);
+    } catch {
+      // ignore
+    }
+  };
+
+  const d = getAdminDict(lang);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,7 +52,7 @@ export default function AdminLoginPage() {
       const data = await res.json();
 
       if (!res.ok || !data.success) {
-        setError(data.error || "Anmeldung fehlgeschlagen.");
+        setError(data.error || d.login.failed);
         setLoading(false);
         return;
       }
@@ -36,24 +60,49 @@ export default function AdminLoginPage() {
       router.push("/admin");
       router.refresh();
     } catch {
-      setError("Verbindungsfehler beim Anmelden.");
+      setError(lang === "tr" ? "Giriş yapılırken bağlantı hatası oluştu." : "Verbindungsfehler beim Anmelden.");
       setLoading(false);
     }
   };
 
   return (
     <div className="min-h-screen bg-[#F7F3EE] flex flex-col justify-center items-center p-4 sm:p-6">
-      <div className="w-full max-w-md bg-white border border-[#E8D6C5] rounded-[1px] shadow-luxury-md p-8 sm:p-10 space-y-8">
+      <div className="w-full max-w-md bg-white border border-[#E8D6C5] rounded-[1px] shadow-luxury-md p-8 sm:p-10 space-y-8 relative">
+        {/* Language Switcher in Login Card */}
+        <div className="flex justify-end items-center gap-1">
+          <Globe className="w-3.5 h-3.5 text-[#844C36]" />
+          <div className="flex items-center gap-1 bg-[#FAF6F1] p-0.5 rounded-[2px] border border-[#E8D6C5]">
+            <button
+              type="button"
+              onClick={() => handleLangChange("de")}
+              className={`px-2 py-0.5 text-[10px] font-bold rounded-[1px] transition-all ${
+                lang === "de" ? "bg-[#844C36] text-white shadow-xs" : "text-[#756A63] hover:text-[#392D29]"
+              }`}
+            >
+              DE
+            </button>
+            <button
+              type="button"
+              onClick={() => handleLangChange("tr")}
+              className={`px-2 py-0.5 text-[10px] font-bold rounded-[1px] transition-all ${
+                lang === "tr" ? "bg-[#844C36] text-white shadow-xs" : "text-[#756A63] hover:text-[#392D29]"
+              }`}
+            >
+              TR
+            </button>
+          </div>
+        </div>
+
         <div className="text-center space-y-3">
           <AuraGlowLogo size="md" className="mx-auto" />
-          <span className="text-xs uppercase tracking-[0.2em] text-[#B88770] font-medium block pt-2">
-            Administration
+          <span className="text-xs uppercase tracking-[0.2em] text-[#844C36] font-semibold block pt-2">
+            {d.login.subtitle}
           </span>
           <h1 className="font-editorial text-2xl sm:text-3xl text-[#392D29]">
-            Studio Login
+            {d.login.title}
           </h1>
           <p className="text-xs text-[#756A63] font-light">
-            Bitte melde dich mit deinen Zugangsdaten an.
+            {d.login.desc}
           </p>
         </div>
 
@@ -67,7 +116,7 @@ export default function AdminLoginPage() {
         <form onSubmit={handleSubmit} className="space-y-5" noValidate>
           <div>
             <label className="block text-xs uppercase tracking-[0.14em] text-[#392D29] font-medium mb-1.5">
-              E-Mail-Adresse
+              {d.login.emailLabel}
             </label>
             <div className="relative">
               <Mail className="w-4 h-4 text-[#756A63] absolute left-3.5 top-1/2 -translate-y-1/2" />
@@ -76,15 +125,15 @@ export default function AdminLoginPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="admin@auraglow.de"
-                className="w-full pl-10 pr-4 py-3 bg-[#FAF6F1] border border-[#E8D6C5] rounded-[1px] text-sm text-[#392D29] focus:outline-none focus:border-[#B88770] transition-colors"
+                placeholder="auralow@gmail.com"
+                className="w-full pl-10 pr-4 py-3 bg-[#FAF6F1] border border-[#E8D6C5] rounded-[1px] text-sm text-[#392D29] focus:outline-none focus:border-[#844C36] transition-colors"
               />
             </div>
           </div>
 
           <div>
             <label className="block text-xs uppercase tracking-[0.14em] text-[#392D29] font-medium mb-1.5">
-              Passwort
+              {d.login.passLabel}
             </label>
             <div className="relative">
               <Lock className="w-4 h-4 text-[#756A63] absolute left-3.5 top-1/2 -translate-y-1/2" />
@@ -94,7 +143,7 @@ export default function AdminLoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full pl-10 pr-4 py-3 bg-[#FAF6F1] border border-[#E8D6C5] rounded-[1px] text-sm text-[#392D29] focus:outline-none focus:border-[#B88770] transition-colors"
+                className="w-full pl-10 pr-4 py-3 bg-[#FAF6F1] border border-[#E8D6C5] rounded-[1px] text-sm text-[#392D29] focus:outline-none focus:border-[#844C36] transition-colors"
               />
             </div>
           </div>
@@ -102,15 +151,15 @@ export default function AdminLoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="btn-primary w-full inline-flex items-center justify-center gap-2 text-xs py-3.5 mt-2"
+            className="btn-primary w-full inline-flex items-center justify-center gap-2 text-xs py-3.5 mt-2 shadow-luxury-xs"
           >
             {loading ? (
               <>
                 <Loader2 className="w-4 h-4 animate-spin" />
-                <span>Anmelden...</span>
+                <span>{d.login.submittingBtn}</span>
               </>
             ) : (
-              <span>Anmelden</span>
+              <span>{d.login.submitBtn}</span>
             )}
           </button>
         </form>
@@ -118,9 +167,9 @@ export default function AdminLoginPage() {
         <div className="pt-2 text-center border-t border-[#E8D6C5]/50">
           <Link
             href="/"
-            className="text-xs text-[#756A63] hover:text-[#B88770] transition-colors"
+            className="text-xs text-[#756A63] hover:text-[#844C36] transition-colors font-medium"
           >
-            &larr; Zurück zur Website
+            &larr; {d.login.backHome}
           </Link>
         </div>
       </div>
