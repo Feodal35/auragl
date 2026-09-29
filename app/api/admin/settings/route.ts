@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import {
   getBusinessSettings,
   saveBusinessSettings,
@@ -27,14 +28,25 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: false, error: "Nicht autorisiert." }, { status: 401 });
   }
 
-  const body = await request.json();
+  try {
+    const body = await request.json();
 
-  if (body.business) {
-    await saveBusinessSettings(body.business);
-  }
-  if (body.hours) {
-    await saveOpeningHours(body.hours);
-  }
+    if (body.business) {
+      await saveBusinessSettings(body.business);
+    }
+    if (body.hours) {
+      await saveOpeningHours(body.hours);
+    }
 
-  return NextResponse.json({ success: true });
+    // Immediately purge Next.js server & ISR cache for all pages
+    revalidatePath("/", "layout");
+
+    return NextResponse.json({ success: true });
+  } catch (err: any) {
+    console.error("[Settings POST Error]:", err);
+    return NextResponse.json(
+      { success: false, error: err?.message || "Fehler beim Speichern der Einstellungen." },
+      { status: 500 }
+    );
+  }
 }

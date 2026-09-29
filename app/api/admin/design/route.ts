@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { getDesignSettings, saveDesignSetting } from "@/lib/db";
 import { getAdminSession } from "@/lib/auth";
 
@@ -18,7 +19,18 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: false, error: "Nicht autorisiert." }, { status: 401 });
   }
 
-  const body = await request.json();
-  const saved = await saveDesignSetting(body);
-  return NextResponse.json({ success: true, data: saved });
+  try {
+    const body = await request.json();
+    const saved = await saveDesignSetting(body);
+
+    revalidatePath("/", "layout");
+
+    return NextResponse.json({ success: true, data: saved });
+  } catch (err: any) {
+    console.error("[Design POST Error]:", err);
+    return NextResponse.json(
+      { success: false, error: err?.message || "Fehler beim Speichern des Designs." },
+      { status: 500 }
+    );
+  }
 }

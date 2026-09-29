@@ -227,8 +227,8 @@ export default function KontaktContent({ business, openingHours }: KontaktConten
 
           <div className="relative w-full h-[320px] sm:h-[420px] rounded-[1px] overflow-hidden border border-[#E8D6C5]">
             <iframe
-              title="Aura Glow by Mürvet Google Maps Standort Peine"
-              src="https://maps.google.com/maps?q=Ernst-Moritz-Arndt-Stra%C3%9Fe%2013,%2031224%20Peine,%20Germany&t=&z=15&ie=UTF8&iwloc=&output=embed"
+              title={`Aura Glow by Mürvet Google Maps Standort ${business.city || "Peine"}`}
+              src={`https://maps.google.com/maps?q=${encodeURIComponent(`${business.street || "Ernst-Moritz-Arndt-Straße 13"}, ${business.postal_code || "31224"} ${business.city || "Peine"}, Germany`)}&t=&z=15&ie=UTF8&iwloc=&output=embed`}
               width="100%"
               height="100%"
               style={{ border: 0 }}

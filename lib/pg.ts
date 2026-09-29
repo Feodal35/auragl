@@ -1,4 +1,5 @@
-import { Pool, QueryResultRow } from "pg";
+import { Pool } from "pg";
+import type { QueryResultRow } from "pg";
 
 let pool: Pool | null = null;
 
@@ -12,17 +13,24 @@ export function getPgPool(): Pool | null {
   }
 
   if (!pool) {
-    const connectionString = process.env.DATABASE_URL;
+    const rawConnectionString = process.env.DATABASE_URL || "";
 
-    // Aiven requires SSL mode require
-    const isSsl = connectionString?.includes("sslmode=require") || process.env.NODE_ENV === "production";
+    // Aiven SSL fix: strip sslmode so pg-connection-string does not force strict CA verification
+    let cleanConnectionString = rawConnectionString;
+    try {
+      const url = new URL(rawConnectionString);
+      url.searchParams.delete("sslmode");
+      cleanConnectionString = url.toString();
+    } catch {
+      cleanConnectionString = rawConnectionString.replace(/[?&]sslmode=[^&]+/, "");
+    }
 
     pool = new Pool({
-      connectionString,
-      ssl: isSsl ? { rejectUnauthorized: false } : false,
+      connectionString: cleanConnectionString,
+      ssl: { rejectUnauthorized: false },
       max: 3, // Safe for multiple Next.js worker threads within Aiven's 20-connection limit
-      idleTimeoutMillis: 10000,
-      connectionTimeoutMillis: 8000,
+      idleTimeoutMillis: 30000,
+      connectionTimeoutMillis: 20000,
       allowExitOnIdle: true,
     });
 
