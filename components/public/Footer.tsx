@@ -258,13 +258,6 @@ export default function Footer({ business, openingHours }: FooterProps) {
             </button>
             <span className="text-white/20 hidden sm:inline" aria-hidden="true">|</span>
             <LanguageSwitcher variant="footer" />
-            <span className="text-white/20 hidden sm:inline" aria-hidden="true">|</span>
-            <Link
-              href="/admin/login"
-              className="hover:text-white transition-colors text-[#EFE6DD]/90 min-h-[40px] inline-flex items-center"
-            >
-              {t.footer.admin}
-            </Link>
           </div>
         </div>
       </div>
