@@ -135,8 +135,8 @@ export default function GoogleConsentMode({
         />
       )}
 
-      {/* 3. Google Analytics 4 / Google Tag (if GA ID is provided) - deferred to browser idle */}
-      {gaId && (
+      {/* 3. Google Analytics 4 / Google Tag — loaded directly ONLY when GTM is NOT present */}
+      {gaId && !gtmId && (
         <>
           <Script
             src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}

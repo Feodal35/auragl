@@ -98,7 +98,7 @@ export default async function HomePage() {
         <AppointmentExperienceSection />
 
         {/* 12 — 5 FAQ Accordion (Item 7) */}
-        <FaqSection />
+        <FaqSection whatsapp={business.whatsapp || business.phone} />
 
         {/* 13 — Contact & Visit (with Google Map - Item 14) */}
         <ContactVisitSection business={business} openingHours={openingHours} />

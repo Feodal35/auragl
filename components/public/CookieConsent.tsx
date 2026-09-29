@@ -115,10 +115,10 @@ export default function CookieConsent() {
       role="dialog"
       aria-modal="true"
       aria-labelledby="cookie-banner-title"
-      className="fixed inset-0 z-50 flex items-end sm:items-end justify-center sm:justify-start p-4 sm:p-6 bg-black/30 backdrop-blur-[2px] transition-all animate-in fade-in duration-300"
+      className="fixed inset-x-0 bottom-0 z-50 sm:inset-0 sm:flex sm:items-end sm:justify-start sm:p-6 bg-transparent sm:bg-black/30 sm:backdrop-blur-[2px] transition-all animate-in fade-in duration-300"
     >
       <div
-        className="w-full sm:max-w-xl max-h-[90vh] overflow-y-auto bg-[#F7F3EE] border border-[#E8D6C5] rounded-[2px] shadow-[0_12px_45px_rgba(33,26,24,0.18)] p-6 sm:p-7 text-[#392D29] space-y-5 animate-in slide-in-from-bottom-5 duration-300"
+        className="w-full sm:max-w-xl max-h-[70vh] sm:max-h-[90vh] overflow-y-auto bg-[#F7F3EE] border border-[#E8D6C5] sm:rounded-[2px] shadow-[0_-4px_24px_rgba(33,26,24,0.14)] sm:shadow-[0_12px_45px_rgba(33,26,24,0.18)] p-4 sm:p-7 text-[#392D29] space-y-4 sm:space-y-5 animate-in slide-in-from-bottom-5 duration-300"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}

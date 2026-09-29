@@ -16,7 +16,8 @@ export const AppointmentRequestSchema = z.object({
   phone: z
     .string()
     .min(6, "Bitte gib eine gültige Telefonnummer an.")
-    .max(30, "Telefonnummer ist zu lang."),
+    .max(30, "Telefonnummer ist zu lang.")
+    .regex(/^[\d\s\+\-\(\)\/\.]{6,}$/, "Bitte gib eine gültige Telefonnummer an (nur Ziffern, +, Leerzeichen oder -)." ),
   treatment_title: z
     .string()
     .min(2, "Bitte wähle eine gewünschte Behandlung aus."),

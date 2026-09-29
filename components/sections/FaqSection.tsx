@@ -67,7 +67,7 @@ const faqsEn: FaqItem[] = [
   },
 ];
 
-export default function FaqSection() {
+export default function FaqSection({ whatsapp = "+491739026031" }: { whatsapp?: string }) {
   const { t, locale } = useLanguage();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
@@ -185,7 +185,7 @@ export default function FaqSection() {
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
             <a
-              href="https://wa.me/4917612345678"
+              href={`https://wa.me/${whatsapp.replace(/\D/g, "")}`}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-secondary text-xs inline-flex items-center gap-2"

@@ -63,7 +63,7 @@ export default function TestimonialsSection() {
           <div className="inline-flex items-center gap-2 mb-3">
             <HeartHandshake className="w-4 h-4 text-[#844C36]" />
             <span className="text-xs uppercase tracking-[0.24em] text-[#844C36] font-semibold">
-              Echtes Kundenvertrauen &bull; Müşteri Yorumları
+              Echtes Kundenvertrauen &bull; Kundenstimmen
             </span>
           </div>
           <h2
