@@ -119,7 +119,7 @@ INSERT INTO site_settings (key, value) VALUES
     "phone_display": "+49 176 1234 5678",
     "email": "kontakt@auraglow.de",
     "whatsapp": "+4917612345678",
-    "instagram_url": "https://instagram.com/auraglow_bymurvet",
+    "instagram_url": "https://instagram.com/aura6low",
     "tiktok_url": "",
     "facebook_url": "",
     "google_maps_url": "https://maps.google.com/?q=Ernst-Moritz-Arndt-Stra%C3%9Fe+13+31224+Peine"

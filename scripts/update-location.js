@@ -24,7 +24,7 @@ async function updateLocation() {
       phone_display: currentVal.phone_display || "+49 176 1234 5678",
       email: currentVal.email || "kontakt@auraglow.de",
       whatsapp: currentVal.whatsapp || "+4917612345678",
-      instagram_url: currentVal.instagram_url || "https://instagram.com/auraglow_bymurvet",
+      instagram_url: currentVal.instagram_url || "https://instagram.com/aura6low",
       google_maps_url: "https://maps.google.com/?q=Ernst-Moritz-Arndt-Stra%C3%9Fe+13+31224+Peine",
       booking_info: "Termine nur nach vorheriger Vereinbarung.",
     };

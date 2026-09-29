@@ -146,7 +146,7 @@ export default function KontaktContent({ business, openingHours }: KontaktConten
                         rel="noopener noreferrer"
                         className="hover:text-[#B88770] transition-colors"
                       >
-                        @auraglow_bymurvet
+                        @{business.instagram_url?.split("/").filter(Boolean).pop() || "aura6low"}
                       </a>
                     </div>
                   </div>

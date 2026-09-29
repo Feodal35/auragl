@@ -149,7 +149,7 @@ export default function JsonLdSchema({ business, openingHours }: Props) {
       },
     ],
     sameAs: [
-      business.instagram_url || "https://instagram.com/auraglow_bymurvet",
+      business.instagram_url || "https://instagram.com/aura6low",
     ],
   },
 ],
