@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { ServiceCategory } from "@/lib/types";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
@@ -51,10 +52,12 @@ export default function CategoriesSection({ categories }: CategoriesSectionProps
                 className="group relative h-[420px] overflow-hidden flex flex-col justify-end p-6 bg-[#211A18] text-white transition-all duration-500 rounded-[1px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9A891]"
               >
                 {/* Image Background with Dark Vignette */}
-                <img
+                <Image
                   src={img}
                   alt={`${cat.name} Behandlungen - Aura Glow Studio Düsseldorf`}
-                  className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-700 ease-out opacity-60 group-hover:opacity-75"
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  className="object-cover object-center group-hover:scale-110 transition-transform duration-700 ease-out opacity-60 group-hover:opacity-75"
                   loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#211A18] via-[#211A18]/40 to-transparent" />
@@ -74,7 +77,7 @@ export default function CategoriesSection({ categories }: CategoriesSectionProps
                   <h3 className="font-editorial text-2xl font-normal group-hover:text-[#D9A891] transition-colors">
                     {cat.name}
                   </h3>
-                  <p className="text-xs text-[#EFE6DD]/80 font-light line-clamp-2 leading-relaxed">
+                  <p className="text-xs text-[#EFE6DD]/95 font-light line-clamp-2 leading-relaxed">
                     {cat.description}
                   </p>
                   <span className="inline-block text-[11px] uppercase tracking-[0.16em] text-[#D9A891] font-medium pt-2 group-hover:translate-x-1 transition-transform">

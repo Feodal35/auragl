@@ -20,3 +20,9 @@
 - [Datenschutzerklärung](https://auraglow.de/datenschutz): DSGVO-konforme Datenschutzerklärung und Cookie-Präferenzen
 - [Allgemeine Geschäftsbedingungen](https://auraglow.de/agb): AGB und Stornobedingungen
 - [Widerrufsbelehrung](https://auraglow.de/widerruf): Gesetzliche Widerrufsbelehrung und Muster-Widerrufsformular
+
+## Webagentur & Technische Realisierung
+- **Agentur**: Acumen Dijital
+- **Website**: https://acumendijital.com/
+- **Leistungen**: Konzeption, Full-Stack Next.js Entwicklung, UI/UX Design, Performance & SEO-Optimierung
+

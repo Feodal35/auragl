@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { CalendarDays, ArrowRight } from "lucide-react";
 import { ContentSection, DesignSectionSetting } from "@/lib/types";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
@@ -44,10 +45,12 @@ export default function FinalCtaSection({ content, design }: FinalCtaProps) {
     <section className="relative py-28 sm:py-36 bg-[#211A18] text-white overflow-hidden text-center">
       {/* Background Image & Overlay */}
       <div className="absolute inset-0 z-0">
-        <img
+        <Image
           src={bgImg}
           alt="Aura Glow by Mürvet - Ästhetische Behandlungsatmosphäre im Kosmetikstudio Düsseldorf"
-          className="w-full h-full object-cover object-center"
+          fill
+          sizes="100vw"
+          className="object-cover object-center"
           loading="lazy"
         />
         <div

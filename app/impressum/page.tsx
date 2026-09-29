@@ -209,6 +209,29 @@ export default async function ImpressumPage() {
                 Die durch die Seitenbetreiber erstellten Inhalte, Fotos, Texte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht (UrhG). Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der vorherigen schriftlichen Zustimmung der jeweiligen Urheberin.
               </p>
             </div>
+
+            {/* 9. Konzeption, Webdesign & Technische Realisierung */}
+            <div>
+              <h2 className="font-editorial text-2xl text-[#392D29] mb-3">
+                9. Konzeption, Webdesign &amp; Technische Realisierung
+              </h2>
+              <p>
+                Verantwortlich für Konzeption, UI/UX-Design, barrierefreie Next.js Webentwicklung und Performance-Optimierung:
+                <br />
+                <strong className="text-[#392D29] font-medium block mt-1">
+                  Acumen Dijital
+                </strong>
+                Website:{" "}
+                <a
+                  href="https://acumendijital.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#392D29] font-medium hover:text-[#A26D57] underline transition-colors"
+                >
+                  https://acumendijital.com/
+                </a>
+              </p>
+            </div>
           </div>
         </div>
       </main>

@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Sparkles, CheckCircle2, Clock3, CalendarDays, ArrowRight } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 
@@ -107,16 +108,14 @@ export default function CaseStudySpotlight() {
                 <div className={`lg:col-span-5 relative min-h-[320px] sm:min-h-[400px] overflow-hidden bg-[#E8D6C5]/20 ${
                   isReversed ? "lg:order-2" : "lg:order-1"
                 }`}>
-                  <picture>
-                    <source srcSet={study.image.replace(/\.(jpg|png|jpeg)$/, ".webp")} type="image/webp" />
-                    <img
-                      src={study.image}
-                      alt={study.imageAlt}
-                      className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </picture>
+                  <Image
+                    src={study.image.replace(/\.(jpg|png|jpeg)$/, ".webp")}
+                    alt={study.imageAlt}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 42vw"
+                    className="object-cover object-center transition-transform duration-700 hover:scale-105"
+                    loading="lazy"
+                  />
                   <div className="absolute top-4 left-4 bg-[#211A18]/85 text-white backdrop-blur-sm px-3 py-1 text-xs font-mono tracking-widest uppercase">
                     {locale === "en" ? "Before • After Spotlight" : "Vorher • Nachher Fokus"}
                   </div>
@@ -140,7 +139,7 @@ export default function CaseStudySpotlight() {
                         <strong className="text-xs uppercase tracking-wider text-[#392D29] block mb-1">
                           {locale === "en" ? "Initial Situation" : "Ausgangslage"}
                         </strong>
-                        <p className="text-xs sm:text-sm text-[#756A63] font-light leading-relaxed">
+                        <p className="text-xs sm:text-sm text-[#4F443E] font-normal leading-relaxed">
                           {study.problem}
                         </p>
                       </div>
@@ -149,7 +148,7 @@ export default function CaseStudySpotlight() {
                         <strong className="text-xs uppercase tracking-wider text-[#392D29] block mb-1">
                           {locale === "en" ? "Applied Treatment & Technique" : "Angewandte Behandlung & Technik"}
                         </strong>
-                        <p className="text-xs sm:text-sm text-[#756A63] font-light leading-relaxed">
+                        <p className="text-xs sm:text-sm text-[#4F443E] font-normal leading-relaxed">
                           {study.solution}
                         </p>
                       </div>

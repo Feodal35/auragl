@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import { GalleryItem } from "@/lib/types";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
@@ -115,10 +116,12 @@ export default function GalleryClient({ items }: GalleryClientProps) {
                 }
               }}
             >
-              <img
+              <Image
                 src={item.image_url}
                 alt={item.caption}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                fill
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                 loading="lazy"
               />
               {/* Category tag */}
@@ -159,11 +162,16 @@ export default function GalleryClient({ items }: GalleryClientProps) {
                 <X className="w-8 h-8" aria-hidden="true" />
               </button>
 
-              <img
-                src={activeItem.image_url}
-                alt={activeItem.caption}
-                className="max-h-[75vh] w-auto object-contain rounded-[1px] shadow-2xl"
-              />
+              <div className="relative w-[90vw] max-w-3xl h-[65vh]">
+                <Image
+                  src={activeItem.image_url}
+                  alt={activeItem.caption}
+                  fill
+                  sizes="(max-width: 1024px) 90vw, 1024px"
+                  className="object-contain rounded-[1px] shadow-2xl"
+                  priority
+                />
+              </div>
 
               <div className="text-center mt-6 text-white max-w-lg space-y-3">
                 <span className="text-xs uppercase tracking-[0.2em] text-[#D9A891]">

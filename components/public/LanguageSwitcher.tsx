@@ -29,7 +29,7 @@ export default function LanguageSwitcher({
     return (
       <div
         className={cn(
-          "inline-flex items-center gap-2 text-xs text-[#EFE6DD]/70",
+          "inline-flex items-center gap-2 text-xs text-[#EFE6DD]/90",
           className
         )}
         role="group"
@@ -45,7 +45,7 @@ export default function LanguageSwitcher({
               "px-2 py-0.5 text-[11px] font-medium tracking-wider uppercase rounded-sm transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#D9A891]",
               locale === "de"
                 ? "bg-[#844C36] text-white shadow-xs"
-                : "text-[#EFE6DD]/60 hover:text-white"
+                : "text-[#EFE6DD]/80 hover:text-white"
             )}
             aria-pressed={locale === "de"}
             aria-label="Deutsch wählen"
@@ -62,7 +62,7 @@ export default function LanguageSwitcher({
               "px-2 py-0.5 text-[11px] font-medium tracking-wider uppercase rounded-sm transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#D9A891]",
               locale === "en"
                 ? "bg-[#844C36] text-white shadow-xs"
-                : "text-[#EFE6DD]/60 hover:text-white"
+                : "text-[#EFE6DD]/80 hover:text-white"
             )}
             aria-pressed={locale === "en"}
             aria-label="Select English"

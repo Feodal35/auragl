@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import { ArrowRight, CalendarDays } from "lucide-react";
 import { ContentSection } from "@/lib/types";
 
@@ -23,16 +24,14 @@ export default function AboutMurvetSection({ content }: AboutMurvetProps) {
           {/* Portrait Image (5 cols) */}
           <div className="lg:col-span-5 relative">
             <div className="relative aspect-[3/4] overflow-hidden rounded-[1px] shadow-luxury-md bg-[#E8D6C5]">
-              <picture>
-                <source srcSet="/images/treatments/murvet-at-work.webp" type="image/webp" />
-                <img
-                  src="/images/treatments/murvet-at-work.jpg"
-                  alt="Mürvet — Gründerin & Master Stylistin bei der Behandlung im Studio Aura Glow Düsseldorf"
-                  className="w-full h-full object-cover object-center"
-                  loading="lazy"
-                  decoding="async"
-                />
-              </picture>
+              <Image
+                src="/images/treatments/murvet-at-work.webp"
+                alt="Mürvet — Gründerin & Master Stylistin bei der Behandlung im Studio Aura Glow Düsseldorf"
+                fill
+                sizes="(max-width: 1024px) 100vw, 42vw"
+                className="object-cover object-center"
+                loading="lazy"
+              />
             </div>
             {/* Decorative Offset Frame */}
             <div className="absolute -bottom-4 -right-4 w-full h-full border border-[#B88770]/40 -z-10 hidden sm:block" />
@@ -51,7 +50,7 @@ export default function AboutMurvetSection({ content }: AboutMurvetProps) {
               {headline}
             </h2>
 
-            <div className="space-y-4 text-base sm:text-lg text-[#756A63] font-light leading-relaxed">
+            <div className="space-y-4 text-base sm:text-lg text-[#4F443E] font-light leading-relaxed">
               <p>{bodyText}</p>
               <p>
                 In unserem Studio geht es nicht um künstliche Masken, sondern um die subtile
@@ -67,7 +66,7 @@ export default function AboutMurvetSection({ content }: AboutMurvetProps) {
                 <span className="font-script text-3xl sm:text-4xl text-[#A26D57] block">
                   Mürvet
                 </span>
-                <span className="text-[11px] uppercase tracking-[0.18em] text-[#756A63] mt-1 block">
+                <span className="text-[11px] uppercase tracking-[0.18em] text-[#4F443E] mt-1 block font-medium">
                   Gründerin &amp; Master Artist
                 </span>
               </div>

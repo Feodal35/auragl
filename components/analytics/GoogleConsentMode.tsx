@@ -118,11 +118,11 @@ export default function GoogleConsentMode({
         dangerouslySetInnerHTML={{ __html: syncInitScript }}
       />
 
-      {/* 2. Google Tag Manager (if GTM ID is provided) */}
+      {/* 2. Google Tag Manager (if GTM ID is provided) - deferred to browser idle */}
       {gtmId && (
         <Script
           id="google-tag-manager"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           dangerouslySetInnerHTML={{
             __html: `
               (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -135,16 +135,16 @@ export default function GoogleConsentMode({
         />
       )}
 
-      {/* 3. Google Analytics 4 / Google Tag (if GA ID is provided) */}
+      {/* 3. Google Analytics 4 / Google Tag (if GA ID is provided) - deferred to browser idle */}
       {gaId && (
         <>
           <Script
             src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
-            strategy="afterInteractive"
+            strategy="lazyOnload"
           />
           <Script
             id="google-analytics-init"
-            strategy="afterInteractive"
+            strategy="lazyOnload"
             dangerouslySetInnerHTML={{
               __html: `
                 gtag('js', new Date());

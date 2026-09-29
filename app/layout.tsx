@@ -51,9 +51,13 @@ export const metadata: Metadata = {
     "Lash Lifting",
     "Beauty Schulungen",
   ],
-  authors: [{ name: "Aura Glow by Mürvet" }],
-  creator: "Mürvet",
-  publisher: "Aura Glow by Mürvet",
+  authors: [
+    { name: "Aura Glow by Mürvet", url: siteUrl },
+    { name: "Acumen Dijital", url: "https://acumendijital.com/" },
+  ],
+  creator: "Acumen Dijital",
+  publisher: "Acumen Dijital",
+  generator: "Next.js & Acumen Dijital",
   formatDetection: {
     email: false,
     address: false,
@@ -134,7 +138,10 @@ export default function RootLayout({
       <head>
         <GoogleConsentMode />
       </head>
-      <body className="antialiased bg-[#F7F3EE] text-[#392D29] min-h-screen selection:bg-[#E8D6C5] selection:text-[#211A18]">
+      <body
+        suppressHydrationWarning
+        className="antialiased bg-[#F7F3EE] text-[#392D29] min-h-screen selection:bg-[#E8D6C5] selection:text-[#211A18]"
+      >
         <GoogleTagManagerNoScript />
         <LanguageProvider>
           {children}

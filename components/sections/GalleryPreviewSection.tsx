@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import { ArrowUpRight, X, Eye } from "lucide-react";
 import { GalleryItem } from "@/lib/types";
 
@@ -75,10 +76,12 @@ export default function GalleryPreviewSection({ items }: GalleryPreviewProps) {
                 }
               }}
             >
-              <img
+              <Image
                 src={previewItems[0].image_url}
                 alt={`${previewItems[0].caption} - Behandlungsergebnis Aura Glow Düsseldorf`}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                fill
+                sizes="(max-width: 768px) 100vw, 58vw"
+                className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                 loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
@@ -109,10 +112,12 @@ export default function GalleryPreviewSection({ items }: GalleryPreviewProps) {
                   }
                 }}
               >
-                <img
+                <Image
                   src={item.image_url}
                   alt={`${item.caption} - Vorher Nachher Ergebnis Düsseldorf`}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 42vw"
+                  className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                   loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
@@ -149,11 +154,16 @@ export default function GalleryPreviewSection({ items }: GalleryPreviewProps) {
             >
               <X className="w-8 h-8" aria-hidden="true" />
             </button>
-            <img
-              src={activeItem.image_url}
-              alt={`${activeItem.caption} - Großansicht Behandlungsergebnis Aura Glow`}
-              className="max-h-[75vh] w-auto object-contain rounded-[1px] shadow-2xl"
-            />
+            <div className="relative w-[90vw] max-w-3xl h-[65vh]">
+              <Image
+                src={activeItem.image_url}
+                alt={`${activeItem.caption} - Großansicht Behandlungsergebnis Aura Glow`}
+                fill
+                sizes="(max-width: 1024px) 90vw, 1024px"
+                className="object-contain rounded-[1px] shadow-2xl"
+                priority
+              />
+            </div>
             <div className="text-center mt-4 text-white">
               <span className="text-xs uppercase tracking-[0.2em] text-[#D9A891]">
                 {activeItem.category}

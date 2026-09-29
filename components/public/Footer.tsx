@@ -132,10 +132,10 @@ export default function Footer({ business, openingHours }: FooterProps) {
                 </div>
               ))}
             </div>
-            <p className="text-[11px] text-[#EFE6DD]/60 italic pt-1">
+            <p className="text-xs text-[#EFE6DD]/90 italic pt-1">
               {t.footer.byAppointmentOnly}
             </p>
-            <p className="text-[10px] text-[#EFE6DD]/50 pt-2 border-t border-white/5">
+            <p className="text-xs text-[#EFE6DD]/85 pt-2 border-t border-white/10">
               {t.footer.vatNotice}
             </p>
           </div>
@@ -199,38 +199,51 @@ export default function Footer({ business, openingHours }: FooterProps) {
           </div>
         </div>
 
-        {/* Bottom Bar: Copyright, Language Switcher & Complete German Legal Links */}
-        <div className="pt-8 flex flex-col lg:flex-row items-center justify-between text-xs text-[#EFE6DD]/70 gap-4">
-          <div className="flex items-center gap-4">
+        {/* Bottom Bar: Copyright, Language Switcher, Acumen Dijital & Complete German Legal Links */}
+        <div className="pt-8 flex flex-col lg:flex-row items-center justify-between text-xs text-[#EFE6DD]/90 gap-4">
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 text-center sm:text-left">
             <span>
               &copy; {currentYear} {business.business_name}. {t.footer.copyright}
+            </span>
+            <span className="text-white/20 hidden sm:inline" aria-hidden="true">&bull;</span>
+            <span className="text-[#EFE6DD]/90">
+              Webdesign &amp; Entwicklung:{" "}
+              <a
+                href="https://acumendijital.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#D9A891] hover:text-white underline font-medium transition-colors"
+                title="Acumen Dijital - Digitalagentur für Webdesign & Performance"
+              >
+                Acumen Dijital
+              </a>
             </span>
           </div>
           <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
             <Link
               href="/impressum"
-              className="hover:text-[#D9A891] transition-colors min-h-[40px] inline-flex items-center"
+              className="hover:text-[#D9A891] transition-colors min-h-[40px] inline-flex items-center text-[#EFE6DD]/90"
             >
               {t.footer.impressum}
             </Link>
             <span className="text-white/20 hidden sm:inline" aria-hidden="true">|</span>
             <Link
               href="/datenschutz"
-              className="hover:text-[#D9A891] transition-colors min-h-[40px] inline-flex items-center"
+              className="hover:text-[#D9A891] transition-colors min-h-[40px] inline-flex items-center text-[#EFE6DD]/90"
             >
               {t.footer.privacy}
             </Link>
             <span className="text-white/20 hidden sm:inline" aria-hidden="true">|</span>
             <Link
               href="/agb"
-              className="hover:text-[#D9A891] transition-colors min-h-[40px] inline-flex items-center"
+              className="hover:text-[#D9A891] transition-colors min-h-[40px] inline-flex items-center text-[#EFE6DD]/90"
             >
               {t.footer.agb}
             </Link>
             <span className="text-white/20 hidden sm:inline" aria-hidden="true">|</span>
             <Link
               href="/widerruf"
-              className="hover:text-[#D9A891] transition-colors min-h-[40px] inline-flex items-center"
+              className="hover:text-[#D9A891] transition-colors min-h-[40px] inline-flex items-center text-[#EFE6DD]/90"
             >
               {t.footer.revocation}
             </Link>
@@ -238,7 +251,7 @@ export default function Footer({ business, openingHours }: FooterProps) {
             <button
               type="button"
               onClick={handleOpenCookieSettings}
-              className="hover:text-[#D9A891] transition-colors min-h-[40px] inline-flex items-center gap-1 text-[#EFE6DD]/70 hover:underline cursor-pointer"
+              className="hover:text-[#D9A891] transition-colors min-h-[40px] inline-flex items-center gap-1 text-[#EFE6DD]/90 hover:underline cursor-pointer"
             >
               <Cookie className="w-3 h-3 text-[#D9A891]" />
               <span>{t.footer.cookieSettings}</span>
@@ -248,7 +261,7 @@ export default function Footer({ business, openingHours }: FooterProps) {
             <span className="text-white/20 hidden sm:inline" aria-hidden="true">|</span>
             <Link
               href="/admin/login"
-              className="hover:text-white transition-colors text-[#EFE6DD]/70 min-h-[40px] inline-flex items-center"
+              className="hover:text-white transition-colors text-[#EFE6DD]/90 min-h-[40px] inline-flex items-center"
             >
               {t.footer.admin}
             </Link>

@@ -36,7 +36,7 @@ export default function ContactVisitSection({ business, openingHours }: ContactV
                     <h3 className="text-sm font-medium uppercase tracking-wider text-[#392D29]">
                       Adresse
                     </h3>
-                    <p className="text-base text-[#756A63] font-light mt-1">
+                    <p className="text-base text-[#4F443E] font-normal mt-1">
                       {business.street}
                       <br />
                       {business.postal_code} {business.city}
@@ -68,7 +68,7 @@ export default function ContactVisitSection({ business, openingHours }: ContactV
                     <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6 mt-1">
                       <a
                         href={`tel:${business.phone.replace(/\s+/g, "")}`}
-                        className="text-base text-[#756A63] hover:text-[#392D29] font-light"
+                        className="text-base text-[#392D29] hover:text-[#844C36] font-medium transition-colors"
                       >
                         {business.phone_display || business.phone}
                       </a>
@@ -77,7 +77,7 @@ export default function ContactVisitSection({ business, openingHours }: ContactV
                           href={`https://wa.me/${business.whatsapp.replace(/\D/g, "")}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 text-xs text-[#128C7E] hover:text-[#075E54] font-semibold"
+                          className="inline-flex items-center gap-1 text-xs text-[#08675b] hover:text-[#05443d] font-semibold"
                         >
                           <MessageCircle className="w-3.5 h-3.5" />
                           <span>WhatsApp Chat</span>
@@ -99,7 +99,7 @@ export default function ContactVisitSection({ business, openingHours }: ContactV
                     </h3>
                     <a
                       href={`mailto:${business.email}`}
-                      className="text-base text-[#756A63] hover:text-[#392D29] font-light mt-1 block"
+                      className="text-base text-[#392D29] hover:text-[#844C36] font-medium mt-1 block transition-colors"
                     >
                       {business.email}
                     </a>
@@ -122,7 +122,7 @@ export default function ContactVisitSection({ business, openingHours }: ContactV
               {openingHours.map((h) => (
                 <div key={h.id} className="py-2.5 flex justify-between items-center">
                   <span className="font-light text-[#392D29]">{h.day_name}</span>
-                  <span className="font-medium text-[#756A63]">
+                  <span className="font-medium text-[#392D29]">
                     {h.is_closed ? (
                       <span className="text-[#844C36] font-medium">
                         {h.custom_label || "Geschlossen"}
@@ -135,7 +135,7 @@ export default function ContactVisitSection({ business, openingHours }: ContactV
               ))}
             </div>
 
-            <div className="pt-4 bg-[#FAF6F1] p-4 border border-[#E8D6C5]/60 text-xs text-[#756A63] font-light rounded-[1px]">
+            <div className="pt-4 bg-[#FAF6F1] p-4 border border-[#E8D6C5]/60 text-xs text-[#4F443E] font-normal rounded-[1px]">
               <strong className="text-[#392D29] block mb-1">
                 Wichtiger Hinweis zur Terminvereinbarung:
               </strong>

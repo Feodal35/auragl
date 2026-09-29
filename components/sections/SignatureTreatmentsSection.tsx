@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { ArrowUpRight, Clock3, CalendarDays } from "lucide-react";
 import { ServiceItem } from "@/lib/types";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
@@ -54,10 +55,12 @@ export default function SignatureTreatmentsSection({ services }: SignatureTreatm
               >
                 {/* Image Container with Editorial Aspect Ratio */}
                 <div className="relative aspect-[4/5] sm:aspect-[3/4] overflow-hidden bg-[#E8D6C5]/30 mb-6 rounded-[1px]">
-                  <img
+                  <Image
                     src={item.featured_image}
                     alt={`${item.title} - Behandlung bei Aura Glow by Mürvet Düsseldorf`}
-                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
                     loading="lazy"
                   />
                   {/* Category Badge */}

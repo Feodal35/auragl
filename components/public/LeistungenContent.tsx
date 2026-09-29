@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { ServiceCategory, ServiceItem } from "@/lib/types";
@@ -86,10 +87,12 @@ export default function LeistungenContent({ categories, services }: LeistungenCo
                   >
                     {/* Image Header with Aspect Ratio */}
                     <div className="relative aspect-[16/10] overflow-hidden bg-[#E8D6C5]/20">
-                      <img
+                      <Image
                         src={service.featured_image}
                         alt={`${service.title} - Exklusive Behandlung bei Aura Glow Düsseldorf`}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                        fill
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                        className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                         loading="lazy"
                       />
                       <div className="absolute bottom-3 right-3 bg-[#211A18]/85 text-white backdrop-blur-sm px-3.5 py-1 text-xs font-medium">

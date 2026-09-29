@@ -1,0 +1,13 @@
+/* TEAM */
+Agency: Acumen Dijital
+Website: https://acumendijital.com/
+Contact: info@acumendijital.com
+Role: Concept, UI/UX Design, Full-Stack Architecture, Next.js Development & Performance Optimization
+
+/* SITE */
+Client: Aura Glow by Mürvet
+Location: Düsseldorf, Germany
+Technology: Next.js 15, React 19, TypeScript, Tailwind CSS, PostgreSQL
+Standards: HTML5, CSS3, Schema.org JSON-LD, WCAG 2.1 AA
+Language: German, English
+Doctype: HTML5

@@ -42,11 +42,13 @@ export default function AuraGlowLogo({
         xl: 80,
       };
       const dim = dimensions[size];
+      const monogramSrc =
+        size === "sm" || size === "md" ? "/icon-64x64.webp" : "/icon-192x192.webp";
       return (
         <picture>
-          <source srcSet="/icon-192x192.webp" type="image/webp" />
+          <source srcSet={customLogoUrl || monogramSrc} type="image/webp" />
           <img
-            src={customLogoUrl || "/icon-192x192.png"}
+            src={customLogoUrl || (size === "sm" ? "/icon-32x32.png" : "/icon-192x192.png")}
             alt="Aura Glow by Mürvet Monogramm"
             width={dim}
             height={dim}
@@ -75,9 +77,16 @@ export default function AuraGlowLogo({
       xl: { w: 232, h: 170 },
     };
     const { w, h } = dimensions[size];
+    const fullLogoSrc =
+      size === "sm"
+        ? "/images/aura-glow-logo-sm.webp"
+        : size === "md"
+        ? "/images/aura-glow-logo-md.webp"
+        : "/images/aura-glow-logo.webp";
+
     return (
       <picture>
-        <source srcSet="/images/aura-glow-logo.webp" type="image/webp" />
+        <source srcSet={customLogoUrl || fullLogoSrc} type="image/webp" />
         <img
           src={customLogoUrl || "/images/aura-glow-logo.png"}
           alt="Aura Glow by Mürvet - Beauty & Aesthetics Studio Düsseldorf Logo"

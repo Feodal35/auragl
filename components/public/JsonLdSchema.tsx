@@ -21,10 +21,34 @@ export default function JsonLdSchema({ business, openingHours }: Props) {
 
   const schema = {
     "@context": "https://schema.org",
-    "@type": "BeautySalon",
-    "@id": `${baseUrl}/#beautysalon`,
-    name: business.business_name,
-    alternateName: "Aura Glow Düsseldorf",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": `${baseUrl}/#website`,
+        "url": baseUrl,
+        "name": business.business_name || "Aura Glow by Mürvet",
+        "description": "Exklusives Beauty & Aesthetics Studio in Düsseldorf für Wimpernverlängerung, Hollywood Glow Facials und Permanent Make-up.",
+        "inLanguage": ["de-DE", "en-US"],
+        "creator": {
+          "@type": "Organization",
+          "@id": "https://acumendijital.com/#organization",
+          "name": "Acumen Dijital",
+          "url": "https://acumendijital.com/",
+          "description": "Digitale Agentur für Webdesign, Next.js Entwicklung und Performance-Marketing",
+          "sameAs": ["https://acumendijital.com/"]
+        },
+        "publisher": {
+          "@type": "Organization",
+          "@id": "https://acumendijital.com/#organization",
+          "name": "Acumen Dijital",
+          "url": "https://acumendijital.com/"
+        }
+      },
+      {
+        "@type": "BeautySalon",
+        "@id": `${baseUrl}/#beautysalon`,
+        name: business.business_name,
+        alternateName: "Aura Glow Düsseldorf",
     description:
       "Exklusives Beauty & Aesthetics Studio für Wimpernverlängerung, Hollywood Glow Facials, Powder Brows Permanent Make-up und Schulungen auf der Königsallee in Düsseldorf.",
     url: baseUrl,
@@ -125,7 +149,9 @@ export default function JsonLdSchema({ business, openingHours }: Props) {
     sameAs: [
       business.instagram_url || "https://instagram.com/auraglow_bymurvet",
     ],
-  };
+  },
+],
+};
 
   return (
     <script
