@@ -309,9 +309,9 @@ INSERT INTO site_settings (key, value) VALUES
 ('business', '{
     "business_name": "Aura Glow by Mürvet",
     "owner_name": "Mürvet",
-    "street": "Königsallee 42",
-    "postal_code": "40212",
-    "city": "Düsseldorf",
+    "street": "Ernst-Moritz-Arndt-Straße 13",
+    "postal_code": "31224",
+    "city": "Peine",
     "country": "Deutschland",
     "phone": "+49 176 12345678",
     "phone_display": "+49 176 1234 5678",
@@ -320,7 +320,7 @@ INSERT INTO site_settings (key, value) VALUES
     "instagram_url": "https://instagram.com/auraglow_bymurvet",
     "tiktok_url": "",
     "facebook_url": "",
-    "google_maps_url": "https://maps.google.com/?q=Dusseldorf"
+    "google_maps_url": "https://maps.google.com/?q=Ernst-Moritz-Arndt-Stra%C3%9Fe+13+31224+Peine"
 }'::jsonb),
 ('brand', '{
     "brand_name": "Aura Glow by Mürvet",

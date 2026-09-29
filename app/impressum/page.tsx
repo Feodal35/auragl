@@ -10,7 +10,7 @@ import { getBusinessSettings, getOpeningHours } from "@/lib/db";
 export const metadata: Metadata = {
   title: "Impressum & Rechtliche Angaben (§ 5 DDG) | Aura Glow by Mürvet",
   description:
-    "Rechtliche Angaben und Impressum gemäß § 5 DDG und § 18 Abs. 2 MStV für das Kosmetik- und Aesthetics-Studio Aura Glow by Mürvet in Düsseldorf.",
+    "Rechtliche Angaben und Impressum gemäß § 5 DDG und § 18 Abs. 2 MStV für das Kosmetik- und Aesthetics-Studio Aura Glow by Mürvet in Peine.",
 };
 
 export const revalidate = 60;
@@ -106,18 +106,18 @@ export default async function ImpressumPage() {
                 <br />
                 <strong>Zuständige Handwerkskammer:</strong>
                 <br />
-                Handwerkskammer Düsseldorf (HWK Düsseldorf)
+                Handwerkskammer Braunschweig-Lüneburg-Stade
                 <br />
-                Georg-Schulhoff-Platz 1, 40221 Düsseldorf
+                Burgplatz 1, 38100 Braunschweig
                 <br />
                 Website:{" "}
                 <a
-                  href="https://www.hwk-duesseldorf.de"
+                  href="https://www.hwk-bls.de"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[#A26D57] hover:underline"
                 >
-                  www.hwk-duesseldorf.de
+                  www.hwk-bls.de
                 </a>
               </p>
               <p className="mt-2">

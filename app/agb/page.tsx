@@ -11,7 +11,7 @@ import { ShieldAlert, Clock3, CalendarDays, FileText } from "lucide-react";
 export const metadata: Metadata = {
   title: "Allgemeine Geschäftsbedingungen (AGB) | Aura Glow by Mürvet",
   description:
-    "Allgemeine Geschäftsbedingungen und Stornierungsregelungen für kosmetische Behandlungen bei Aura Glow by Mürvet in Düsseldorf.",
+    "Allgemeine Geschäftsbedingungen und Stornierungsregelungen für kosmetische Behandlungen bei Aura Glow by Mürvet in Peine.",
 };
 
 export const revalidate = 60;
@@ -227,7 +227,7 @@ export default async function AgbPage() {
                 (1) Auf Verträge zwischen dem Studio und der Kundin findet ausschließlich das Recht der Bundesrepublik Deutschland unter Ausschluss des UN-Kaufrechts Anwendung. Bei Verbrauchern gilt diese Rechtswahl nur insoweit, als nicht der gewährte Schutz durch zwingende Bestimmungen des Rechts des Staates, in dem der Verbraucher seinen gewöhnlichen Aufenthalt hat, entzogen wird.
               </p>
               <p className="mt-2">
-                (2) Sofern die Kundin Kauffrau im Sinne des HGB, juristische Person des öffentlichen Rechts oder ein öffentlich-rechtliches Sondervermögen ist, ist Gerichtsstand für alle Streitigkeiten aus Vertragsverhältnissen zwischen der Kundin und dem Studio Düsseldorf.
+                (2) Sofern die Kundin Kauffrau im Sinne des HGB, juristische Person des öffentlichen Rechts oder ein öffentlich-rechtliches Sondervermögen ist, ist Gerichtsstand für alle Streitigkeiten aus Vertragsverhältnissen zwischen der Kundin und dem Studio der Sitz des Studios (Peine).
               </p>
               <p className="mt-2">
                 (3) Sollten einzelne Bestimmungen dieser AGB unwirksam sein oder werden, so wird die Wirksamkeit der übrigen Bestimmungen hierdurch nicht berührt.

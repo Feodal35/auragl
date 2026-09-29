@@ -7,9 +7,9 @@ import { getGalleryItems, getBusinessSettings, getOpeningHours } from "@/lib/db"
 import GalleryClient from "./GalleryClient";
 
 export const metadata: Metadata = {
-  title: "Vorher & Nachher Galerie | Studio-Einblicke Düsseldorf",
+  title: "Vorher & Nachher Galerie | Studio-Einblicke Peine",
   description:
-    "Authentische Vorher-Nachher Behandlungsresultate von Aura Glow by Mürvet in Düsseldorf: Wimpernverlängerung, Hollywood Glow Facials & Permanent Make-up.",
+    "Authentische Vorher-Nachher Behandlungsresultate von Aura Glow by Mürvet in Peine: Wimpernverlängerung, Hollywood Glow Facials & Permanent Make-up.",
 };
 
 export const revalidate = 60;

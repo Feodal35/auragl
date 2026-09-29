@@ -328,13 +328,13 @@ export const translations: Record<Locale, Translations> = {
       language: "Sprache",
     },
     header: {
-      topAnnouncement: "Königsallee Düsseldorf • Exklusive Beauty & Aesthetics",
-      topAnnouncementShort: "Aura Glow Düsseldorf",
+      topAnnouncement: "Ernst-Moritz-Arndt-Straße 13, Peine • Exklusive Beauty & Aesthetics",
+      topAnnouncementShort: "Aura Glow Peine",
       topAnnouncementCta: "Termine nach Vereinbarung • Jetzt anfragen",
     },
     footer: {
       brandDescription:
-        "Exklusives Beauty & Aesthetics Studio in Düsseldorf. Meisterhafte Behandlungen für natürliche Schönheit, strahlenden Glow und vollendete Symmetrie auf der Königsallee.",
+        "Exklusives Beauty & Aesthetics Studio in Peine. Meisterhafte Behandlungen für natürliche Schönheit, strahlenden Glow und vollendete Symmetrie in der Ernst-Moritz-Arndt-Straße 13.",
       followInstagram: "Instagram folgen",
       colTreatments: "Behandlungen & Studio",
       colHours: "Öffnungszeiten",
@@ -418,7 +418,7 @@ export const translations: Record<Locale, Translations> = {
     gallery: {
       eyebrow: "Impressionen",
       title: "Galerie & Studioeinblicke",
-      subtitle: "Echte Resultate, feinste Linien und die beruhigende Ästhetik unseres Studios auf der Königsallee.",
+      subtitle: "Echte Resultate, feinste Linien und die beruhigende Ästhetik unseres Studios in Peine.",
       all: "Alle",
       viewDetails: "Vergrößern",
     },
@@ -510,7 +510,7 @@ export const translations: Record<Locale, Translations> = {
       step2Title: "Persönliche Rückmeldung",
       step2Desc: "Wir kontaktieren dich per WhatsApp, SMS oder Telefon mit einer verbindlichen Terminbestätigung.",
       step3Title: "Deine Wohlfühlzeit",
-      step3Desc: "Freue dich auf eine exklusive, individuelle Behandlung in unserem Studio auf der Königsallee.",
+      step3Desc: "Freue dich auf eine exklusive, individuelle Behandlung in unserem Studio in Peine.",
       urgencyNotice: "Eilige Anfrage oder Fragen vorab?",
       whatsappDirect: "Per WhatsApp schreiben",
       callDirect: "Direkt anrufen",
@@ -586,7 +586,7 @@ export const translations: Record<Locale, Translations> = {
       formTitle: "Kontaktiere uns",
       formSubtitle: "Fülle das untenstehende Formular aus. Wir melden uns zeitnah bei dir.",
       mapEyebrow: "Standort & Route",
-      mapTitle: "Aura Glow auf der Königsallee Düsseldorf",
+      mapTitle: "Aura Glow in der Ernst-Moritz-Arndt-Straße 13, Peine",
       planRoute: "Route in Google Maps planen",
     },
     aboutPage: {
@@ -614,7 +614,7 @@ export const translations: Record<Locale, Translations> = {
     galleryPage: {
       eyebrow: "Impressionen",
       title: "Galerie & Studioeinblicke",
-      subtitle: "Echte Resultate, feinste Linien und die beruhigende Ästhetik unseres Studios auf der Königsallee.",
+      subtitle: "Echte Resultate, feinste Linien und die beruhigende Ästhetik unseres Studios in Peine.",
       categoryAll: "Alle",
       categoryWimpern: "Wimpern",
       categoryFacials: "Gesichtsreinigung & Pflege",
@@ -640,13 +640,13 @@ export const translations: Record<Locale, Translations> = {
       language: "Language",
     },
     header: {
-      topAnnouncement: "Königsallee Düsseldorf • Exclusive Beauty & Aesthetics",
-      topAnnouncementShort: "Aura Glow Düsseldorf",
+      topAnnouncement: "Ernst-Moritz-Arndt-Straße 13, Peine • Exclusive Beauty & Aesthetics",
+      topAnnouncementShort: "Aura Glow Peine",
       topAnnouncementCta: "Appointments by reservation • Inquire now",
     },
     footer: {
       brandDescription:
-        "Exclusive Beauty & Aesthetics Studio in Düsseldorf. Masterful treatments for natural beauty, radiant glow, and perfect symmetry on Königsallee.",
+        "Exclusive Beauty & Aesthetics Studio in Peine. Masterful treatments for natural beauty, radiant glow, and perfect symmetry at Ernst-Moritz-Arndt-Straße 13.",
       followInstagram: "Follow on Instagram",
       colTreatments: "Treatments & Studio",
       colHours: "Opening Hours",
@@ -730,7 +730,7 @@ export const translations: Record<Locale, Translations> = {
     gallery: {
       eyebrow: "Impressions",
       title: "Gallery & Studio Insights",
-      subtitle: "Authentic results, delicate precision, and the tranquil ambience of our Königsallee studio.",
+      subtitle: "Authentic results, delicate precision, and the tranquil ambience of our Peine studio.",
       all: "All",
       viewDetails: "Enlarge",
     },
@@ -822,7 +822,7 @@ export const translations: Record<Locale, Translations> = {
       step2Title: "Personal Confirmation",
       step2Desc: "We will contact you via WhatsApp, SMS, or phone to finalize and confirm your appointment.",
       step3Title: "Your Glow Session",
-      step3Desc: "Look forward to an exclusive, bespoke treatment in our luxury salon on Königsallee.",
+      step3Desc: "Look forward to an exclusive, bespoke treatment in our luxury salon in Peine.",
       urgencyNotice: "Urgent question or short-term booking?",
       whatsappDirect: "Message via WhatsApp",
       callDirect: "Call Us Directly",
@@ -898,7 +898,7 @@ export const translations: Record<Locale, Translations> = {
       formTitle: "Contact Us",
       formSubtitle: "Complete the form below. We will respond to your inquiry promptly.",
       mapEyebrow: "Location & Directions",
-      mapTitle: "Aura Glow on Königsallee Düsseldorf",
+      mapTitle: "Aura Glow at Ernst-Moritz-Arndt-Straße 13, Peine",
       planRoute: "Plan route in Google Maps",
     },
     aboutPage: {
@@ -926,7 +926,7 @@ export const translations: Record<Locale, Translations> = {
     galleryPage: {
       eyebrow: "Impressions",
       title: "Gallery & Studio Insights",
-      subtitle: "Authentic results, fine lines, and the serene ambience of our studio on Königsallee.",
+      subtitle: "Authentic results, fine lines, and the serene ambience of our studio in Peine.",
       categoryAll: "All",
       categoryWimpern: "Lashes",
       categoryFacials: "Facials & Skincare",

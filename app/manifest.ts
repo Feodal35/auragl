@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Aura Glow by Mürvet | Beauty & Aesthetics",
     short_name: "Aura Glow",
-    description: "Exklusives Beauty & Aesthetics Studio für Wimpernverlängerung, Hollywood Facials und Permanent Make-up in Düsseldorf.",
+    description: "Exklusives Beauty & Aesthetics Studio für Wimpernverlängerung, Hollywood Facials und Permanent Make-up in Peine.",
     start_url: "/",
     display: "standalone",
     background_color: "#F7F3EE",

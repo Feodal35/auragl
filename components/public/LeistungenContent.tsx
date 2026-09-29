@@ -89,7 +89,7 @@ export default function LeistungenContent({ categories, services }: LeistungenCo
                     <div className="relative aspect-[16/10] overflow-hidden bg-[#E8D6C5]/20">
                       <Image
                         src={service.featured_image}
-                        alt={`${service.title} - Exklusive Behandlung bei Aura Glow Düsseldorf`}
+                        alt={`${service.title} - Exklusive Behandlung bei Aura Glow Peine`}
                         fill
                         sizes="(max-width: 768px) 100vw, 50vw"
                         className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"

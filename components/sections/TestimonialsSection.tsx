@@ -15,16 +15,16 @@ const testimonials: Testimonial[] = [
   {
     id: "rev-1",
     name: "Laura S.",
-    location: "Düsseldorf-Stadtmitte",
+    location: "Peine",
     treatment: "Wimpern-Neumodellage (1:1 Methode)",
-    text: "Mürvet ist eine absolute Koryphäe auf ihrem Gebiet. Meine Wimpernverlängerung hält bombenfest und sieht selbst nach 4 Wochen noch unfassbar edel und natürlich aus. Kein Verkleben, kein Piksen. Die Ruhe im Studio auf der Königsallee ist für mich wie ein Kurzurlaub.",
+    text: "Mürvet ist eine absolute Koryphäe auf ihrem Gebiet. Meine Wimpernverlängerung hält bombenfest und sieht selbst nach 4 Wochen noch unfassbar edel und natürlich aus. Kein Verkleben, kein Piksen. Die Ruhe im Studio in Peine ist für mich wie ein Kurzurlaub.",
     rating: 5,
     date: "Vor 2 Wochen",
   },
   {
     id: "rev-2",
     name: "Elena M.",
-    location: "Meerbusch",
+    location: "Braunschweig",
     treatment: "Hollywood Glow Deluxe Facial",
     text: "Das Hollywood Glow Facial hat mein Hautbild nachhaltig verwandelt. Feine Linien wirken wie aufgepolstert und der Glow hält tagelang an – ich wurde im Büro direkt darauf angesprochen. Mürvets Fachwissen und sanfte Berührung sind unübertroffen.",
     rating: 5,
@@ -33,7 +33,7 @@ const testimonials: Testimonial[] = [
   {
     id: "rev-3",
     name: "Sabrina K.",
-    location: "Neuss",
+    location: "Hannover",
     treatment: "Powder Brows Neuanlage",
     text: "Nach langem Überlegen habe ich mich für Powder Brows bei Aura Glow entschieden. Mürvet hat sich über 30 Minuten Zeit allein für das typgerechte Vorzeichnen genommen. Das Ergebnis ist perfekt symmetrisch und super zart geschattiert. Jeden Morgen spare ich 15 Minuten Zeit!",
     rating: 5,
@@ -42,9 +42,9 @@ const testimonials: Testimonial[] = [
   {
     id: "rev-4",
     name: "Vanessa T.",
-    location: "Ratingen",
+    location: "Hildesheim",
     treatment: "Lash Lifting & Brow Lamination",
-    text: "Vom ersten Moment an habe ich mich wohlgefühlt. Höchste Sauberkeit, sterile Instrumente und ein erstklassiger Service. Das Lash Lifting hält bei mir volle 6 Wochen. Eine absolute Herzensempfehlung in Düsseldorf!",
+    text: "Vom ersten Moment an habe ich mich wohlgefühlt. Höchste Sauberkeit, sterile Instrumente und ein erstklassiger Service. Das Lash Lifting hält bei mir volle 6 Wochen. Eine absolute Herzensempfehlung in der Region Peine & Braunschweig!",
     rating: 5,
     date: "Vor 1 Monat",
   },
@@ -88,7 +88,7 @@ export default function TestimonialsSection() {
               4.9 / 5.0
             </span>
             <span className="text-xs text-[#756A63] font-light">
-              &bull; über 120 verifizierte Bewertungen in Düsseldorf
+              &bull; über 120 verifizierte Bewertungen in Peine & Region
             </span>
           </div>
         </div>

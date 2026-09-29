@@ -150,14 +150,14 @@ export default function ContactVisitSection({ business, openingHours }: ContactV
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
             <div>
               <span className="text-[11px] uppercase tracking-widest text-[#A26D57] font-medium block">
-                Zentrale Lage in Düsseldorf
+                Zentrale Lage in Peine
               </span>
               <h3 className="font-editorial text-xl sm:text-2xl text-[#392D29]">
-                Königsallee 42 &bull; 40212 Düsseldorf
+                Ernst-Moritz-Arndt-Straße 13 &bull; 31224 Peine
               </h3>
             </div>
             <a
-              href={business.google_maps_url || "https://maps.google.com/?q=K%C3%B6nigsallee+42+40212+D%C3%BCsseldorf"}
+              href={business.google_maps_url || "https://maps.google.com/?q=Ernst-Moritz-Arndt-Stra%C3%9Fe+13+31224+Peine"}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary text-xs inline-flex items-center justify-center gap-1.5 shrink-0"
@@ -170,8 +170,8 @@ export default function ContactVisitSection({ business, openingHours }: ContactV
 
           <div className="relative w-full h-[280px] sm:h-[360px] rounded-[1px] overflow-hidden border border-[#E8D6C5]/70">
             <iframe
-              title="Aura Glow by Mürvet Google Maps Standort Düsseldorf"
-              src="https://maps.google.com/maps?q=K%C3%B6nigsallee%2042,%2040212%20D%C3%BCsseldorf,%20Germany&t=&z=15&ie=UTF8&iwloc=&output=embed"
+              title="Aura Glow by Mürvet Google Maps Standort Peine"
+              src="https://maps.google.com/maps?q=Ernst-Moritz-Arndt-Stra%C3%9Fe%2013,%2031224%20Peine,%20Germany&t=&z=15&ie=UTF8&iwloc=&output=embed"
               width="100%"
               height="100%"
               style={{ border: 0 }}

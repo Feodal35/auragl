@@ -12,9 +12,9 @@ import TerminHeader from "@/components/public/TerminHeader";
 import TerminInfoCards from "@/components/public/TerminInfoCards";
 
 export const metadata: Metadata = {
-  title: "Termin online anfragen | Wunschtermin in Düsseldorf sichern",
+  title: "Termin online anfragen | Wunschtermin in Peine sichern",
   description:
-    "Vereinbare deinen Wunschtermin bei Aura Glow by Mürvet auf der Königsallee in Düsseldorf. Wimpern, Facials & Permanent Make-up.",
+    "Vereinbare deinen Wunschtermin bei Aura Glow by Mürvet in der Ernst-Moritz-Arndt-Straße 13 in Peine. Wimpern, Facials & Permanent Make-up.",
 };
 
 export const revalidate = 60;

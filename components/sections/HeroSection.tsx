@@ -53,7 +53,7 @@ export default function HeroSection({ content, design }: HeroSectionProps) {
           <source media="(max-width: 767px)" srcSet={mobileBg} />
           <img
             src={desktopBg}
-            alt="Aura Glow by Mürvet - Exklusives Kosmetik und Aesthetics Studio Düsseldorf"
+            alt="Aura Glow by Mürvet - Exklusives Kosmetik und Aesthetics Studio Peine"
             loading="eager"
             fetchPriority="high"
             className="w-full h-full object-cover object-center scale-[1.02] transform transition-transform duration-1000 ease-out"

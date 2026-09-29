@@ -7,9 +7,9 @@ import AboutContent from "@/components/public/AboutContent";
 import { getBusinessSettings, getOpeningHours, getContentSections } from "@/lib/db";
 
 export const metadata: Metadata = {
-  title: "Über Mürvet | Studio-Philosophie & Expertise Düsseldorf",
+  title: "Über Mürvet | Studio-Philosophie & Expertise Peine",
   description:
-    "Erfahre mehr über Mürvet und die Philosophie von Aura Glow in Düsseldorf: Meisterhafte Präzision, natürliche Ästhetik und kompromisslose Hygiene.",
+    "Erfahre mehr über Mürvet und die Philosophie von Aura Glow in Peine: Meisterhafte Präzision, natürliche Ästhetik und kompromisslose Hygiene.",
 };
 
 export const revalidate = 60;

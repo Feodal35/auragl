@@ -11,7 +11,7 @@ import { Undo2, AlertCircle, FileCheck2 } from "lucide-react";
 export const metadata: Metadata = {
   title: "Widerrufsbelehrung & Muster-Widerrufsformular | Aura Glow by Mürvet",
   description:
-    "Informationen zum gesetzlichen Widerrufsrecht für Verbraucher und Muster-Widerrufsformular bei Aura Glow by Mürvet in Düsseldorf.",
+    "Informationen zum gesetzlichen Widerrufsrecht für Verbraucher und Muster-Widerrufsformular bei Aura Glow by Mürvet in Peine.",
 };
 
 export const revalidate = 60;

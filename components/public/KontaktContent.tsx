@@ -215,7 +215,7 @@ export default function KontaktContent({ business, openingHours }: KontaktConten
               </p>
             </div>
             <a
-              href={business.google_maps_url || "https://maps.google.com/?q=K%C3%B6nigsallee+42+40212+D%C3%BCsseldorf"}
+              href={business.google_maps_url || "https://maps.google.com/?q=Ernst-Moritz-Arndt-Stra%C3%9Fe+13+31224+Peine"}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary text-xs inline-flex items-center justify-center gap-1.5 shrink-0"
@@ -227,8 +227,8 @@ export default function KontaktContent({ business, openingHours }: KontaktConten
 
           <div className="relative w-full h-[320px] sm:h-[420px] rounded-[1px] overflow-hidden border border-[#E8D6C5]">
             <iframe
-              title="Aura Glow by Mürvet Google Maps Standort"
-              src="https://maps.google.com/maps?q=K%C3%B6nigsallee%2042,%2040212%20D%C3%BCsseldorf,%20Germany&t=&z=15&ie=UTF8&iwloc=&output=embed"
+              title="Aura Glow by Mürvet Google Maps Standort Peine"
+              src="https://maps.google.com/maps?q=Ernst-Moritz-Arndt-Stra%C3%9Fe%2013,%2031224%20Peine,%20Germany&t=&z=15&ie=UTF8&iwloc=&output=embed"
               width="100%"
               height="100%"
               style={{ border: 0 }}

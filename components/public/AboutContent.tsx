@@ -59,7 +59,7 @@ export default function AboutContent({ aboutContent }: AboutContentProps) {
                 <source srcSet="/images/treatments/murvet-at-work.webp" type="image/webp" />
                 <img
                   src="/images/treatments/murvet-at-work.jpg"
-                  alt="Mürvet — Gründerin von Aura Glow bei der Behandlung im Düsseldorfer Studio"
+                  alt="Mürvet — Gründerin von Aura Glow bei der Behandlung im Studio in Peine"
                   className="w-full h-full object-cover object-center"
                   loading="lazy"
                   decoding="async"

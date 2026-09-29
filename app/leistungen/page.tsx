@@ -7,9 +7,9 @@ import LeistungenContent from "@/components/public/LeistungenContent";
 import { getCategories, getAllServices, getBusinessSettings, getOpeningHours } from "@/lib/db";
 
 export const metadata: Metadata = {
-  title: "Behandlungen & Facials | Wimpern, Brows & Glow Facials Düsseldorf",
+  title: "Behandlungen & Facials | Wimpern, Brows & Glow Facials Peine",
   description:
-    "Exklusives Leistungsangebot von Aura Glow by Mürvet in Düsseldorf: Wimpernverlängerung, Hollywood Glow, Microneedling, Powder Brows und zertifizierte Schulungen.",
+    "Exklusives Leistungsangebot von Aura Glow by Mürvet in Peine: Wimpernverlängerung, Hollywood Glow, Microneedling, Powder Brows und zertifizierte Schulungen.",
 };
 
 export const revalidate = 60;

@@ -63,7 +63,7 @@ export const DEFAULT_SERVICES: ServiceItem[] = [
     is_featured: true,
     display_order: 1,
     is_active: true,
-    seo_title: "Klassische Wimpernverlängerung Düsseldorf | Aura Glow by Mürvet",
+    seo_title: "Klassische Wimpernverlängerung Peine | Aura Glow by Mürvet",
     seo_description: "Präzise 1:1 Wimpernverlängerung für einen natürlichen, eleganten Mascara-Look.",
   },
   {
@@ -133,7 +133,7 @@ export const DEFAULT_SERVICES: ServiceItem[] = [
     is_featured: true,
     display_order: 5,
     is_active: true,
-    seo_title: "Hollywood Glow Facial Düsseldorf | Aura Glow by Mürvet",
+    seo_title: "Hollywood Glow Facial Peine | Aura Glow by Mürvet",
     seo_description: "Das exklusive Signature Facial für porentiefe Reinheit und unwiderstehlichen Glow.",
   },
   {
@@ -201,7 +201,7 @@ export const DEFAULT_SERVICES: ServiceItem[] = [
     is_featured: true,
     display_order: 9,
     is_active: true,
-    seo_title: "Powder Brows Düsseldorf | Aura Glow by Mürvet",
+    seo_title: "Powder Brows Peine | Aura Glow by Mürvet",
     seo_description: "Natürliche Puder-Augenbrauen mit meisterhafter Schattierung und langer Haltbarkeit.",
   },
   {
@@ -398,16 +398,16 @@ export const DEFAULT_OPENING_HOURS: OpeningHour[] = [
 export const DEFAULT_BUSINESS_SETTINGS: BusinessSettings = {
   business_name: "Aura Glow by Mürvet",
   owner_name: "Mürvet",
-  street: "Königsallee 42",
-  postal_code: "40212",
-  city: "Düsseldorf",
+  street: "Ernst-Moritz-Arndt-Straße 13",
+  postal_code: "31224",
+  city: "Peine",
   country: "Deutschland",
   phone: "+49 176 12345678",
   phone_display: "+49 176 1234 5678",
   email: "kontakt@auraglow.de",
   whatsapp: "+4917612345678",
   instagram_url: "https://instagram.com/auraglow_bymurvet",
-  google_maps_url: "https://maps.google.com/?q=Dusseldorf",
+  google_maps_url: "https://maps.google.com/?q=Ernst-Moritz-Arndt-Stra%C3%9Fe+13+31224+Peine",
   booking_info: "Termine nur nach vorheriger Vereinbarung.",
 };
 

@@ -47,7 +47,7 @@ export default function FinalCtaSection({ content, design }: FinalCtaProps) {
       <div className="absolute inset-0 z-0">
         <Image
           src={bgImg}
-          alt="Aura Glow by Mürvet - Ästhetische Behandlungsatmosphäre im Kosmetikstudio Düsseldorf"
+          alt="Aura Glow by Mürvet - Ästhetische Behandlungsatmosphäre im Kosmetikstudio Peine"
           fill
           sizes="100vw"
           className="object-cover object-center"

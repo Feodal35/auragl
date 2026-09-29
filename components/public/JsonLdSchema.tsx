@@ -27,7 +27,7 @@ export default function JsonLdSchema({ business, openingHours }: Props) {
         "@id": `${baseUrl}/#website`,
         "url": baseUrl,
         "name": business.business_name || "Aura Glow by Mürvet",
-        "description": "Exklusives Beauty & Aesthetics Studio in Düsseldorf für Wimpernverlängerung, Hollywood Glow Facials und Permanent Make-up.",
+        "description": "Exklusives Beauty & Aesthetics Studio in Peine für Wimpernverlängerung, Hollywood Glow Facials und Permanent Make-up.",
         "inLanguage": ["de-DE", "en-US"],
         "creator": {
           "@type": "Organization",
@@ -48,9 +48,9 @@ export default function JsonLdSchema({ business, openingHours }: Props) {
         "@type": "BeautySalon",
         "@id": `${baseUrl}/#beautysalon`,
         name: business.business_name,
-        alternateName: "Aura Glow Düsseldorf",
+        alternateName: "Aura Glow Peine",
     description:
-      "Exklusives Beauty & Aesthetics Studio für Wimpernverlängerung, Hollywood Glow Facials, Powder Brows Permanent Make-up und Schulungen auf der Königsallee in Düsseldorf.",
+      "Exklusives Beauty & Aesthetics Studio für Wimpernverlängerung, Hollywood Glow Facials, Powder Brows Permanent Make-up und Schulungen in der Ernst-Moritz-Arndt-Straße 13 in Peine.",
     url: baseUrl,
     telephone: business.phone,
     email: business.email,
@@ -64,25 +64,27 @@ export default function JsonLdSchema({ business, openingHours }: Props) {
     ],
     hasMap:
       business.google_maps_url ||
-      "https://maps.google.com/?q=K%C3%B6nigsallee+42+40212+D%C3%BCsseldorf",
+      "https://maps.google.com/?q=Ernst-Moritz-Arndt-Stra%C3%9Fe+13+31224+Peine",
     address: {
       "@type": "PostalAddress",
       streetAddress: business.street,
       addressLocality: business.city,
       postalCode: business.postal_code,
       addressCountry: "DE",
-      addressRegion: "Nordrhein-Westfalen",
+      addressRegion: "Niedersachsen",
     },
     geo: {
       "@type": "GeoCoordinates",
-      latitude: 51.2217,
-      longitude: 6.7788,
+      latitude: 52.3235,
+      longitude: 10.2340,
     },
     areaServed: [
-      { "@type": "City", name: "Düsseldorf" },
-      { "@type": "City", name: "Meerbusch" },
-      { "@type": "City", name: "Neuss" },
-      { "@type": "City", name: "Ratingen" },
+      { "@type": "City", name: "Peine" },
+      { "@type": "City", name: "Braunschweig" },
+      { "@type": "City", name: "Hannover" },
+      { "@type": "City", name: "Hildesheim" },
+      { "@type": "City", name: "Salzgitter" },
+      { "@type": "City", name: "Gifhorn" },
     ],
     openingHoursSpecification: openingHours
       .filter((h) => !h.is_closed && h.open_time && h.close_time)

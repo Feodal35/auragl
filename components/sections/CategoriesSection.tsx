@@ -54,7 +54,7 @@ export default function CategoriesSection({ categories }: CategoriesSectionProps
                 {/* Image Background with Dark Vignette */}
                 <Image
                   src={img}
-                  alt={`${cat.name} Behandlungen - Aura Glow Studio Düsseldorf`}
+                  alt={`${cat.name} Behandlungen - Aura Glow Studio Peine`}
                   fill
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover object-center group-hover:scale-110 transition-transform duration-700 ease-out opacity-60 group-hover:opacity-75"

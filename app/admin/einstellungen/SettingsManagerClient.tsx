@@ -121,14 +121,14 @@ export default function SettingsManagerClient({ initialBusiness, initialHours }:
                 type="text"
                 value={business.postal_code}
                 onChange={(e) => setBusiness({ ...business, postal_code: e.target.value })}
-                placeholder="40212"
+                placeholder="31224"
                 className="w-24 px-3 py-2.5 bg-[#FAF6F1] border border-[#E8D6C5] rounded-[1px] text-xs text-[#392D29]"
               />
               <input
                 type="text"
                 value={business.city}
                 onChange={(e) => setBusiness({ ...business, city: e.target.value })}
-                placeholder="Düsseldorf"
+                placeholder="Peine"
                 className="flex-1 px-3 py-2.5 bg-[#FAF6F1] border border-[#E8D6C5] rounded-[1px] text-xs text-[#392D29]"
               />
             </div>

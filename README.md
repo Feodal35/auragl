@@ -1,6 +1,6 @@
 # AURA GLOW BY MÜRVET — Luxury Beauty & Aesthetics Platform
 
-A bespoke, production-ready website and administration platform for **Aura Glow by Mürvet** (Düsseldorf, Germany).
+A bespoke, production-ready website and administration platform for **Aura Glow by Mürvet** (Peine, Germany).
 
 Designed to European quiet luxury standards: intentional composition, editorial typography (*Cormorant Garamond* & *Inter*), sophisticated whitespace, and high-performance engineering.
 

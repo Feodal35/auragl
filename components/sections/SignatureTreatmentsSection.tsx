@@ -57,7 +57,7 @@ export default function SignatureTreatmentsSection({ services }: SignatureTreatm
                 <div className="relative aspect-[4/5] sm:aspect-[3/4] overflow-hidden bg-[#E8D6C5]/30 mb-6 rounded-[1px]">
                   <Image
                     src={item.featured_image}
-                    alt={`${item.title} - Behandlung bei Aura Glow by Mürvet Düsseldorf`}
+                    alt={`${item.title} - Behandlung bei Aura Glow by Mürvet Peine`}
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"

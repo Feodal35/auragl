@@ -11,7 +11,7 @@ import { ShieldCheck, Lock, Eye, Server, MapPin } from "lucide-react";
 export const metadata: Metadata = {
   title: "Datenschutzerklärung (DSGVO & TDDDG) | Aura Glow by Mürvet",
   description:
-    "Umfassende Datenschutzerklärung gemäß DSGVO und § 25 TDDDG für das Beauty- & Aesthetics-Studio Aura Glow by Mürvet in Düsseldorf.",
+    "Umfassende Datenschutzerklärung gemäß DSGVO und § 25 TDDDG für das Beauty- & Aesthetics-Studio Aura Glow by Mürvet in Peine.",
 };
 
 export const revalidate = 60;
@@ -213,7 +213,7 @@ export default async function PrivacyPage() {
                 Zur visuellen Darstellung unserer Studio-Lage binden wir auf den Seiten &bdquo;Kontakt&ldquo; und &bdquo;Besuch&ldquo; Karteninhalte des Dienstes Google Maps (Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland) ein. Die Einbindung erfolgt über eine responsive Iframe-Lösung mit verzögertem Nachladen (lazy loading).
               </p>
               <p className="mt-2">
-                Beim Laden der Karte verarbeitet Google deine IP-Adresse, um die Kartendaten an deinen Browser auszuliefern. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (unser berechtigtes Interesse an einer leichten Auffindbarkeit unseres Studios in Düsseldorf). Sofern du dies nicht wünschst, kannst du stattdessen den direkten externen Google Maps Routenlink nutzen.
+                Beim Laden der Karte verarbeitet Google deine IP-Adresse, um die Kartendaten an deinen Browser auszuliefern. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (unser berechtigtes Interesse an einer leichten Auffindbarkeit unseres Studios in Peine). Sofern du dies nicht wünschst, kannst du stattdessen den direkten externen Google Maps Routenlink nutzen.
               </p>
             </div>
 
@@ -266,23 +266,23 @@ export default async function PrivacyPage() {
                 11. Beschwerderecht bei der zuständigen Aufsichtsbehörde
               </h2>
               <p className="text-xs text-[#756A63] leading-relaxed">
-                Im Falle datenschutzrechtlicher Verstöße steht der betroffenen Person ein Beschwerderecht bei einer zuständigen Datenschutz-Aufsichtsbehörde zu (Art. 77 DSGVO). Die für unser Studio in Nordrhein-Westfalen örtlich zuständige Aufsichtsbehörde ist:
+                Im Falle datenschutzrechtlicher Verstöße steht der betroffenen Person ein Beschwerderecht bei einer zuständigen Datenschutz-Aufsichtsbehörde zu (Art. 77 DSGVO). Die für unser Studio in Niedersachsen örtlich zuständige Aufsichtsbehörde ist:
               </p>
               <div className="text-xs text-[#392D29] font-medium pt-1">
-                Landesbeauftragte für Datenschutz und Informationsfreiheit Nordrhein-Westfalen (LDI NRW)
+                Die Landesbeauftragte für den Datenschutz Niedersachsen (LfD Niedersachsen)
                 <br />
-                Kavalleriestraße 2–4, 40213 Düsseldorf
+                Prinzenstraße 5, 30159 Hannover
                 <br />
-                Telefon: 0211 / 38424-0 &bull; E-Mail: poststelle@ldi.nrw.de
+                Telefon: 0511 / 120-4500 &bull; E-Mail: poststelle@lfd.niedersachsen.de
                 <br />
                 Website:{" "}
                 <a
-                  href="https://www.ldi.nrw.de"
+                  href="https://lfd.niedersachsen.de"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[#A26D57] hover:underline"
                 >
-                  https://www.ldi.nrw.de
+                  https://lfd.niedersachsen.de
                 </a>
               </div>
             </div>

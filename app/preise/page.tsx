@@ -7,9 +7,9 @@ import PreiseContent from "@/components/public/PreiseContent";
 import { getCategories, getPricing, getBusinessSettings, getOpeningHours } from "@/lib/db";
 
 export const metadata: Metadata = {
-  title: "Preise & Behandlungsübersicht | Transparente Konditionen Düsseldorf",
+  title: "Preise & Behandlungsübersicht | Transparente Konditionen Peine",
   description:
-    "Transparente Preisliste für alle Behandlungen von Aura Glow by Mürvet in Düsseldorf: Wimpernverlängerung, Hollywood Glow, Microneedling & Powder Brows.",
+    "Transparente Preisliste für alle Behandlungen von Aura Glow by Mürvet in Peine: Wimpernverlängerung, Hollywood Glow, Microneedling & Powder Brows.",
 };
 
 export const revalidate = 60;
