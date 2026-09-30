@@ -12,8 +12,8 @@ interface StickyMobileCtaProps {
 }
 
 export default function StickyMobileCta({
-  phone = "+49 176 1234 5678",
-  whatsapp = "+49 176 1234 5678",
+  phone = "+49 173 9026031",
+  whatsapp = "+49 173 9026031",
 }: StickyMobileCtaProps) {
   const { t } = useLanguage();
   const cleanPhone = phone.replace(/\s+/g, "");

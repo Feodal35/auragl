@@ -13,7 +13,7 @@ interface HeaderProps {
   businessPhone?: string;
 }
 
-export default function Header({ businessPhone = "+49 176 1234 5678" }: HeaderProps) {
+export default function Header({ businessPhone = "+49 173 9026031" }: HeaderProps) {
   const { t } = useLanguage();
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
