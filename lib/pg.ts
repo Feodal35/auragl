@@ -28,9 +28,9 @@ export function getPgPool(): Pool | null {
     pool = new Pool({
       connectionString: cleanConnectionString,
       ssl: { rejectUnauthorized: false },
-      max: 3, // Safe for multiple Next.js worker threads within Aiven's 20-connection limit
-      idleTimeoutMillis: 30000,
-      connectionTimeoutMillis: 20000,
+      max: 1, // 1 connection per serverless function instance to prevent pool exhaustion on Aiven
+      idleTimeoutMillis: 2000, // Release idle connection quickly
+      connectionTimeoutMillis: 10000,
       allowExitOnIdle: true,
     });
 

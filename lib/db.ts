@@ -1085,6 +1085,7 @@ export async function createAppointmentRequest(data: Omit<AppointmentRequest, "i
       if (rows && rows.length > 0) return rows[0];
     } catch (err) {
       console.error("[PostgreSQL createAppointmentRequest Error]:", err);
+      throw err;
     }
   }
 
@@ -1230,6 +1231,7 @@ export async function createContactMessage(data: Omit<ContactMessage, "id" | "st
       if (rows && rows.length > 0) return rows[0];
     } catch (err) {
       console.error("[PostgreSQL createContactMessage Error]:", err);
+      throw err;
     }
   }
 

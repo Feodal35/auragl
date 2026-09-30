@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { AppointmentRequestSchema } from "@/lib/validations";
 import { createAppointmentRequest } from "@/lib/db";
 import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
@@ -57,6 +58,9 @@ export async function POST(request: Request) {
     } catch (err) {
       console.error("[Appointment Notification Error]:", err);
     }
+
+    revalidatePath("/admin/anfragen");
+    revalidatePath("/admin");
 
     return NextResponse.json({
       success: true,

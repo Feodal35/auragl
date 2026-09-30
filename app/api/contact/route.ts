@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { ContactMessageSchema } from "@/lib/validations";
 import { createContactMessage } from "@/lib/db";
 import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
@@ -53,6 +54,9 @@ export async function POST(request: Request) {
     } catch (err) {
       console.error("[Contact Notification Error]:", err);
     }
+
+    revalidatePath("/admin/nachrichten");
+    revalidatePath("/admin");
 
     return NextResponse.json({
       success: true,

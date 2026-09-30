@@ -1,24 +1,37 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { AppointmentRequest } from "@/lib/types";
 import { formatDate } from "@/lib/utils";
 import { useAdminLanguage } from "@/components/admin/AdminLanguageContext";
 import { getAdminDict } from "@/lib/i18n/adminDict";
-import { CalendarDays, Clock3, Mail, Phone, CheckCircle2, XCircle, AlertCircle, Save } from "lucide-react";
+import { CalendarDays, Clock3, Mail, Phone, CheckCircle2, XCircle, AlertCircle, Save, RefreshCw } from "lucide-react";
 
 interface Props {
   initialRequests: AppointmentRequest[];
 }
 
 export default function AppointmentManagerClient({ initialRequests }: Props) {
+  const router = useRouter();
   const { adminLang } = useAdminLanguage();
   const d = getAdminDict(adminLang);
 
   const [requests, setRequests] = useState<AppointmentRequest[]>(initialRequests);
   const [filter, setFilter] = useState<string>("alle");
   const [loadingId, setLoadingId] = useState<string | null>(null);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [noteInputs, setNoteInputs] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    setRequests(initialRequests);
+  }, [initialRequests]);
+
+  const handleRefresh = () => {
+    setIsRefreshing(true);
+    router.refresh();
+    setTimeout(() => setIsRefreshing(false), 1000);
+  };
 
   const filtered =
     filter === "alle"
@@ -72,21 +85,34 @@ export default function AppointmentManagerClient({ initialRequests }: Props) {
 
   return (
     <div className="space-y-6">
-      {/* Filter Tabs */}
-      <div className="flex flex-wrap gap-2">
-        {filterTabs.map((tab) => (
-          <button
-            key={tab.key}
-            onClick={() => setFilter(tab.key)}
-            className={`text-xs uppercase tracking-wider px-4 py-1.5 rounded-full font-medium transition-colors ${
-              filter === tab.key
-                ? "bg-[#844C36] text-white shadow-xs"
-                : "bg-white text-[#756A63] hover:bg-[#FAF6F1] border border-[#E8D6C5]"
-            }`}
-          >
-            {tab.label} ({tab.key === "alle" ? requests.length : requests.filter((r) => r.status === tab.key).length})
-          </button>
-        ))}
+      {/* Filter Tabs & Refresh Button */}
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <div className="flex flex-wrap gap-2">
+          {filterTabs.map((tab) => (
+            <button
+              key={tab.key}
+              onClick={() => setFilter(tab.key)}
+              className={`text-xs uppercase tracking-wider px-4 py-1.5 rounded-full font-medium transition-colors ${
+                filter === tab.key
+                  ? "bg-[#844C36] text-white shadow-xs"
+                  : "bg-white text-[#756A63] hover:bg-[#FAF6F1] border border-[#E8D6C5]"
+              }`}
+            >
+              {tab.label} ({tab.key === "alle" ? requests.length : requests.filter((r) => r.status === tab.key).length})
+            </button>
+          ))}
+        </div>
+
+        <button
+          type="button"
+          onClick={handleRefresh}
+          disabled={isRefreshing}
+          className="inline-flex items-center gap-1.5 text-xs font-medium text-[#756A63] hover:text-[#392D29] bg-white border border-[#E8D6C5] px-3.5 py-1.5 rounded-full hover:bg-[#FAF6F1] transition-colors"
+          title="Yenile"
+        >
+          <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? "animate-spin text-[#A26D57]" : ""}`} />
+          <span>Yenile</span>
+        </button>
       </div>
 
       {/* List / Cards */}
