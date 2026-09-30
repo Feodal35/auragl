@@ -34,12 +34,13 @@ export interface ContactNotificationData {
 /** Studio owner — all form notifications arrive here */
 const STUDIO_EMAIL = "Murvetdincer@aura6lowbymürvet.de";
 
+/** Sender mailbox — authenticated on Strato SMTP */
+const SENDER_EMAIL = "noreply@aura6lowbymürvet.de";
+
 function createTransport() {
-  // If it's an alias, STRATO_USER is the primary mailbox login, and STRATO_EMAIL is the alias.
-  // If not an alias, STRATO_EMAIL alone is used for both.
-  const user = process.env.STRATO_USER || process.env.STRATO_EMAIL;
+  const user = process.env.STRATO_EMAIL || process.env.STRATO_USER || SENDER_EMAIL;
   const pass = process.env.STRATO_PASSWORD;
-  if (!user || !pass) return null;
+  if (!pass) return null;
 
   return nodemailer.createTransport({
     host: "smtp.strato.de",
@@ -50,7 +51,7 @@ function createTransport() {
 }
 
 function getSenderEmail(): string {
-  return process.env.STRATO_EMAIL || process.env.STRATO_USER || STUDIO_EMAIL;
+  return process.env.STRATO_EMAIL || SENDER_EMAIL;
 }
 
 export async function sendAppointmentNotification(
