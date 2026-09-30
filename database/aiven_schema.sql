@@ -308,7 +308,7 @@ SELECT setval('opening_hours_id_seq', (SELECT MAX(id) FROM opening_hours));
 INSERT INTO site_settings (key, value) VALUES
 ('business', '{
     "business_name": "Aura Glow by Mürvet",
-    "owner_name": "Mürvet",
+    "owner_name": "Mürvet Dincer",
     "street": "Ernst-Moritz-Arndt-Straße 13",
     "postal_code": "31224",
     "city": "Peine",

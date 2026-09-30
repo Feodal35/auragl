@@ -397,7 +397,7 @@ export const DEFAULT_OPENING_HOURS: OpeningHour[] = [
 
 export const DEFAULT_BUSINESS_SETTINGS: BusinessSettings = {
   business_name: "Aura Glow by Mürvet",
-  owner_name: "Mürvet",
+  owner_name: "Mürvet Dincer",
   street: "Ernst-Moritz-Arndt-Straße 13",
   postal_code: "31224",
   city: "Peine",

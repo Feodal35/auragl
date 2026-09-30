@@ -15,7 +15,7 @@ async function updateLocation() {
     const updatedVal = {
       ...currentVal,
       business_name: currentVal.business_name || "Aura Glow by Mürvet",
-      owner_name: currentVal.owner_name || "Mürvet",
+      owner_name: currentVal.owner_name || "Mürvet Dincer",
       street: "Ernst-Moritz-Arndt-Straße 13",
       postal_code: "31224",
       city: "Peine",
