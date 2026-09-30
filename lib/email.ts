@@ -28,8 +28,13 @@ export interface ContactNotificationData {
 
 const DEFAULT_SENDER = "Aura Glow Studio <onboarding@resend.dev>";
 
+/** Studio owner notification address — all form submissions land here */
+const STUDIO_EMAIL = "murvetdincer@aura6lowbymürvet.de";
+
 export async function sendAppointmentNotification(data: AppointmentNotificationData): Promise<boolean> {
-  const recipient = process.env.NOTIFICATION_EMAIL_TO || process.env.ADMIN_EMAIL;
+  const recipient =
+    process.env.NOTIFICATION_EMAIL_TO ||
+    STUDIO_EMAIL;
   const resendApiKey = process.env.RESEND_API_KEY;
   const webhookUrl = process.env.NOTIFICATION_WEBHOOK_URL;
 
@@ -113,7 +118,9 @@ export async function sendAppointmentNotification(data: AppointmentNotificationD
 }
 
 export async function sendContactNotification(data: ContactNotificationData): Promise<boolean> {
-  const recipient = process.env.NOTIFICATION_EMAIL_TO || process.env.ADMIN_EMAIL;
+  const recipient =
+    process.env.NOTIFICATION_EMAIL_TO ||
+    STUDIO_EMAIL;
   const resendApiKey = process.env.RESEND_API_KEY;
   const webhookUrl = process.env.NOTIFICATION_WEBHOOK_URL;
 
