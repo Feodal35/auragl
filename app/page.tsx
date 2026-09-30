@@ -2,14 +2,11 @@ import React from "react";
 import Header from "@/components/public/Header";
 import Footer from "@/components/public/Footer";
 import HeroSection from "@/components/sections/HeroSection";
-import IntroSection from "@/components/sections/IntroSection";
 import SignatureTreatmentsSection from "@/components/sections/SignatureTreatmentsSection";
-import PhilosophySection from "@/components/sections/PhilosophySection";
 import CategoriesSection from "@/components/sections/CategoriesSection";
 import GalleryPreviewSection from "@/components/sections/GalleryPreviewSection";
 import SelectedPricingSection from "@/components/sections/SelectedPricingSection";
 import AboutMurvetSection from "@/components/sections/AboutMurvetSection";
-import AppointmentExperienceSection from "@/components/sections/AppointmentExperienceSection";
 import ContactVisitSection from "@/components/sections/ContactVisitSection";
 import FinalCtaSection from "@/components/sections/FinalCtaSection";
 import CaseStudySpotlight from "@/components/sections/CaseStudySpotlight";
@@ -29,7 +26,7 @@ import {
   getContentSections,
 } from "@/lib/db";
 
-export const revalidate = 60; // ISR cache revalidation
+export const revalidate = 60;
 
 export default async function HomePage() {
   const [
@@ -58,59 +55,46 @@ export default async function HomePage() {
       <Header businessPhone={business.phone_display || business.phone} />
 
       <main id="main-content" className="flex-grow">
-        {/* 01 — Hero */}
+        {/* 01 — Hero: service chips + concrete headline + real studio photo */}
         <HeroSection
           content={contentSections.hero}
           design={designSettings.hero}
         />
 
-        {/* 02 — Introduction */}
-        <IntroSection content={contentSections.intro} />
-
-        {/* 03 — Signature Treatments */}
+        {/* 02 — Signature Treatments (concrete, with real images) */}
         <SignatureTreatmentsSection services={featuredServices} />
 
-        {/* 04 — Philosophy */}
-        <PhilosophySection
-          content={contentSections.philosophy}
-          design={designSettings.philosophy}
-        />
-
-        {/* 05 — Categories */}
+        {/* 03 — Categories */}
         <CategoriesSection categories={categories} />
 
-        {/* 06 — Case Studies (Vaka Çalışmaları - Item 6) */}
+        {/* 04 — Case Studies (real results) */}
         <CaseStudySpotlight />
 
-        {/* 07 — Gallery Preview */}
+        {/* 05 — Gallery Preview */}
         <GalleryPreviewSection items={gallery} />
 
-        {/* 08 — Selected Pricing */}
+        {/* 06 — Selected Pricing */}
         <SelectedPricingSection pricing={pricing} />
 
-        {/* 09 — Customer Testimonials (Müşteri Yorumları - Item 15) */}
+        {/* 07 — Testimonials */}
         <TestimonialsSection />
 
-        {/* 10 — About Mürvet */}
+        {/* 08 — About Mürvet */}
         <AboutMurvetSection content={contentSections.about_murvet} />
 
-        {/* 11 — Appointment Experience */}
-        <AppointmentExperienceSection />
-
-        {/* 12 — 5 FAQ Accordion (Item 7) */}
+        {/* 09 — FAQ */}
         <FaqSection whatsapp={business.whatsapp || business.phone} />
 
-        {/* 13 — Contact & Visit (with Google Map - Item 14) */}
+        {/* 10 — Contact & Visit */}
         <ContactVisitSection business={business} openingHours={openingHours} />
 
-        {/* 14 — Final CTA */}
+        {/* 11 — Final CTA */}
         <FinalCtaSection
           content={contentSections.appointment_cta}
           design={designSettings.appointment_cta}
         />
       </main>
 
-      {/* Sticky Mobile Call & Booking CTA (Item 9) */}
       <StickyMobileCta
         phone={business.phone_display || business.phone}
         whatsapp={business.whatsapp || business.phone}

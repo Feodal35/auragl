@@ -13,6 +13,16 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
+        // Preload hero image for homepage — critical for LCP optimization
+        source: "/",
+        headers: [
+          {
+            key: "Link",
+            value: "</images/murvet-treatment-full.webp>; rel=preload; as=image; type=image/webp",
+          },
+        ],
+      },
+      {
         source: "/(.*)",
         headers: [
           {

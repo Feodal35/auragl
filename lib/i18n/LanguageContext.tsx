@@ -89,12 +89,15 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
   const currentTranslations = translations[locale] || translations.de;
 
+  // During SSR and initial hydration, expose "de" translations to match server output.
+  // Only after isReady (post-mount) do we expose the real detected locale.
+  // This prevents React #418 hydration mismatch caused by locale switching in useEffect.
   return (
     <LanguageContext.Provider
       value={{
-        locale,
+        locale: isReady ? locale : "de",
         setLocale,
-        t: currentTranslations,
+        t: isReady ? currentTranslations : translations.de,
         isReady,
       }}
     >

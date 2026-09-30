@@ -202,7 +202,7 @@ export default function Footer({ business, openingHours }: FooterProps) {
         {/* Bottom Bar: Copyright, Language Switcher, Acumen Dijital & Complete German Legal Links */}
         <div className="pt-8 flex flex-col lg:flex-row items-center justify-between text-xs text-[#EFE6DD]/90 gap-4">
           <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 text-center sm:text-left">
-            <span>
+            <span suppressHydrationWarning>
               &copy; {currentYear} {business.business_name}. {t.footer.copyright}
             </span>
             <span className="text-white/20 hidden sm:inline" aria-hidden="true">&bull;</span>

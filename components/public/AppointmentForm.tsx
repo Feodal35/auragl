@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
@@ -22,8 +22,13 @@ export default function AppointmentForm({ services, initialTreatment = "" }: App
   const [isSuccess, setIsSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  // Set min date to today
-  const todayString = new Date().toISOString().split("T")[0];
+  // todayString must be calculated client-side only to prevent hydration mismatch (React #418)
+  // Server always renders "" (no min constraint), client sets the real today date after mount.
+  const [todayString, setTodayString] = useState("");
+
+  useEffect(() => {
+    setTodayString(new Date().toISOString().split("T")[0]);
+  }, []);
 
   const {
     register,
