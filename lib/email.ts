@@ -37,27 +37,45 @@ const STUDIO_EMAIL = "Murvetdincer@aura6lowbymürvet.de";
 /** Sender mailbox — authenticated on Strato SMTP */
 const SENDER_EMAIL = "noreply@aura6lowbymürvet.de";
 
+/** Convert umlaut domains (e.g. aura6lowbymürvet.de -> xn--aura6lowbymrvet-9vb.de) for SMTP compliance */
+function toPunycodeEmail(email: string): string {
+  if (!email || !email.includes("@")) return email;
+  const [local, domain] = email.split("@");
+  try {
+    const punyDomain = new URL(`https://${domain}`).hostname;
+    return `${local}@${punyDomain}`;
+  } catch {
+    return email;
+  }
+}
+
 function createTransport() {
-  const user = process.env.STRATO_EMAIL || process.env.STRATO_USER || SENDER_EMAIL;
+  const rawUser = process.env.STRATO_USER || process.env.STRATO_EMAIL || SENDER_EMAIL;
   const pass = process.env.STRATO_PASSWORD;
   if (!pass) return null;
+
+  const user = toPunycodeEmail(rawUser);
 
   return nodemailer.createTransport({
     host: "smtp.strato.de",
     port: 465,
     secure: true, // SSL
     auth: { user, pass },
+    connectionTimeout: 10000,
+    greetingTimeout: 10000,
+    socketTimeout: 15000,
   });
 }
 
 function getSenderEmail(): string {
-  return process.env.STRATO_EMAIL || SENDER_EMAIL;
+  const raw = process.env.STRATO_EMAIL || SENDER_EMAIL;
+  return toPunycodeEmail(raw);
 }
 
 export async function sendAppointmentNotification(
   data: AppointmentNotificationData
 ): Promise<boolean> {
-  const recipient = process.env.NOTIFICATION_EMAIL_TO || STUDIO_EMAIL;
+  const recipient = toPunycodeEmail(process.env.NOTIFICATION_EMAIL_TO || STUDIO_EMAIL);
   const timeDisplay = data.preferred_time ? ` um ${data.preferred_time} Uhr` : "";
 
   const subject = `📅 Terminanfrage: ${data.first_name} ${data.last_name} – ${data.treatment_title}`;
@@ -165,7 +183,7 @@ export async function sendAppointmentNotification(
 export async function sendContactNotification(
   data: ContactNotificationData
 ): Promise<boolean> {
-  const recipient = process.env.NOTIFICATION_EMAIL_TO || STUDIO_EMAIL;
+  const recipient = toPunycodeEmail(process.env.NOTIFICATION_EMAIL_TO || STUDIO_EMAIL);
 
   const subject = `💬 Kontaktanfrage: ${data.name} – ${data.subject}`;
   const html = `

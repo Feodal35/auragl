@@ -47,10 +47,12 @@ export async function POST(request: Request) {
       privacy_accepted: validated.data.privacy_accepted,
     });
 
-    // Dispatch notification
-    sendContactNotification(validated.data).catch((err) =>
-      console.error("[Contact Notification Error]:", err)
-    );
+    // Dispatch notification (must await in Vercel Serverless so execution does not terminate early)
+    try {
+      await sendContactNotification(validated.data);
+    } catch (err) {
+      console.error("[Contact Notification Error]:", err);
+    }
 
     return NextResponse.json({
       success: true,

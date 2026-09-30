@@ -51,10 +51,12 @@ export async function POST(request: Request) {
       privacy_accepted: validated.data.privacy_accepted,
     });
 
-    // Dispatch notification
-    sendAppointmentNotification(validated.data).catch((err) =>
-      console.error("[Appointment Notification Error]:", err)
-    );
+    // Dispatch notification (must await in Vercel Serverless so execution does not terminate early)
+    try {
+      await sendAppointmentNotification(validated.data);
+    } catch (err) {
+      console.error("[Appointment Notification Error]:", err);
+    }
 
     return NextResponse.json({
       success: true,
