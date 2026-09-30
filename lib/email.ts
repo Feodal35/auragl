@@ -35,7 +35,9 @@ export interface ContactNotificationData {
 const STUDIO_EMAIL = "Murvetdincer@aura6lowbymürvet.de";
 
 function createTransport() {
-  const user = process.env.STRATO_EMAIL;
+  // If it's an alias, STRATO_USER is the primary mailbox login, and STRATO_EMAIL is the alias.
+  // If not an alias, STRATO_EMAIL alone is used for both.
+  const user = process.env.STRATO_USER || process.env.STRATO_EMAIL;
   const pass = process.env.STRATO_PASSWORD;
   if (!user || !pass) return null;
 
@@ -45,6 +47,10 @@ function createTransport() {
     secure: true, // SSL
     auth: { user, pass },
   });
+}
+
+function getSenderEmail(): string {
+  return process.env.STRATO_EMAIL || process.env.STRATO_USER || STUDIO_EMAIL;
 }
 
 export async function sendAppointmentNotification(
@@ -116,7 +122,7 @@ export async function sendAppointmentNotification(
   if (transport) {
     try {
       await transport.sendMail({
-        from: `"${data.first_name} ${data.last_name} via Aura Glow" <${process.env.STRATO_EMAIL}>`,
+        from: `"${data.first_name} ${data.last_name} via Aura Glow" <${getSenderEmail()}>`,
         replyTo: `"${data.first_name} ${data.last_name}" <${data.email}>`,
         to: recipient,
         subject,
@@ -214,7 +220,7 @@ export async function sendContactNotification(
   if (transport) {
     try {
       await transport.sendMail({
-        from: `"${data.name} via Aura Glow" <${process.env.STRATO_EMAIL}>`,
+        from: `"${data.name} via Aura Glow" <${getSenderEmail()}>`,
         replyTo: `"${data.name}" <${data.email}>`,
         to: recipient,
         subject,
