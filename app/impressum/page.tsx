@@ -13,7 +13,8 @@ export const metadata: Metadata = {
     "Rechtliche Angaben und Impressum gemäß § 5 DDG und § 18 Abs. 2 MStV für das Kosmetik- und Aesthetics-Studio Aura Glow by Mürvet in Peine.",
 };
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default async function ImpressumPage() {
   const [business, openingHours] = await Promise.all([

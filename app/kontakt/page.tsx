@@ -11,7 +11,8 @@ export const metadata: Metadata = {
     "Kontaktiere Aura Glow by Mürvet in der Ernst-Moritz-Arndt-Straße 13 in Peine. Telefon, WhatsApp, Öffnungszeiten, Google Maps Routenplaner und Online-Anfrage.",
 };
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default async function ContactPage() {
   const [business, openingHours] = await Promise.all([
