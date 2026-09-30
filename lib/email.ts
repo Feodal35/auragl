@@ -1,9 +1,12 @@
 /**
  * Email and Notification Dispatcher for Aura Glow by Mürvet
  *
- * Sends via Gmail SMTP (Nodemailer) — completely free, unlimited.
- * Setup: Google Account → Security → 2-Step Verification → App Passwords → Mail
- * Env vars needed:  GMAIL_USER=auralow@gmail.com  GMAIL_APP_PASSWORD=xxxx xxxx xxxx xxxx
+ * Sends via Strato SMTP (Nodemailer) — completely free, unlimited.
+ * Strato SMTP: smtp.strato.de · Port 465 (SSL)
+ *
+ * Vercel Env Vars needed:
+ *   STRATO_EMAIL=noreply@aura6lowbymürvet.de   (Strato'da oluşturulan e-posta adresi)
+ *   STRATO_PASSWORD=***                          (Strato mail şifresi)
  */
 
 import nodemailer from "nodemailer";
@@ -28,17 +31,18 @@ export interface ContactNotificationData {
   message: string;
 }
 
-/** Studio owner — all form notifications go here */
+/** Studio owner — all form notifications arrive here */
 const STUDIO_EMAIL = "Murvetdincer@aura6lowbymürvet.de";
 
 function createTransport() {
-  const user = process.env.GMAIL_USER;
-  const pass = process.env.GMAIL_APP_PASSWORD;
-
+  const user = process.env.STRATO_EMAIL;
+  const pass = process.env.STRATO_PASSWORD;
   if (!user || !pass) return null;
 
   return nodemailer.createTransport({
-    service: "gmail",
+    host: "smtp.strato.de",
+    port: 465,
+    secure: true, // SSL
     auth: { user, pass },
   });
 }
@@ -108,11 +112,11 @@ export async function sendAppointmentNotification(
   let sent = false;
   const transport = createTransport();
 
-  // 1. Gmail SMTP (free, unlimited)
+  // 1. Strato SMTP (free, unlimited via Strato)
   if (transport) {
     try {
       await transport.sendMail({
-        from: `"${data.first_name} ${data.last_name} via Aura Glow" <${process.env.GMAIL_USER}>`,
+        from: `"${data.first_name} ${data.last_name} via Aura Glow" <${process.env.STRATO_EMAIL}>`,
         replyTo: `"${data.first_name} ${data.last_name}" <${data.email}>`,
         to: recipient,
         subject,
@@ -120,7 +124,7 @@ export async function sendAppointmentNotification(
       });
       sent = true;
     } catch (err) {
-      console.error("[Email Error - Gmail SMTP]:", err);
+      console.error("[Email Error - Strato SMTP]:", err);
     }
   }
 
@@ -144,7 +148,7 @@ export async function sendAppointmentNotification(
   if (!sent) {
     console.info(
       `[Notification] Appointment: ${data.first_name} ${data.last_name} – ${data.treatment_title} – ${data.preferred_date}` +
-      `\n  → GMAIL_USER or GMAIL_APP_PASSWORD not set. Add them to Vercel env vars.`
+      `\n  → STRATO_EMAIL or STRATO_PASSWORD not set. Add them to Vercel env vars.`
     );
   }
 
@@ -206,11 +210,11 @@ export async function sendContactNotification(
   let sent = false;
   const transport = createTransport();
 
-  // 1. Gmail SMTP
+  // 1. Strato SMTP
   if (transport) {
     try {
       await transport.sendMail({
-        from: `"${data.name} via Aura Glow" <${process.env.GMAIL_USER}>`,
+        from: `"${data.name} via Aura Glow" <${process.env.STRATO_EMAIL}>`,
         replyTo: `"${data.name}" <${data.email}>`,
         to: recipient,
         subject,
@@ -218,7 +222,7 @@ export async function sendContactNotification(
       });
       sent = true;
     } catch (err) {
-      console.error("[Email Error - Gmail SMTP]:", err);
+      console.error("[Email Error - Strato SMTP]:", err);
     }
   }
 
@@ -242,7 +246,7 @@ export async function sendContactNotification(
   if (!sent) {
     console.info(
       `[Notification] Contact from: ${data.name} (${data.subject})` +
-      `\n  → GMAIL_USER or GMAIL_APP_PASSWORD not set. Add them to Vercel env vars.`
+      `\n  → STRATO_EMAIL or STRATO_PASSWORD not set. Add them to Vercel env vars.`
     );
   }
 
