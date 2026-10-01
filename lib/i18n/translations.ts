@@ -378,11 +378,11 @@ export const translations: Record<Locale, Translations> = {
       book: "Termin",
     },
     hero: {
-      eyebrow: "Beauty & Aesthetics by Mürvet",
-      headline: "Deine Schönheit.\nUnser Anspruch.",
-      bodyText: "Entdecke individuelle Beauty-Behandlungen für deine natürliche Schönheit und ein strahlendes Selbstbewusstsein.",
+      eyebrow: "Aura Glow by Mürvet · Peine, Niedersachsen",
+      headline: "Wimpern · Facials & Glow\nPermanent Make-up\nIhr Beauty-Studio in Peine.",
+      bodyText: "Professionelle Wimpernverlängerung, regenerierende Facials und zertifiziertes Permanent Make-up – direkt in Peine.",
       ctaPrimary: "Termin anfragen",
-      ctaSecondary: "Behandlungen entdecken",
+      ctaSecondary: "Alle Behandlungen",
       scrollDown: "Nach unten scrollen",
     },
     intro: {
@@ -690,11 +690,11 @@ export const translations: Record<Locale, Translations> = {
       book: "Book",
     },
     hero: {
-      eyebrow: "Beauty & Aesthetics by Mürvet",
-      headline: "Your Beauty.\nOur Passion.",
-      bodyText: "Discover bespoke beauty treatments tailored to accentuate your natural beauty and boost radiant self-confidence.",
+      eyebrow: "Aura Glow by Mürvet · Peine, Lower Saxony",
+      headline: "Lashes · Facials & Glow\nPermanent Makeup\nYour Beauty Studio in Peine.",
+      bodyText: "Professional lash extensions, regenerating facials and certified permanent makeup – directly in Peine.",
       ctaPrimary: "Book Appointment",
-      ctaSecondary: "Explore Treatments",
+      ctaSecondary: "All Treatments",
       scrollDown: "Scroll down",
     },
     intro: {

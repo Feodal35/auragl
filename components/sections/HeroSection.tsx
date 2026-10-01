@@ -13,7 +13,7 @@ interface HeroSectionProps {
 
 const SERVICE_CHIPS_DE = [
   "Wimpernverlängerung",
-  "Cilt Bakımı & Glow",
+  "Facials & Glow",
   "Permanent Make-up",
 ];
 const SERVICE_CHIPS_EN = ["Lash Extensions", "Skin Care & Glow", "Permanent Makeup"];
@@ -25,7 +25,7 @@ export default function HeroSection({ content, design }: HeroSectionProps) {
   const headline = isEn
     ? t.hero.headline
     : content?.headline ||
-      "Wimpern. Cilt Bakımı.\nPermanent Make-up.\nIhr Beauty-Studio in Peine.";
+      "Wimpern · Facials & Glow\nPermanent Make-up\nIhr Beauty-Studio in Peine.";
 
   const eyebrow = isEn
     ? t.hero.eyebrow
@@ -102,7 +102,7 @@ export default function HeroSection({ content, design }: HeroSectionProps) {
 
       {/* Content */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-28 sm:py-36 text-white flex flex-col items-center lg:items-start text-center lg:text-left">
-        <div className="max-w-2xl flex flex-col items-center lg:items-start">
+        <div className="max-w-2xl lg:max-w-3xl xl:max-w-3xl flex flex-col items-center lg:items-start">
           {/* Eyebrow — location + brand */}
           <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 mb-5">
             <span className="w-1.5 h-1.5 rounded-full bg-[#D9A891]" />
@@ -125,7 +125,7 @@ export default function HeroSection({ content, design }: HeroSectionProps) {
 
           {/* Headline — suppressHydrationWarning prevents React #418 mismatch */}
           <h1
-            className="font-editorial text-4xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl font-light tracking-tight leading-[1.08] text-balance mb-6"
+            className="font-editorial text-3xl sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl font-light tracking-tight leading-[1.12] mb-6"
             suppressHydrationWarning
           >
             {headline.split("\n").map((line, idx, arr) => (

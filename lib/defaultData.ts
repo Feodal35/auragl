@@ -497,11 +497,11 @@ export const DEFAULT_CONTENT_SECTIONS: Record<string, ContentSection> = {
     section_id: "hero",
     title: "Aura Glow by Mürvet",
     eyebrow: "Aura Glow by Mürvet · Peine, Niedersachsen",
-    headline: "Wimpern. Cilt Bakımı.\nPermanent Make-up.\nIhr Beauty-Studio in Peine.",
+    headline: "Wimpern · Facials & Glow\nPermanent Make-up\nIhr Beauty-Studio in Peine.",
     body_text: "Professionelle Wimpernverlängerung, regenerierende Facials und zertifiziertes Permanent Make-up – direkt in Peine.",
     primary_cta_label: "Termin anfragen",
     primary_cta_url: "/termin",
-    secondary_cta_label: "Behandlungen entdecken",
+    secondary_cta_label: "Alle Behandlungen",
     secondary_cta_url: "/leistungen",
   },
   intro: {
