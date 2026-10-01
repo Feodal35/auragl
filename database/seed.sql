@@ -138,7 +138,7 @@ ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value;
 
 -- 6. DESIGN SETTINGS (Configurable Backgrounds & Overlays)
 INSERT INTO design_settings (section_id, background_color, background_image_desktop, background_image_mobile, image_position, image_size, overlay_color, overlay_opacity, text_color) VALUES
-('hero', '#211A18', 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=2000&q=85', 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1000&q=85', 'center center', 'cover', '#211A18', 0.45, '#FFFFFF'),
+('hero', '#12171B', '/images/hero-brand-desktop.webp', '/images/hero-brand-mobile.webp', 'center center', 'cover', '#12171B', 0.0, '#FFFFFF'),
 ('intro', '#F7F3EE', NULL, NULL, 'center center', 'cover', '#211A18', 0.0, '#392D29'),
 ('treatments', '#FAF6F1', NULL, NULL, 'center center', 'cover', '#211A18', 0.0, '#392D29'),
 ('philosophy', '#211A18', 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=2000&q=80', NULL, 'center center', 'cover', '#211A18', 0.65, '#FFFFFF'),

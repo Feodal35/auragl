@@ -425,13 +425,13 @@ export const DEFAULT_BRAND_SETTINGS: BrandSettings = {
 export const DEFAULT_DESIGN_SETTINGS: Record<string, DesignSectionSetting> = {
   hero: {
     section_id: "hero",
-    background_color: "#211A18",
-    background_image_desktop: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=2000&q=85",
-    background_image_mobile: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1000&q=85",
+    background_color: "#12171B",
+    background_image_desktop: "/images/hero-brand-desktop.webp",
+    background_image_mobile: "/images/hero-brand-mobile.webp",
     image_position: "center center",
     image_size: "cover",
-    overlay_color: "#211A18",
-    overlay_opacity: 0.45,
+    overlay_color: "#12171B",
+    overlay_opacity: 0,
     text_color: "#FFFFFF",
   },
   intro: {
@@ -496,9 +496,9 @@ export const DEFAULT_CONTENT_SECTIONS: Record<string, ContentSection> = {
   hero: {
     section_id: "hero",
     title: "Aura Glow by Mürvet",
-    eyebrow: "Beauty & Aesthetics by Mürvet",
-    headline: "Deine Schönheit.\nUnser Anspruch.",
-    body_text: "Entdecke individuelle Beauty-Behandlungen für deine natürliche Schönheit und ein strahlendes Selbstbewusstsein.",
+    eyebrow: "Aura Glow by Mürvet · Peine, Niedersachsen",
+    headline: "Wimpern. Cilt Bakımı.\nPermanent Make-up.\nIhr Beauty-Studio in Peine.",
+    body_text: "Professionelle Wimpernverlängerung, regenerierende Facials und zertifiziertes Permanent Make-up – direkt in Peine.",
     primary_cta_label: "Termin anfragen",
     primary_cta_url: "/termin",
     secondary_cta_label: "Behandlungen entdecken",
