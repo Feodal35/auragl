@@ -97,6 +97,9 @@ export default function HeroSection({ content, design }: HeroSectionProps) {
             style={{ backgroundColor: overlayColor, opacity: overlayOpacity }}
           />
         )}
+        {/* Soft readability gradients: protect white text contrast while leaving brand artwork untouched on right */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#12171B]/90 via-[#12171B]/50 via-45% to-transparent hidden lg:block" />
+        <div className="absolute inset-0 bg-[#12171B]/40 lg:hidden" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#12171B] via-transparent to-[#12171B]/30" />
       </div>
 
@@ -125,7 +128,7 @@ export default function HeroSection({ content, design }: HeroSectionProps) {
 
           {/* Headline — suppressHydrationWarning prevents React #418 mismatch */}
           <h1
-            className="font-editorial text-3xl sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl font-light tracking-tight leading-[1.12] mb-6"
+            className="font-editorial text-3xl sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl font-light tracking-tight leading-[1.12] mb-6 drop-shadow-sm"
             suppressHydrationWarning
           >
             {headline.split("\n").map((line, idx, arr) => (
@@ -138,7 +141,7 @@ export default function HeroSection({ content, design }: HeroSectionProps) {
 
           {/* Supporting copy */}
           <p
-            className="text-base sm:text-lg md:text-xl font-light text-[#EFE6DD]/85 max-w-xl leading-relaxed mb-10 text-balance"
+            className="text-base sm:text-lg md:text-xl font-light text-[#EFE6DD] max-w-xl leading-relaxed mb-10 text-balance drop-shadow-sm"
             suppressHydrationWarning
           >
             {bodyText}
