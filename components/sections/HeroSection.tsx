@@ -46,19 +46,24 @@ export default function HeroSection({ content, design }: HeroSectionProps) {
     : content?.secondary_cta_label || "Alle Behandlungen";
   const secondaryCtaUrl = content?.secondary_cta_url || "/leistungen";
 
-  // Real studio photo as default — avoids back-of-head stock photo
+  // Official Aura Glow brand artwork as default hero
+  const isCustomDesktop = Boolean(design?.background_image_desktop);
   const desktopBg =
-    design?.background_image_desktop || "/images/murvet-treatment-full.webp";
-  const mobileBg = design?.background_image_mobile || desktopBg;
+    design?.background_image_desktop || "/images/hero-brand-desktop.webp";
+  const mobileBg = design?.background_image_mobile || "/images/hero-brand-mobile.webp";
   const overlayOpacity =
-    design?.overlay_opacity !== undefined ? design.overlay_opacity : 0.52;
-  const overlayColor = design?.overlay_color || "#211A18";
+    design?.overlay_opacity !== undefined
+      ? design.overlay_opacity
+      : isCustomDesktop
+      ? 0.52
+      : 0;
+  const overlayColor = design?.overlay_color || "#12171B";
 
   const chips = isEn ? SERVICE_CHIPS_EN : SERVICE_CHIPS_DE;
 
   return (
     <section
-      className="relative min-h-[92dvh] sm:min-h-screen flex items-center justify-center overflow-hidden bg-[#211A18]"
+      className="relative min-h-[92dvh] sm:min-h-screen flex items-center overflow-hidden bg-[#12171B]"
       aria-label="Aura Glow by Mürvet – Hero"
     >
       {/* Background — Next.js Image with priority for LCP */}
@@ -66,93 +71,97 @@ export default function HeroSection({ content, design }: HeroSectionProps) {
         {/* Mobile */}
         <Image
           src={mobileBg}
-          alt="Mürvet bei der Behandlung – Aura Glow Beauty Studio Peine"
+          alt="Aura Glow by Mürvet – Beauty & Aesthetics Studio Peine"
           fill
           priority
           fetchPriority="high"
           sizes="(max-width: 767px) 100vw, 0vw"
-          className="object-cover object-center sm:hidden"
-          quality={85}
+          className="object-cover object-top sm:hidden"
+          quality={88}
         />
         {/* Desktop */}
         <Image
           src={desktopBg}
-          alt="Mürvet bei der Behandlung – Aura Glow Beauty Studio Peine"
+          alt="Aura Glow by Mürvet – Beauty & Aesthetics Studio Peine"
           fill
           priority
           fetchPriority="high"
           sizes="(min-width: 768px) 100vw"
           className="object-cover object-center hidden sm:block"
-          quality={85}
+          quality={90}
         />
-        {/* Dark tint overlay */}
-        <div
-          className="absolute inset-0"
-          style={{ backgroundColor: overlayColor, opacity: overlayOpacity }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#211A18] via-transparent to-[#211A18]/40" />
+        {/* Dark tint overlay for custom background images */}
+        {overlayOpacity > 0 && (
+          <div
+            className="absolute inset-0"
+            style={{ backgroundColor: overlayColor, opacity: overlayOpacity }}
+          />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#12171B] via-transparent to-[#12171B]/30" />
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-32 text-center text-white flex flex-col items-center">
-        {/* Eyebrow — location + brand */}
-        <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 mb-5">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#D9A891]" />
-          <span className="text-[11px] sm:text-xs uppercase tracking-[0.22em] text-[#EFE6DD] font-medium">
-            {eyebrow}
-          </span>
-        </div>
-
-        {/* Service chips — instant visual summary of specialties */}
-        <div className="flex flex-wrap justify-center gap-2 mb-7">
-          {chips.map((chip) => (
-            <span
-              key={chip}
-              className="text-[11px] px-3 py-1 rounded-full bg-[#B88770]/30 border border-[#D9A891]/40 text-[#EFE6DD] font-medium tracking-wide backdrop-blur-sm"
-            >
-              {chip}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-28 sm:py-36 text-white flex flex-col items-center lg:items-start text-center lg:text-left">
+        <div className="max-w-2xl flex flex-col items-center lg:items-start">
+          {/* Eyebrow — location + brand */}
+          <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 mb-5">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#D9A891]" />
+            <span className="text-[11px] sm:text-xs uppercase tracking-[0.22em] text-[#EFE6DD] font-medium">
+              {eyebrow}
             </span>
-          ))}
-        </div>
+          </div>
 
-        {/* Headline — suppressHydrationWarning prevents React #418 mismatch */}
-        <h1
-          className="font-editorial text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-light tracking-tight leading-[1.08] max-w-4xl text-balance mb-6"
-          suppressHydrationWarning
-        >
-          {headline.split("\n").map((line, idx, arr) => (
-            <React.Fragment key={idx}>
-              {line}
-              {idx < arr.length - 1 && <br />}
-            </React.Fragment>
-          ))}
-        </h1>
+          {/* Service chips — instant visual summary of specialties */}
+          <div className="flex flex-wrap justify-center lg:justify-start gap-2 mb-7">
+            {chips.map((chip) => (
+              <span
+                key={chip}
+                className="text-[11px] px-3.5 py-1 rounded-full bg-[#B88770]/30 border border-[#D9A891]/40 text-[#EFE6DD] font-medium tracking-wide backdrop-blur-sm"
+              >
+                {chip}
+              </span>
+            ))}
+          </div>
 
-        {/* Supporting copy */}
-        <p
-          className="text-base sm:text-lg md:text-xl font-light text-[#EFE6DD]/85 max-w-2xl leading-relaxed mb-10 text-balance"
-          suppressHydrationWarning
-        >
-          {bodyText}
-        </p>
-
-        {/* CTAs */}
-        <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
-          <a
-            href={primaryCtaUrl}
-            className="w-full sm:w-auto btn-primary flex items-center justify-center gap-2 group"
-          >
-            <CalendarDays className="w-4 h-4 text-white" />
-            <span suppressHydrationWarning>{primaryCtaLabel}</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </a>
-          <a
-            href={secondaryCtaUrl}
-            className="w-full sm:w-auto btn-secondary-light flex items-center justify-center"
+          {/* Headline — suppressHydrationWarning prevents React #418 mismatch */}
+          <h1
+            className="font-editorial text-4xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl font-light tracking-tight leading-[1.08] text-balance mb-6"
             suppressHydrationWarning
           >
-            {secondaryCtaLabel}
-          </a>
+            {headline.split("\n").map((line, idx, arr) => (
+              <React.Fragment key={idx}>
+                {line}
+                {idx < arr.length - 1 && <br />}
+              </React.Fragment>
+            ))}
+          </h1>
+
+          {/* Supporting copy */}
+          <p
+            className="text-base sm:text-lg md:text-xl font-light text-[#EFE6DD]/85 max-w-xl leading-relaxed mb-10 text-balance"
+            suppressHydrationWarning
+          >
+            {bodyText}
+          </p>
+
+          {/* CTAs */}
+          <div className="flex flex-col sm:flex-row items-center lg:items-start gap-4 w-full sm:w-auto">
+            <a
+              href={primaryCtaUrl}
+              className="w-full sm:w-auto btn-primary flex items-center justify-center gap-2 group"
+            >
+              <CalendarDays className="w-4 h-4 text-white" />
+              <span suppressHydrationWarning>{primaryCtaLabel}</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </a>
+            <a
+              href={secondaryCtaUrl}
+              className="w-full sm:w-auto btn-secondary-light flex items-center justify-center"
+              suppressHydrationWarning
+            >
+              {secondaryCtaLabel}
+            </a>
+          </div>
         </div>
       </div>
 

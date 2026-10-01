@@ -18,7 +18,7 @@ const nextConfig: NextConfig = {
         headers: [
           {
             key: "Link",
-            value: "</images/murvet-treatment-full.webp>; rel=preload; as=image; type=image/webp",
+            value: "</images/hero-brand-desktop.webp>; rel=preload; as=image; type=image/webp",
           },
         ],
       },
