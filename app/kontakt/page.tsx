@@ -6,9 +6,9 @@ import KontaktContent from "@/components/public/KontaktContent";
 import { getBusinessSettings, getOpeningHours } from "@/lib/db";
 
 export const metadata: Metadata = {
-  title: "Kontakt, Anfahrt & Öffnungszeiten | Ernst-Moritz-Arndt-Straße 13, Peine",
+  title: "Kontakt, Anfahrt & Öffnungszeiten | 31224 Peine",
   description:
-    "Kontaktiere Aura Glow by Mürvet in der Ernst-Moritz-Arndt-Straße 13 in Peine. Telefon, WhatsApp, Öffnungszeiten, Google Maps Routenplaner und Online-Anfrage.",
+    "Kontaktiere Aura Glow by Mürvet in 31224 Peine. Telefon, WhatsApp, Öffnungszeiten, Google Maps Routenplaner und Online-Anfrage.",
 };
 
 export const dynamic = "force-dynamic";

@@ -398,7 +398,7 @@ export const DEFAULT_OPENING_HOURS: OpeningHour[] = [
 export const DEFAULT_BUSINESS_SETTINGS: BusinessSettings = {
   business_name: "Aura Glow by Mürvet",
   owner_name: "Mürvet Dincer",
-  street: "Ernst-Moritz-Arndt-Straße 13",
+  street: "",
   postal_code: "31224",
   city: "Peine",
   country: "Deutschland",
@@ -407,7 +407,7 @@ export const DEFAULT_BUSINESS_SETTINGS: BusinessSettings = {
   email: "kontakt@auraglow.de",
   whatsapp: "+491739026031",
   instagram_url: "https://instagram.com/aura6low",
-  google_maps_url: "https://maps.google.com/?q=Ernst-Moritz-Arndt-Stra%C3%9Fe+13+31224+Peine",
+  google_maps_url: "https://maps.google.com/?q=31224+Peine",
   booking_info: "Termine nur nach vorheriger Vereinbarung.",
 };
 

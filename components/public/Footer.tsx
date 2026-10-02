@@ -146,7 +146,7 @@ export default function Footer({ business, openingHours }: FooterProps) {
               {t.footer.colContact}
             </h3>
             <ul className="space-y-3 text-sm text-[#EFE6DD]/80">
-              {business.street && (
+              {(business.street || business.postal_code || business.city) && (
                 <li
                   className="flex items-start gap-3"
                   itemProp="address"
@@ -155,10 +155,14 @@ export default function Footer({ business, openingHours }: FooterProps) {
                 >
                   <MapPin className="w-4 h-4 text-[#D9A891] shrink-0 mt-0.5" />
                   <span>
-                    <span itemProp="streetAddress">{business.street}</span>
-                    <br />
-                    <span itemProp="postalCode">{business.postal_code}</span>{" "}
-                    <span itemProp="addressLocality">{business.city}</span>
+                    {business.street && (
+                      <>
+                        <span itemProp="streetAddress">{business.street}</span>
+                        <br />
+                      </>
+                    )}
+                    <span itemProp="postalCode">{business.postal_code || "31224"}</span>{" "}
+                    <span itemProp="addressLocality">{business.city || "Peine"}</span>
                   </span>
                 </li>
               )}

@@ -328,13 +328,13 @@ export const translations: Record<Locale, Translations> = {
       language: "Sprache",
     },
     header: {
-      topAnnouncement: "Ernst-Moritz-Arndt-Straße 13, Peine • Exklusive Beauty & Aesthetics",
+      topAnnouncement: "31224 Peine • Exklusive Beauty & Aesthetics",
       topAnnouncementShort: "Aura Glow Peine",
       topAnnouncementCta: "Termine nach Vereinbarung • Jetzt anfragen",
     },
     footer: {
       brandDescription:
-        "Exklusives Beauty & Aesthetics Studio in Peine. Meisterhafte Behandlungen für natürliche Schönheit, strahlenden Glow und vollendete Symmetrie in der Ernst-Moritz-Arndt-Straße 13.",
+        "Exklusives Beauty & Aesthetics Studio in Peine. Meisterhafte Behandlungen für natürliche Schönheit, strahlenden Glow und vollendete Symmetrie in 31224 Peine.",
       followInstagram: "Instagram folgen",
       colTreatments: "Behandlungen & Studio",
       colHours: "Öffnungszeiten",
@@ -586,7 +586,7 @@ export const translations: Record<Locale, Translations> = {
       formTitle: "Kontaktiere uns",
       formSubtitle: "Fülle das untenstehende Formular aus. Wir melden uns zeitnah bei dir.",
       mapEyebrow: "Standort & Route",
-      mapTitle: "Aura Glow in der Ernst-Moritz-Arndt-Straße 13, Peine",
+      mapTitle: "Aura Glow in 31224 Peine",
       planRoute: "Route in Google Maps planen",
     },
     aboutPage: {
@@ -640,13 +640,13 @@ export const translations: Record<Locale, Translations> = {
       language: "Language",
     },
     header: {
-      topAnnouncement: "Ernst-Moritz-Arndt-Straße 13, Peine • Exclusive Beauty & Aesthetics",
+      topAnnouncement: "31224 Peine • Exclusive Beauty & Aesthetics",
       topAnnouncementShort: "Aura Glow Peine",
       topAnnouncementCta: "Appointments by reservation • Inquire now",
     },
     footer: {
       brandDescription:
-        "Exclusive Beauty & Aesthetics Studio in Peine. Masterful treatments for natural beauty, radiant glow, and perfect symmetry at Ernst-Moritz-Arndt-Straße 13.",
+        "Exclusive Beauty & Aesthetics Studio in Peine. Masterful treatments for natural beauty, radiant glow, and perfect symmetry in 31224 Peine.",
       followInstagram: "Follow on Instagram",
       colTreatments: "Treatments & Studio",
       colHours: "Opening Hours",
@@ -898,7 +898,7 @@ export const translations: Record<Locale, Translations> = {
       formTitle: "Contact Us",
       formSubtitle: "Complete the form below. We will respond to your inquiry promptly.",
       mapEyebrow: "Location & Directions",
-      mapTitle: "Aura Glow at Ernst-Moritz-Arndt-Straße 13, Peine",
+      mapTitle: "Aura Glow in 31224 Peine",
       planRoute: "Plan route in Google Maps",
     },
     aboutPage: {

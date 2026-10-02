@@ -27,7 +27,7 @@ export default function ContactVisitSection({ business, openingHours }: ContactV
             </div>
 
             <div className="space-y-6 pt-4 border-t border-[#E8D6C5]">
-              {business.street && (
+              {(business.street || business.postal_code || business.city) && (
                 <div className="flex items-start gap-4">
                   <div className="w-9 h-9 rounded-full bg-[#FAF6F1] border border-[#E8D6C5] flex items-center justify-center text-[#B88770] shrink-0 mt-1">
                     <MapPin className="w-4 h-4" />
@@ -37,8 +37,12 @@ export default function ContactVisitSection({ business, openingHours }: ContactV
                       Adresse
                     </h3>
                     <p className="text-base text-[#4F443E] font-normal mt-1">
-                      {business.street}
-                      <br />
+                      {business.street && (
+                        <>
+                          {business.street}
+                          <br />
+                        </>
+                      )}
                       {business.postal_code} {business.city}
                     </p>
                     {business.google_maps_url && (
@@ -153,11 +157,11 @@ export default function ContactVisitSection({ business, openingHours }: ContactV
                 Zentrale Lage in {business.city || "Peine"}
               </span>
               <h3 className="font-editorial text-xl sm:text-2xl text-[#392D29]">
-                {business.street} &bull; {business.postal_code} {business.city}
+                {business.street ? `${business.street} • ` : ""}{business.postal_code || "31224"} {business.city || "Peine"}
               </h3>
             </div>
             <a
-              href={business.google_maps_url || `https://maps.google.com/?q=${encodeURIComponent(`${business.street || ""} ${business.postal_code || ""} ${business.city || ""}`)}`}
+              href={business.google_maps_url || `https://maps.google.com/?q=${encodeURIComponent(`${business.street ? `${business.street} ` : ""}${business.postal_code || "31224"} ${business.city || "Peine"}`)}`}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary text-xs inline-flex items-center justify-center gap-1.5 shrink-0"
@@ -171,7 +175,7 @@ export default function ContactVisitSection({ business, openingHours }: ContactV
           <div className="relative w-full h-[280px] sm:h-[360px] rounded-[1px] overflow-hidden border border-[#E8D6C5]/70">
             <iframe
               title={`Aura Glow by Mürvet Google Maps Standort ${business.city || "Peine"}`}
-              src={`https://maps.google.com/maps?q=${encodeURIComponent(`${business.street || "Ernst-Moritz-Arndt-Straße 13"}, ${business.postal_code || "31224"} ${business.city || "Peine"}, Germany`)}&t=&z=15&ie=UTF8&iwloc=&output=embed`}
+              src={`https://maps.google.com/maps?q=${encodeURIComponent(`${business.street ? `${business.street}, ` : ""}${business.postal_code || "31224"} ${business.city || "Peine"}, Germany`)}&t=&z=14&ie=UTF8&iwloc=&output=embed`}
               width="100%"
               height="100%"
               style={{ border: 0 }}

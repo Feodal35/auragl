@@ -63,14 +63,18 @@ export default function KontaktContent({ business, openingHours }: KontaktConten
               </h2>
 
               <div className="space-y-5 text-sm text-[#756A63]">
-                {business.street && (
+                {(business.street || business.postal_code || business.city) && (
                   <div className="flex items-start gap-3.5">
                     <MapPin className="w-5 h-5 text-[#B88770] shrink-0 mt-0.5" />
                     <div>
                       <strong className="text-[#392D29] block">{t.contactPage.addressLabel}</strong>
                       <span>
-                        {business.street}
-                        <br />
+                        {business.street && (
+                          <>
+                            {business.street}
+                            <br />
+                          </>
+                        )}
                         {business.postal_code} {business.city}
                       </span>
                       {business.google_maps_url && (
@@ -211,11 +215,11 @@ export default function KontaktContent({ business, openingHours }: KontaktConten
                 {t.contactPage.mapTitle}
               </h3>
               <p className="text-xs sm:text-sm text-[#756A63] font-light mt-1">
-                {business.street} &bull; {business.postal_code} {business.city}
+                {business.street ? `${business.street} • ` : ""}{business.postal_code || "31224"} {business.city || "Peine"}
               </p>
             </div>
             <a
-              href={business.google_maps_url || "https://maps.google.com/?q=Ernst-Moritz-Arndt-Stra%C3%9Fe+13+31224+Peine"}
+              href={business.google_maps_url || "https://maps.google.com/?q=31224+Peine"}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary text-xs inline-flex items-center justify-center gap-1.5 shrink-0"
@@ -228,7 +232,7 @@ export default function KontaktContent({ business, openingHours }: KontaktConten
           <div className="relative w-full h-[320px] sm:h-[420px] rounded-[1px] overflow-hidden border border-[#E8D6C5]">
             <iframe
               title={`Aura Glow by Mürvet Google Maps Standort ${business.city || "Peine"}`}
-              src={`https://maps.google.com/maps?q=${encodeURIComponent(`${business.street || "Ernst-Moritz-Arndt-Straße 13"}, ${business.postal_code || "31224"} ${business.city || "Peine"}, Germany`)}&t=&z=15&ie=UTF8&iwloc=&output=embed`}
+              src={`https://maps.google.com/maps?q=${encodeURIComponent(`${business.street ? `${business.street}, ` : ""}${business.postal_code || "31224"} ${business.city || "Peine"}, Germany`)}&t=&z=14&ie=UTF8&iwloc=&output=embed`}
               width="100%"
               height="100%"
               style={{ border: 0 }}

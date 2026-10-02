@@ -49,27 +49,27 @@ export default function JsonLdSchema({ business, openingHours }: Props) {
         "@id": `${baseUrl}/#beautysalon`,
         name: business.business_name,
         alternateName: "Aura Glow Peine",
-    description:
-      "Exklusives Beauty & Aesthetics Studio für Wimpernverlängerung, Hollywood Glow Facials, Powder Brows Permanent Make-up und Schulungen in der Ernst-Moritz-Arndt-Straße 13 in Peine.",
-    url: baseUrl,
-    telephone: business.phone,
-    email: business.email,
-    priceRange: "€€",
-    currenciesAccepted: "EUR",
-    paymentAccepted: "Barzahlung, EC-Karte, Kreditkarte",
-    image: [
-      `${baseUrl}/images/treatments/microneedling-facial.jpg`,
-      `${baseUrl}/images/treatments/murvet-treatment-full.jpg`,
-      `${baseUrl}/images/treatments/lash-lift-result.jpg`,
-    ],
-    hasMap:
-      business.google_maps_url ||
-      "https://maps.google.com/?q=Ernst-Moritz-Arndt-Stra%C3%9Fe+13+31224+Peine",
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: business.street,
-      addressLocality: business.city,
-      postalCode: business.postal_code,
+        description:
+          "Exklusives Beauty & Aesthetics Studio für Wimpernverlängerung, Hollywood Glow Facials, Powder Brows Permanent Make-up und Schulungen in 31224 Peine.",
+        url: baseUrl,
+        telephone: business.phone,
+        email: business.email,
+        priceRange: "€€",
+        currenciesAccepted: "EUR",
+        paymentAccepted: "Barzahlung, EC-Karte, Kreditkarte",
+        image: [
+          `${baseUrl}/images/treatments/microneedling-facial.jpg`,
+          `${baseUrl}/images/treatments/murvet-treatment-full.jpg`,
+          `${baseUrl}/images/treatments/lash-lift-result.jpg`,
+        ],
+        hasMap:
+          business.google_maps_url ||
+          "https://maps.google.com/?q=31224+Peine",
+        address: {
+          "@type": "PostalAddress",
+          ...(business.street ? { streetAddress: business.street } : {}),
+          addressLocality: business.city || "Peine",
+          postalCode: business.postal_code || "31224",
       addressCountry: "DE",
       addressRegion: "Niedersachsen",
     },

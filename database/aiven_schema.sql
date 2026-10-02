@@ -309,7 +309,7 @@ INSERT INTO site_settings (key, value) VALUES
 ('business', '{
     "business_name": "Aura Glow by Mürvet",
     "owner_name": "Mürvet Dincer",
-    "street": "Ernst-Moritz-Arndt-Straße 13",
+    "street": "",
     "postal_code": "31224",
     "city": "Peine",
     "country": "Deutschland",
@@ -320,7 +320,7 @@ INSERT INTO site_settings (key, value) VALUES
     "instagram_url": "https://instagram.com/aura6low",
     "tiktok_url": "",
     "facebook_url": "",
-    "google_maps_url": "https://maps.google.com/?q=Ernst-Moritz-Arndt-Stra%C3%9Fe+13+31224+Peine"
+    "google_maps_url": "https://maps.google.com/?q=31224+Peine"
 }'::jsonb),
 ('brand', '{
     "brand_name": "Aura Glow by Mürvet",
