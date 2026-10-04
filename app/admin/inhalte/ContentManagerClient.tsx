@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { ContentSection } from "@/lib/types";
 import { useAdminLanguage } from "@/components/admin/AdminLanguageContext";
 import { getAdminDict } from "@/lib/i18n/adminDict";
@@ -11,6 +12,7 @@ interface Props {
 }
 
 export default function ContentManagerClient({ initialSections }: Props) {
+  const router = useRouter();
   const { adminLang } = useAdminLanguage();
   const d = getAdminDict(adminLang);
 
@@ -52,6 +54,7 @@ export default function ContentManagerClient({ initialSections }: Props) {
       });
       if (res.ok) {
         setFeedback(d.content.savedSuccess);
+        router.refresh();
         setTimeout(() => setFeedback(null), 3000);
       }
     } catch {

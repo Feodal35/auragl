@@ -24,6 +24,10 @@ export async function POST(request: Request) {
     const service = await saveService(body);
 
     revalidatePath("/", "layout");
+    revalidatePath("/", "page");
+    revalidatePath("/leistungen");
+    revalidatePath("/termin");
+    revalidatePath("/admin/leistungen");
 
     return NextResponse.json({ success: true, data: service });
   } catch (err: any) {

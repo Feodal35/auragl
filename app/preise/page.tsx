@@ -12,7 +12,8 @@ export const metadata: Metadata = {
     "Transparente Preisliste für alle Behandlungen von Aura Glow by Mürvet in Peine: Wimpernverlängerung, Hollywood Glow, Microneedling & Powder Brows.",
 };
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default async function PricingPage() {
   const [categories, pricing, business, openingHours] = await Promise.all([

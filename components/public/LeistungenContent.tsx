@@ -56,7 +56,7 @@ export default function LeistungenContent({ categories, services }: LeistungenCo
       {/* Categories & Services Sections */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24">
         {categories.map((category) => {
-          const categoryServices = services.filter((s) => s.category_id === category.id);
+          const categoryServices = services.filter((s) => s.category_id === category.id && s.is_active !== false);
           if (categoryServices.length === 0) return null;
 
           return (

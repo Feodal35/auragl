@@ -40,6 +40,14 @@ export async function POST(request: Request) {
 
     // Immediately purge Next.js server & ISR cache for all pages
     revalidatePath("/", "layout");
+    revalidatePath("/", "page");
+    revalidatePath("/kontakt");
+    revalidatePath("/ueber-uns");
+    revalidatePath("/termin");
+    revalidatePath("/leistungen");
+    revalidatePath("/preise");
+    revalidatePath("/galerie");
+    revalidatePath("/admin/einstellungen");
 
     return NextResponse.json({ success: true });
   } catch (err: any) {

@@ -2,6 +2,7 @@ import React from "react";
 import { getBusinessSettings, getOpeningHours } from "@/lib/db";
 import SettingsManagerClient from "./SettingsManagerClient";
 
+export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export default async function AdminSettingsPage() {

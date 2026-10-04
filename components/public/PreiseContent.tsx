@@ -60,7 +60,7 @@ export default function PreiseContent({ categories, pricing }: PreiseContentProp
       {/* Pricing Groups */}
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
         {categories.map((cat) => {
-          const catPricing = pricing.filter((p) => p.category_id === cat.id);
+          const catPricing = pricing.filter((p) => p.category_id === cat.id && p.is_active !== false);
           if (catPricing.length === 0) return null;
 
           // Group by subcategory if exists

@@ -224,22 +224,23 @@ export async function saveService(service: Partial<ServiceItem>): Promise<Servic
             updated_at = NOW()
           WHERE id = $13 RETURNING *`,
           [
-            service.category_id,
-            service.title,
-            service.slug,
-            service.short_description,
-            service.full_description,
-            service.featured_image,
-            service.duration_minutes,
-            service.price_display,
-            service.price,
-            service.is_featured,
-            service.display_order,
-            service.is_active,
+            service.category_id ?? null,
+            service.title ?? null,
+            service.slug ?? null,
+            service.short_description ?? null,
+            service.full_description ?? null,
+            service.featured_image ?? null,
+            service.duration_minutes ?? null,
+            service.price_display ?? null,
+            service.price ?? null,
+            service.is_featured ?? null,
+            service.display_order ?? null,
+            service.is_active ?? null,
             service.id,
           ]
         );
         if (rows && rows.length > 0) return rows[0];
+        throw new Error(`Behandlung mit ID ${service.id} nicht gefunden.`);
       } else {
         const rows = await queryPg<ServiceItem>(
           `INSERT INTO services 
@@ -265,6 +266,7 @@ export async function saveService(service: Partial<ServiceItem>): Promise<Servic
       }
     } catch (err) {
       console.error("[PostgreSQL saveService Error]:", err);
+      throw err;
     }
   }
 
@@ -324,6 +326,7 @@ export async function deleteService(id: number): Promise<boolean> {
       return true;
     } catch (err) {
       console.error("[PostgreSQL deleteService Error]:", err);
+      throw err;
     }
   }
 
@@ -401,10 +404,10 @@ export async function savePriceRow(priceRow: Partial<PriceRow>): Promise<PriceRo
         const rows = await queryPg<PriceRow>(
           `UPDATE pricing SET 
             category_id = COALESCE($1, category_id),
-            subcategory_name = $2,
+            subcategory_name = COALESCE($2, subcategory_name),
             treatment_name = COALESCE($3, treatment_name),
-            variant_name = $4,
-            duration = $5,
+            variant_name = COALESCE($4, variant_name),
+            duration = COALESCE($5, duration),
             price = COALESCE($6, price),
             price_display = COALESCE($7, price_display),
             display_order = COALESCE($8, display_order),
@@ -412,19 +415,20 @@ export async function savePriceRow(priceRow: Partial<PriceRow>): Promise<PriceRo
             updated_at = NOW()
           WHERE id = $10 RETURNING *`,
           [
-            priceRow.category_id,
-            priceRow.subcategory_name || null,
-            priceRow.treatment_name,
-            priceRow.variant_name || null,
-            priceRow.duration || null,
-            priceRow.price,
-            priceRow.price_display,
-            priceRow.display_order,
-            priceRow.is_active,
+            priceRow.category_id ?? null,
+            priceRow.subcategory_name !== undefined ? priceRow.subcategory_name : null,
+            priceRow.treatment_name ?? null,
+            priceRow.variant_name !== undefined ? priceRow.variant_name : null,
+            priceRow.duration !== undefined ? priceRow.duration : null,
+            priceRow.price ?? null,
+            priceRow.price_display ?? null,
+            priceRow.display_order ?? null,
+            priceRow.is_active ?? null,
             priceRow.id,
           ]
         );
         if (rows && rows.length > 0) return rows[0];
+        throw new Error(`Preis mit ID ${priceRow.id} nicht gefunden.`);
       } else {
         const rows = await queryPg<PriceRow>(
           `INSERT INTO pricing 
@@ -447,6 +451,7 @@ export async function savePriceRow(priceRow: Partial<PriceRow>): Promise<PriceRo
       }
     } catch (err) {
       console.error("[PostgreSQL savePriceRow Error]:", err);
+      throw err;
     }
   }
 
@@ -502,6 +507,7 @@ export async function deletePriceRow(id: number): Promise<boolean> {
       return true;
     } catch (err) {
       console.error("[PostgreSQL deletePriceRow Error]:", err);
+      throw err;
     }
   }
 
@@ -579,8 +585,8 @@ export async function saveGalleryItem(item: Partial<GalleryItem>): Promise<Galle
         const rows = await queryPg<GalleryItem>(
           `UPDATE gallery_items SET 
             image_url = COALESCE($1, image_url),
-            before_image_url = $2,
-            after_image_url = $3,
+            before_image_url = COALESCE($2, before_image_url),
+            after_image_url = COALESCE($3, after_image_url),
             caption = COALESCE($4, caption),
             category = COALESCE($5, category),
             is_before_after = COALESCE($6, is_before_after),
@@ -589,18 +595,19 @@ export async function saveGalleryItem(item: Partial<GalleryItem>): Promise<Galle
             updated_at = NOW()
           WHERE id = $9 RETURNING *`,
           [
-            item.image_url,
-            item.before_image_url || null,
-            item.after_image_url || null,
-            item.caption,
-            item.category,
-            item.is_before_after,
-            item.display_order,
-            item.is_active,
+            item.image_url ?? null,
+            item.before_image_url !== undefined ? item.before_image_url : null,
+            item.after_image_url !== undefined ? item.after_image_url : null,
+            item.caption ?? null,
+            item.category ?? null,
+            item.is_before_after ?? null,
+            item.display_order ?? null,
+            item.is_active ?? null,
             item.id,
           ]
         );
         if (rows && rows.length > 0) return rows[0];
+        throw new Error(`Galeriebild mit ID ${item.id} nicht gefunden.`);
       } else {
         const rows = await queryPg<GalleryItem>(
           `INSERT INTO gallery_items 
@@ -622,6 +629,7 @@ export async function saveGalleryItem(item: Partial<GalleryItem>): Promise<Galle
       }
     } catch (err) {
       console.error("[PostgreSQL saveGalleryItem Error]:", err);
+      throw err;
     }
   }
 
@@ -654,6 +662,7 @@ export async function deleteGalleryItem(id: number): Promise<boolean> {
       return true;
     } catch (err) {
       console.error("[PostgreSQL deleteGalleryItem Error]:", err);
+      throw err;
     }
   }
 

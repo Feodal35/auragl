@@ -12,7 +12,8 @@ export const metadata: Metadata = {
     "Erfahre mehr über Mürvet und die Philosophie von Aura Glow in Peine: Meisterhafte Präzision, natürliche Ästhetik und kompromisslose Hygiene.",
 };
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default async function AboutPage() {
   const [business, openingHours, contentSections] = await Promise.all([

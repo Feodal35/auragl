@@ -2,6 +2,7 @@ import React from "react";
 import { getAllGalleryItems } from "@/lib/db";
 import GalleryManagerClient from "./GalleryManagerClient";
 
+export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export default async function AdminGalleryPage() {

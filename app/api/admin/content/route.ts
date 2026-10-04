@@ -24,6 +24,13 @@ export async function POST(request: Request) {
     const saved = await saveContentSection(body);
 
     revalidatePath("/", "layout");
+    revalidatePath("/", "page");
+    revalidatePath("/ueber-uns");
+    revalidatePath("/kontakt");
+    revalidatePath("/leistungen");
+    revalidatePath("/preise");
+    revalidatePath("/galerie");
+    revalidatePath("/admin/inhalte");
 
     return NextResponse.json({ success: true, data: saved });
   } catch (err: any) {

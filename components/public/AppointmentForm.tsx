@@ -22,6 +22,8 @@ export default function AppointmentForm({ services, initialTreatment = "" }: App
   const [isSuccess, setIsSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+  const activeServices = (services || []).filter((s) => s.is_active !== false);
+
   // todayString must be calculated client-side only to prevent hydration mismatch (React #418)
   // Server always renders "" (no min constraint), client sets the real today date after mount.
   const [todayString, setTodayString] = useState("");
@@ -42,7 +44,7 @@ export default function AppointmentForm({ services, initialTreatment = "" }: App
       last_name: "",
       email: "",
       phone: "",
-      treatment_title: initialTreatment || (services[0]?.title ?? ""),
+      treatment_title: initialTreatment || (activeServices[0]?.title ?? ""),
       preferred_date: "",
       preferred_time: "Vormittags (09:00 - 13:00)",
       alternative_date: "",
@@ -215,7 +217,7 @@ export default function AppointmentForm({ services, initialTreatment = "" }: App
           {...register("treatment_title")}
           className={inputClasses}
         >
-          {services.map((s) => (
+          {activeServices.map((s) => (
             <option key={s.id} value={s.title}>
               {s.title} ({s.price_display})
             </option>

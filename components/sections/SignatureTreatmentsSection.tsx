@@ -13,9 +13,10 @@ interface SignatureTreatmentsProps {
 export default function SignatureTreatmentsSection({ services }: SignatureTreatmentsProps) {
   const { t } = useLanguage();
 
-  // Prioritize featured services showcasing real studio treatments
-  const featuredList = services.filter((s) => s.is_featured);
-  const featured = featuredList.length >= 4 ? featuredList.slice(0, 4) : services.slice(0, 4);
+  // Prioritize active featured services showcasing real studio treatments
+  const activeServices = services.filter((s) => s.is_active !== false);
+  const featuredList = activeServices.filter((s) => s.is_featured);
+  const featured = featuredList.length >= 4 ? featuredList.slice(0, 4) : activeServices.slice(0, 4);
 
   return (
     <section className="py-24 sm:py-32 bg-[#EFE6DD]/40 border-y border-[#E8D6C5]/50">

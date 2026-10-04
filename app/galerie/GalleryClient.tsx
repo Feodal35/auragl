@@ -47,10 +47,11 @@ export default function GalleryClient({ items }: GalleryClientProps) {
     return found ? found.label : category;
   };
 
+  const activeItems = (items || []).filter((item) => item.is_active !== false);
   const filteredItems =
     selectedCategory === "Alle"
-      ? items
-      : items.filter((item) => item.category === selectedCategory);
+      ? activeItems
+      : activeItems.filter((item) => item.category === selectedCategory);
 
   return (
     <>

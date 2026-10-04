@@ -18,10 +18,44 @@ export async function PUT(
     const updated = await saveService({ ...body, id: parseInt(id, 10) });
 
     revalidatePath("/", "layout");
+    revalidatePath("/", "page");
+    revalidatePath("/leistungen");
+    revalidatePath("/termin");
+    revalidatePath("/admin/leistungen");
 
     return NextResponse.json({ success: true, data: updated });
   } catch (err: any) {
     console.error("[Services PUT Error]:", err);
+    return NextResponse.json(
+      { success: false, error: err?.message || "Fehler beim Aktualisieren." },
+      { status: 500 }
+    );
+  }
+}
+
+export async function PATCH(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const session = await getAdminSession();
+  if (!session) {
+    return NextResponse.json({ success: false, error: "Nicht autorisiert." }, { status: 401 });
+  }
+
+  try {
+    const { id } = await params;
+    const body = await request.json();
+    const updated = await saveService({ ...body, id: parseInt(id, 10) });
+
+    revalidatePath("/", "layout");
+    revalidatePath("/", "page");
+    revalidatePath("/leistungen");
+    revalidatePath("/termin");
+    revalidatePath("/admin/leistungen");
+
+    return NextResponse.json({ success: true, data: updated });
+  } catch (err: any) {
+    console.error("[Services PATCH Error]:", err);
     return NextResponse.json(
       { success: false, error: err?.message || "Fehler beim Aktualisieren." },
       { status: 500 }
@@ -43,6 +77,10 @@ export async function DELETE(
     const success = await deleteService(parseInt(id, 10));
 
     revalidatePath("/", "layout");
+    revalidatePath("/", "page");
+    revalidatePath("/leistungen");
+    revalidatePath("/termin");
+    revalidatePath("/admin/leistungen");
 
     return NextResponse.json({ success });
   } catch (err: any) {

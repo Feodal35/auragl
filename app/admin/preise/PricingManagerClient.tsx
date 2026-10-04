@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { PriceRow, ServiceCategory } from "@/lib/types";
 import { useAdminLanguage } from "@/components/admin/AdminLanguageContext";
 import { getAdminDict } from "@/lib/i18n/adminDict";
@@ -12,6 +13,7 @@ interface Props {
 }
 
 export default function PricingManagerClient({ initialPricing, categories }: Props) {
+  const router = useRouter();
   const { adminLang } = useAdminLanguage();
   const d = getAdminDict(adminLang);
 
@@ -21,6 +23,48 @@ export default function PricingManagerClient({ initialPricing, categories }: Pro
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [togglingId, setTogglingId] = useState<number | null>(null);
+
+  const handleToggleActive = async (row: PriceRow) => {
+    const nextStatus = !row.is_active;
+    setTogglingId(row.id);
+
+    // Optimistic UI update
+    setPricing((prev) =>
+      prev.map((p) => (p.id === row.id ? { ...p, is_active: nextStatus } : p))
+    );
+
+    try {
+      const res = await fetch(`/api/admin/pricing/${row.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ is_active: nextStatus }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || "Fehler");
+      }
+      setFeedback(
+        nextStatus
+          ? (adminLang === "tr" ? "Fiyat kalemi aktif edildi." : "Preiseintrag aktiviert.")
+          : (adminLang === "tr" ? "Fiyat kalemi pasif edildi." : "Preiseintrag deaktiviert.")
+      );
+      router.refresh();
+      setTimeout(() => setFeedback(null), 3000);
+    } catch (err: any) {
+      // Revert on error
+      setPricing((prev) =>
+        prev.map((p) => (p.id === row.id ? { ...p, is_active: row.is_active } : p))
+      );
+      alert(
+        adminLang === "tr"
+          ? "Durum güncellenirken hata oluştu: " + err.message
+          : "Fehler beim Umschalten: " + err.message
+      );
+    } finally {
+      setTogglingId(null);
+    }
+  };
 
   const filteredPricing =
     selectedCategory === 0
@@ -54,6 +98,7 @@ export default function PricingManagerClient({ initialPricing, categories }: Pro
       if (res.ok) {
         setPricing((prev) => prev.filter((p) => p.id !== id));
         setFeedback(d.pricing.deletedSuccess);
+        router.refresh();
         setTimeout(() => setFeedback(null), 3000);
       }
     } catch {
@@ -87,6 +132,7 @@ export default function PricingManagerClient({ initialPricing, categories }: Pro
         }
         setIsModalOpen(false);
         setEditingRow(null);
+        router.refresh();
         setTimeout(() => setFeedback(null), 3000);
       }
     } catch {
@@ -184,13 +230,28 @@ export default function PricingManagerClient({ initialPricing, categories }: Pro
                   {item.price_display}
                 </td>
                 <td className="py-3 px-4">
-                  <span
-                    className={`inline-block px-2 py-0.5 rounded-full text-[10px] uppercase tracking-wider font-semibold ${
-                      item.is_active ? "bg-emerald-100 text-emerald-800" : "bg-gray-100 text-gray-700"
-                    }`}
+                  <button
+                    type="button"
+                    onClick={() => handleToggleActive(item)}
+                    disabled={togglingId === item.id}
+                    className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold transition-all cursor-pointer shadow-xs ${
+                      item.is_active
+                        ? "bg-emerald-100 text-emerald-800 hover:bg-emerald-200 border border-emerald-300"
+                        : "bg-amber-100 text-amber-900 hover:bg-amber-200 border border-amber-300"
+                    } ${togglingId === item.id ? "opacity-60 cursor-wait" : ""}`}
+                    title={
+                      adminLang === "tr"
+                        ? "Durumu değiştirmek için tıklayın (Aktif/Pasif)"
+                        : "Klicken zum Umschalten (Aktiv/Inaktiv)"
+                    }
                   >
-                    {item.is_active ? d.common.active : d.common.inactive}
-                  </span>
+                    <span
+                      className={`w-2 h-2 rounded-full ${
+                        item.is_active ? "bg-emerald-600 animate-pulse" : "bg-amber-600"
+                      }`}
+                    />
+                    <span>{item.is_active ? d.common.active : d.common.inactive}</span>
+                  </button>
                 </td>
                 <td className="py-3 px-4 text-right space-x-2">
                   <button

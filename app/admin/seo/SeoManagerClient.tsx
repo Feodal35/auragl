@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { SeoSetting } from "@/lib/types";
 import { useAdminLanguage } from "@/components/admin/AdminLanguageContext";
 import { getAdminDict } from "@/lib/i18n/adminDict";
@@ -11,6 +12,7 @@ interface Props {
 }
 
 export default function SeoManagerClient({ initialSeo }: Props) {
+  const router = useRouter();
   const { adminLang } = useAdminLanguage();
   const d = getAdminDict(adminLang);
 
@@ -46,6 +48,7 @@ export default function SeoManagerClient({ initialSeo }: Props) {
       });
       if (res.ok) {
         setFeedback(d.seo.savedSuccess);
+        router.refresh();
         setTimeout(() => setFeedback(null), 3000);
       }
     } catch {

@@ -31,8 +31,8 @@ export default function GalleryPreviewSection({ items }: GalleryPreviewProps) {
     };
   }, [activeItem]);
 
-  // Take first 5 items for homepage editorial showcase
-  const previewItems = items.slice(0, 5);
+  // Take first 5 active items for homepage editorial showcase
+  const previewItems = items.filter((item) => item.is_active !== false).slice(0, 5);
 
   return (
     <section className="py-24 sm:py-32 bg-[#FAF6F1] border-b border-[#E8D6C5]/50">

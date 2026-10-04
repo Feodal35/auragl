@@ -50,6 +50,7 @@ export default function MessageManagerClient({ initialMessages }: Props) {
         setMessages((prev) =>
           prev.map((m) => (m.id === id ? { ...m, status: newStatus } : m))
         );
+        router.refresh();
       }
     } finally {
       setLoadingId(null);

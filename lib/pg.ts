@@ -51,9 +51,12 @@ export async function queryPg<T extends QueryResultRow = QueryResultRow>(
     throw new Error("DATABASE_URL is not configured.");
   }
 
+  // Node-postgres can fail if bind params contain undefined; convert to null
+  const safeParams = params ? params.map((v) => (v === undefined ? null : v)) : undefined;
+
   const client = await p.connect();
   try {
-    const res = await client.query<T>(text, params);
+    const res = await client.query<T>(text, safeParams);
     return res.rows;
   } finally {
     client.release();

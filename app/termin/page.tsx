@@ -5,7 +5,7 @@ import Footer from "@/components/public/Footer";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import StickyMobileCta from "@/components/public/StickyMobileCta";
 import AppointmentForm from "@/components/public/AppointmentForm";
-import { getAllServices, getBusinessSettings, getOpeningHours } from "@/lib/db";
+import { getServices, getBusinessSettings, getOpeningHours } from "@/lib/db";
 import { Clock3, CalendarCheck, ShieldCheck } from "lucide-react";
 
 import TerminHeader from "@/components/public/TerminHeader";
@@ -17,7 +17,8 @@ export const metadata: Metadata = {
     "Vereinbare deinen Wunschtermin bei Aura Glow by Mürvet in 31224 Peine. Wimpern, Facials & Permanent Make-up.",
 };
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 interface PageProps {
   searchParams: Promise<{ behandlung?: string }>;
@@ -27,7 +28,7 @@ export default async function AppointmentPage({ searchParams }: PageProps) {
   const { behandlung } = await searchParams;
 
   const [services, business, openingHours] = await Promise.all([
-    getAllServices(),
+    getServices(),
     getBusinessSettings(),
     getOpeningHours(),
   ]);

@@ -4,7 +4,7 @@ import Header from "@/components/public/Header";
 import Footer from "@/components/public/Footer";
 import StickyMobileCta from "@/components/public/StickyMobileCta";
 import LeistungenContent from "@/components/public/LeistungenContent";
-import { getCategories, getAllServices, getBusinessSettings, getOpeningHours } from "@/lib/db";
+import { getCategories, getServices, getBusinessSettings, getOpeningHours } from "@/lib/db";
 
 export const metadata: Metadata = {
   title: "Behandlungen & Facials | Wimpern, Brows & Glow Facials Peine",
@@ -12,12 +12,13 @@ export const metadata: Metadata = {
     "Exklusives Leistungsangebot von Aura Glow by Mürvet in Peine: Wimpernverlängerung, Hollywood Glow, Microneedling, Powder Brows und zertifizierte Schulungen.",
 };
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default async function ServicesPage() {
   const [categories, services, business, openingHours] = await Promise.all([
     getCategories(),
-    getAllServices(),
+    getServices(),
     getBusinessSettings(),
     getOpeningHours(),
   ]);

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { GalleryItem } from "@/lib/types";
 import { useAdminLanguage } from "@/components/admin/AdminLanguageContext";
 import { getAdminDict } from "@/lib/i18n/adminDict";
@@ -11,6 +12,7 @@ interface Props {
 }
 
 export default function GalleryManagerClient({ initialItems }: Props) {
+  const router = useRouter();
   const { adminLang } = useAdminLanguage();
   const d = getAdminDict(adminLang);
 
@@ -24,6 +26,48 @@ export default function GalleryManagerClient({ initialItems }: Props) {
   });
   const [feedback, setFeedback] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
+  const [togglingId, setTogglingId] = useState<number | null>(null);
+
+  const handleToggleActive = async (item: GalleryItem) => {
+    const nextStatus = item.is_active === false ? true : false;
+    setTogglingId(item.id);
+
+    // Optimistic UI update
+    setItems((prev) =>
+      prev.map((i) => (i.id === item.id ? { ...i, is_active: nextStatus } : i))
+    );
+
+    try {
+      const res = await fetch(`/api/admin/gallery/${item.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ is_active: nextStatus }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || "Fehler");
+      }
+      setFeedback(
+        nextStatus
+          ? (adminLang === "tr" ? "Görsel aktif edildi." : "Bild aktiviert.")
+          : (adminLang === "tr" ? "Görsel pasif edildi." : "Bild deaktiviert.")
+      );
+      router.refresh();
+      setTimeout(() => setFeedback(null), 3000);
+    } catch (err: any) {
+      // Revert on error
+      setItems((prev) =>
+        prev.map((i) => (i.id === item.id ? { ...i, is_active: item.is_active } : i))
+      );
+      alert(
+        adminLang === "tr"
+          ? "Durum güncellenirken hata oluştu: " + err.message
+          : "Fehler beim Umschalten: " + err.message
+      );
+    } finally {
+      setTogglingId(null);
+    }
+  };
 
   const categoryOptions = [
     { de: "Wimpern", tr: "Kirpik / İpek Kirpik" },
@@ -39,6 +83,7 @@ export default function GalleryManagerClient({ initialItems }: Props) {
       if (res.ok) {
         setItems((prev) => prev.filter((i) => i.id !== id));
         setFeedback(d.gallery.deletedSuccess);
+        router.refresh();
         setTimeout(() => setFeedback(null), 3000);
       }
     } catch {
@@ -62,6 +107,7 @@ export default function GalleryManagerClient({ initialItems }: Props) {
         setIsModalOpen(false);
         setNewItem({ image_url: "", caption: "", category: "Wimpern", is_active: true });
         setFeedback(d.gallery.savedSuccess);
+        router.refresh();
         setTimeout(() => setFeedback(null), 3000);
       }
     } catch {
@@ -114,9 +160,28 @@ export default function GalleryManagerClient({ initialItems }: Props) {
               </span>
               <p className="text-xs text-[#392D29] font-medium line-clamp-2">{item.caption}</p>
               <div className="pt-2 border-t border-[#E8D6C5]/50 flex justify-between items-center">
-                <span className="text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full font-medium">
-                  {d.common.active}
-                </span>
+                <button
+                  type="button"
+                  onClick={() => handleToggleActive(item)}
+                  disabled={togglingId === item.id}
+                  className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-semibold transition-all cursor-pointer ${
+                    item.is_active !== false
+                      ? "bg-emerald-100 text-emerald-800 hover:bg-emerald-200 border border-emerald-300"
+                      : "bg-amber-100 text-amber-900 hover:bg-amber-200 border border-amber-300"
+                  } ${togglingId === item.id ? "opacity-60 cursor-wait" : ""}`}
+                  title={
+                    adminLang === "tr"
+                      ? "Durumu değiştirmek için tıklayın (Aktif/Pasif)"
+                      : "Klicken zum Umschalten (Aktiv/Inaktiv)"
+                  }
+                >
+                  <span
+                    className={`w-1.5 h-1.5 rounded-full ${
+                      item.is_active !== false ? "bg-emerald-600 animate-pulse" : "bg-amber-600"
+                    }`}
+                  />
+                  <span>{item.is_active !== false ? d.common.active : d.common.inactive}</span>
+                </button>
                 <button
                   onClick={() => handleDelete(item.id)}
                   className="p-1 text-red-600 hover:bg-red-50 rounded-[1px]"

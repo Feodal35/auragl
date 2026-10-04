@@ -24,6 +24,9 @@ export async function POST(request: Request) {
     const item = await saveGalleryItem(body);
 
     revalidatePath("/", "layout");
+    revalidatePath("/", "page");
+    revalidatePath("/galerie");
+    revalidatePath("/admin/galerie");
 
     return NextResponse.json({ success: true, data: item });
   } catch (err: any) {

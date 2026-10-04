@@ -14,7 +14,9 @@ export default function SelectedPricingSection({ pricing }: SelectedPricingProps
 
   // Select popular representative items across categories
   const selectedIds = [1, 4, 13, 17, 16, 21, 27, 30];
-  const items = pricing.filter((p) => selectedIds.includes(p.id)).slice(0, 8);
+  const items = pricing
+    .filter((p) => p.is_active !== false && selectedIds.includes(p.id))
+    .slice(0, 8);
 
   return (
     <section className="py-24 sm:py-32 bg-[#F7F3EE]">

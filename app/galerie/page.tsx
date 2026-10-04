@@ -12,7 +12,8 @@ export const metadata: Metadata = {
     "Authentische Vorher-Nachher Behandlungsresultate von Aura Glow by Mürvet in Peine: Wimpernverlängerung, Hollywood Glow Facials & Permanent Make-up.",
 };
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default async function GalleryPage() {
   const [items, business, openingHours] = await Promise.all([

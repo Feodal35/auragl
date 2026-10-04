@@ -51,6 +51,7 @@ export default function AppointmentManagerClient({ initialRequests }: Props) {
         setRequests((prev) =>
           prev.map((r) => (r.id === id ? { ...r, status: newStatus } : r))
         );
+        router.refresh();
       }
     } finally {
       setLoadingId(null);
@@ -70,6 +71,7 @@ export default function AppointmentManagerClient({ initialRequests }: Props) {
         setRequests((prev) =>
           prev.map((r) => (r.id === id ? { ...r, internal_notes: note } : r))
         );
+        router.refresh();
       }
     } finally {
       setLoadingId(null);

@@ -24,6 +24,9 @@ export async function POST(request: Request) {
     const row = await savePriceRow(body);
 
     revalidatePath("/", "layout");
+    revalidatePath("/", "page");
+    revalidatePath("/preise");
+    revalidatePath("/admin/preise");
 
     return NextResponse.json({ success: true, data: row });
   } catch (err: any) {

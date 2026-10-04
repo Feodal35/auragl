@@ -7,6 +7,7 @@ import {
 } from "@/lib/db";
 import AdminDashboardClient from "./AdminDashboardClient";
 
+export const dynamic = "force-dynamic";
 export const revalidate = 0; // Dynamic admin data
 
 export default async function AdminDashboardPage() {

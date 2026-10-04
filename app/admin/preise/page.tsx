@@ -2,6 +2,7 @@ import React from "react";
 import { getAllPricing, getCategories } from "@/lib/db";
 import PricingManagerClient from "./PricingManagerClient";
 
+export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export default async function AdminPricingPage() {
