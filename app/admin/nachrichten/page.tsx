@@ -5,7 +5,11 @@ import MessageManagerClient from "./MessageManagerClient";
 export const revalidate = 0;
 
 export default async function AdminMessagesPage() {
-  const messages = await getContactMessages();
+  const messages = await getContactMessages().catch((err) => {
+    console.error("[AdminMessagesPage] getContactMessages failed:", err);
+    return [];
+  });
+  const safeMessages = Array.isArray(messages) ? messages : [];
 
   return (
     <div className="space-y-8">
@@ -14,14 +18,14 @@ export default async function AdminMessagesPage() {
           Posteingang
         </span>
         <h1 className="font-editorial text-3xl sm:text-4xl text-[#392D29]">
-          Kontaktnachrichten ({messages.length})
+          Kontaktnachrichten ({safeMessages.length})
         </h1>
         <p className="text-xs sm:text-sm text-[#756A63] font-light mt-1">
           Alle Mitteilungen und Anfragen, die über das Kontaktformular gesendet wurden.
         </p>
       </div>
 
-      <MessageManagerClient initialMessages={messages} />
+      <MessageManagerClient initialMessages={safeMessages} />
     </div>
   );
 }

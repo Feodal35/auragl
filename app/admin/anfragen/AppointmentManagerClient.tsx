@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { AppointmentRequest } from "@/lib/types";
-import { formatDate } from "@/lib/utils";
+import { formatDate, formatDisplayDate } from "@/lib/utils";
 import { useAdminLanguage } from "@/components/admin/AdminLanguageContext";
 import { getAdminDict } from "@/lib/i18n/adminDict";
 import { CalendarDays, Clock3, Mail, Phone, CheckCircle2, XCircle, AlertCircle, Save, RefreshCw } from "lucide-react";
@@ -17,14 +17,14 @@ export default function AppointmentManagerClient({ initialRequests }: Props) {
   const { adminLang } = useAdminLanguage();
   const d = getAdminDict(adminLang);
 
-  const [requests, setRequests] = useState<AppointmentRequest[]>(initialRequests);
+  const [requests, setRequests] = useState<AppointmentRequest[]>(Array.isArray(initialRequests) ? initialRequests : []);
   const [filter, setFilter] = useState<string>("alle");
   const [loadingId, setLoadingId] = useState<string | null>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [noteInputs, setNoteInputs] = useState<Record<string, string>>({});
 
   useEffect(() => {
-    setRequests(initialRequests);
+    setRequests(Array.isArray(initialRequests) ? initialRequests : []);
   }, [initialRequests]);
 
   const handleRefresh = () => {
@@ -33,10 +33,11 @@ export default function AppointmentManagerClient({ initialRequests }: Props) {
     setTimeout(() => setIsRefreshing(false), 1000);
   };
 
+  const safeRequests = Array.isArray(requests) ? requests : [];
   const filtered =
     filter === "alle"
-      ? requests
-      : requests.filter((r) => r.status === filter);
+      ? safeRequests
+      : safeRequests.filter((r) => r.status === filter);
 
   const handleStatusChange = async (id: string, newStatus: AppointmentRequest["status"]) => {
     setLoadingId(id);
@@ -205,13 +206,13 @@ export default function AppointmentManagerClient({ initialRequests }: Props) {
                   <span className="font-medium text-[#392D29] block mb-1">
                     {adminLang === "tr" ? "İstenen Tarih:" : "Wunschtermin:"}
                   </span>
-                  <span className="font-medium text-[#392D29]">{req.preferred_date}</span>
+                  <span className="font-medium text-[#392D29]">{formatDisplayDate(req.preferred_date)}</span>
                   {req.preferred_time && (
                     <span className="block text-[#756A63]">{req.preferred_time}</span>
                   )}
                   {req.alternative_date && (
                     <span className="block text-[11px] text-[#756A63] mt-0.5">
-                      {adminLang === "tr" ? "Alternatif:" : "Ausweich:"} {req.alternative_date}
+                      {adminLang === "tr" ? "Alternatif:" : "Ausweich:"} {formatDisplayDate(req.alternative_date)}
                     </span>
                   )}
                 </div>

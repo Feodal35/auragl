@@ -5,7 +5,11 @@ import AppointmentManagerClient from "./AppointmentManagerClient";
 export const revalidate = 0;
 
 export default async function AdminAppointmentsPage() {
-  const requests = await getAppointmentRequests();
+  const requests = await getAppointmentRequests().catch((err) => {
+    console.error("[AdminAppointmentsPage] getAppointmentRequests failed:", err);
+    return [];
+  });
+  const safeRequests = Array.isArray(requests) ? requests : [];
 
   return (
     <div className="space-y-8">
@@ -14,14 +18,14 @@ export default async function AdminAppointmentsPage() {
           Kundenanfragen
         </span>
         <h1 className="font-editorial text-3xl sm:text-4xl text-[#392D29]">
-          Terminanfragen ({requests.length})
+          Terminanfragen ({safeRequests.length})
         </h1>
         <p className="text-xs sm:text-sm text-[#756A63] font-light mt-1">
           Hier findest du alle eingehenden Terminanfragen der Website zur Prüfung und Bestätigung.
         </p>
       </div>
 
-      <AppointmentManagerClient initialRequests={requests} />
+      <AppointmentManagerClient initialRequests={safeRequests} />
     </div>
   );
 }

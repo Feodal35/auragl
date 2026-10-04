@@ -45,6 +45,10 @@ export default function AdminSidebar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { adminLang, setAdminLang, isTr } = useAdminLanguage();
 
+  if (pathname === "/admin/login") {
+    return null;
+  }
+
   const handleLogout = async () => {
     try {
       await fetch("/api/admin/logout", { method: "POST" });

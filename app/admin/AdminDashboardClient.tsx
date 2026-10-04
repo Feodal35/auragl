@@ -13,7 +13,7 @@ import {
   ArrowRight,
   BookOpen,
 } from "lucide-react";
-import { formatShortDate } from "@/lib/utils";
+import { formatShortDate, formatDisplayDate } from "@/lib/utils";
 
 interface Props {
   appointments: AppointmentRequest[];
@@ -31,9 +31,14 @@ export default function AdminDashboardClient({
   const { adminLang } = useAdminLanguage();
   const d = getAdminDict(adminLang);
 
-  const newAppointments = appointments.filter((a) => a.status === "neu").length;
-  const newMessages = messages.filter((m) => m.status === "neu").length;
-  const activeServices = services.filter((s) => s.is_active).length;
+  const safeAppointments = Array.isArray(appointments) ? appointments : [];
+  const safeMessages = Array.isArray(messages) ? messages : [];
+  const safeServices = Array.isArray(services) ? services : [];
+  const safeGallery = Array.isArray(gallery) ? gallery : [];
+
+  const newAppointments = safeAppointments.filter((a) => a.status === "neu").length;
+  const newMessages = safeMessages.filter((m) => m.status === "neu").length;
+  const activeServices = safeServices.filter((s) => s.is_active).length;
 
   return (
     <div className="space-y-8">
@@ -91,7 +96,7 @@ export default function AdminDashboardClient({
           </div>
           <div className="flex items-baseline gap-2">
             <span className="font-editorial text-3xl text-[#392D29]">
-              {appointments.length}
+              {safeAppointments.length}
             </span>
             {newAppointments > 0 && (
               <span className="text-xs bg-[#844C36]/10 text-[#844C36] px-2 py-0.5 rounded-full font-medium">
@@ -111,7 +116,7 @@ export default function AdminDashboardClient({
           </div>
           <div className="flex items-baseline gap-2">
             <span className="font-editorial text-3xl text-[#392D29]">
-              {messages.length}
+              {safeMessages.length}
             </span>
             {newMessages > 0 && (
               <span className="text-xs bg-[#844C36]/10 text-[#844C36] px-2 py-0.5 rounded-full font-medium">
@@ -134,7 +139,7 @@ export default function AdminDashboardClient({
               {activeServices}
             </span>
             <span className="text-xs text-[#756A63] font-light">
-              {d.dashboard.ofTotal.replace("{total}", String(services.length))}
+              {d.dashboard.ofTotal.replace("{total}", String(safeServices.length))}
             </span>
           </div>
         </div>
@@ -149,7 +154,7 @@ export default function AdminDashboardClient({
           </div>
           <div className="flex items-baseline gap-2">
             <span className="font-editorial text-3xl text-[#392D29]">
-              {gallery.length}
+              {safeGallery.length}
             </span>
             <span className="text-xs text-[#756A63] font-light">
               {d.dashboard.published}
@@ -221,12 +226,12 @@ export default function AdminDashboardClient({
             href="/admin/anfragen"
             className="text-xs uppercase tracking-wider text-[#844C36] hover:text-[#6C3D2B] font-semibold inline-flex items-center gap-1"
           >
-            <span>{d.dashboard.viewAll.replace("{count}", String(appointments.length))}</span>
+            <span>{d.dashboard.viewAll.replace("{count}", String(safeAppointments.length))}</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
 
-        {appointments.length === 0 ? (
+        {safeAppointments.length === 0 ? (
           <div className="py-12 text-center text-sm text-[#756A63] font-light bg-[#FAF6F1] rounded-[1px]">
             {d.dashboard.noAppointmentsYet}
           </div>
@@ -244,7 +249,7 @@ export default function AdminDashboardClient({
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#E8D6C5]/50">
-                {appointments.slice(0, 5).map((req) => (
+                {safeAppointments.slice(0, 5).map((req) => (
                   <tr key={req.id} className="hover:bg-[#FAF6F1] transition-colors">
                     <td className="py-3.5 px-3 font-medium text-[#392D29]">
                       {req.first_name} {req.last_name}
@@ -256,7 +261,7 @@ export default function AdminDashboardClient({
                       {req.treatment_title}
                     </td>
                     <td className="py-3.5 px-3 text-[#756A63]">
-                      {req.preferred_date}
+                      {formatDisplayDate(req.preferred_date)}
                       {req.preferred_time && (
                         <span className="block text-[10px] text-[#756A63]/80">
                           {req.preferred_time}

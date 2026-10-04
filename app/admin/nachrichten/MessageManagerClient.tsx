@@ -17,13 +17,13 @@ export default function MessageManagerClient({ initialMessages }: Props) {
   const { adminLang } = useAdminLanguage();
   const d = getAdminDict(adminLang);
 
-  const [messages, setMessages] = useState<ContactMessage[]>(initialMessages);
+  const [messages, setMessages] = useState<ContactMessage[]>(Array.isArray(initialMessages) ? initialMessages : []);
   const [filter, setFilter] = useState<string>("alle");
   const [loadingId, setLoadingId] = useState<string | null>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   useEffect(() => {
-    setMessages(initialMessages);
+    setMessages(Array.isArray(initialMessages) ? initialMessages : []);
   }, [initialMessages]);
 
   const handleRefresh = () => {
@@ -32,10 +32,11 @@ export default function MessageManagerClient({ initialMessages }: Props) {
     setTimeout(() => setIsRefreshing(false), 1000);
   };
 
+  const safeMessages = Array.isArray(messages) ? messages : [];
   const filtered =
     filter === "alle"
-      ? messages
-      : messages.filter((m) => m.status === filter);
+      ? safeMessages
+      : safeMessages.filter((m) => m.status === filter);
 
   const handleStatusChange = async (id: string, newStatus: ContactMessage["status"]) => {
     setLoadingId(id);

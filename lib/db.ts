@@ -1061,6 +1061,49 @@ export async function saveSeoSetting(key: string, setting: SeoSetting): Promise<
 }
 
 // ── 7. APPOINTMENT REQUESTS (Private) ──
+function serializeDateOnly(val: unknown): string {
+  if (!val) return "";
+  if (val instanceof Date) {
+    const year = val.getFullYear();
+    const month = String(val.getMonth() + 1).padStart(2, "0");
+    const day = String(val.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  }
+  const str = String(val);
+  if (str.includes("T")) {
+    return str.split("T")[0];
+  }
+  return str;
+}
+
+function serializeTimestamp(val: unknown): string {
+  if (!val) return "";
+  if (val instanceof Date) {
+    return val.toISOString();
+  }
+  return String(val);
+}
+
+function serializeAppointmentRow(row: any): AppointmentRequest {
+  if (!row) return row;
+  return {
+    ...row,
+    id: String(row.id),
+    preferred_date: serializeDateOnly(row.preferred_date),
+    alternative_date: row.alternative_date ? serializeDateOnly(row.alternative_date) : undefined,
+    created_at: serializeTimestamp(row.created_at),
+  };
+}
+
+function serializeMessageRow(row: any): ContactMessage {
+  if (!row) return row;
+  return {
+    ...row,
+    id: String(row.id),
+    created_at: serializeTimestamp(row.created_at),
+  };
+}
+
 export async function createAppointmentRequest(data: Omit<AppointmentRequest, "id" | "status" | "created_at">): Promise<AppointmentRequest> {
   if (hasPostgresConfigured()) {
     try {
@@ -1082,7 +1125,7 @@ export async function createAppointmentRequest(data: Omit<AppointmentRequest, "i
           data.privacy_accepted,
         ]
       );
-      if (rows && rows.length > 0) return rows[0];
+      if (rows && rows.length > 0) return serializeAppointmentRow(rows[0]);
     } catch (err) {
       console.error("[PostgreSQL createAppointmentRequest Error]:", err);
       throw err;
@@ -1108,7 +1151,7 @@ export async function createAppointmentRequest(data: Omit<AppointmentRequest, "i
       })
       .select()
       .single();
-    if (!error && inserted) return inserted as AppointmentRequest;
+    if (!error && inserted) return serializeAppointmentRow(inserted);
   }
 
   const newAppointment: AppointmentRequest = {
@@ -1127,7 +1170,8 @@ export async function getAppointmentRequests(): Promise<AppointmentRequest[]> {
       const rows = await queryPg<AppointmentRequest>(
         "SELECT * FROM appointment_requests ORDER BY created_at DESC"
       );
-      if (rows && rows.length > 0) return rows;
+      if (rows && rows.length > 0) return rows.map(serializeAppointmentRow);
+      return [];
     } catch (err) {
       console.error("[PostgreSQL getAppointmentRequests Error]:", err);
     }
@@ -1139,9 +1183,9 @@ export async function getAppointmentRequests(): Promise<AppointmentRequest[]> {
       .from("appointment_requests")
       .select("*")
       .order("created_at", { ascending: false });
-    if (!error && data) return data as AppointmentRequest[];
+    if (!error && data) return (data as any[]).map(serializeAppointmentRow);
   }
-  return state.appointments;
+  return (state.appointments || []).map(serializeAppointmentRow);
 }
 
 export async function updateAppointmentStatus(
@@ -1228,7 +1272,7 @@ export async function createContactMessage(data: Omit<ContactMessage, "id" | "st
           data.privacy_accepted,
         ]
       );
-      if (rows && rows.length > 0) return rows[0];
+      if (rows && rows.length > 0) return serializeMessageRow(rows[0]);
     } catch (err) {
       console.error("[PostgreSQL createContactMessage Error]:", err);
       throw err;
@@ -1250,7 +1294,7 @@ export async function createContactMessage(data: Omit<ContactMessage, "id" | "st
       })
       .select()
       .single();
-    if (!error && inserted) return inserted as ContactMessage;
+    if (!error && inserted) return serializeMessageRow(inserted);
   }
 
   const newMessage: ContactMessage = {
@@ -1269,7 +1313,8 @@ export async function getContactMessages(): Promise<ContactMessage[]> {
       const rows = await queryPg<ContactMessage>(
         "SELECT * FROM contact_messages ORDER BY created_at DESC"
       );
-      if (rows && rows.length > 0) return rows;
+      if (rows && rows.length > 0) return rows.map(serializeMessageRow);
+      return [];
     } catch (err) {
       console.error("[PostgreSQL getContactMessages Error]:", err);
     }
@@ -1281,9 +1326,9 @@ export async function getContactMessages(): Promise<ContactMessage[]> {
       .from("contact_messages")
       .select("*")
       .order("created_at", { ascending: false });
-    if (!error && data) return data as ContactMessage[];
+    if (!error && data) return (data as any[]).map(serializeMessageRow);
   }
-  return state.messages;
+  return (state.messages || []).map(serializeMessageRow);
 }
 
 export async function updateMessageStatus(

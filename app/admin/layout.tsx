@@ -1,5 +1,5 @@
 import React from "react";
-import AdminSidebar from "@/components/admin/AdminSidebar";
+import AdminLayoutShell from "@/components/admin/AdminLayoutShell";
 import { AdminLanguageProvider } from "@/components/admin/AdminLanguageContext";
 
 export const metadata = {
@@ -17,12 +17,7 @@ export default function AdminLayout({
 }) {
   return (
     <AdminLanguageProvider>
-      <div className="min-h-screen bg-[#FAF6F1] flex flex-col lg:flex-row">
-        <AdminSidebar />
-        <main className="flex-1 p-4 sm:p-8 lg:p-12 overflow-y-auto max-w-7xl">
-          {children}
-        </main>
-      </div>
+      <AdminLayoutShell>{children}</AdminLayoutShell>
     </AdminLanguageProvider>
   );
 }
