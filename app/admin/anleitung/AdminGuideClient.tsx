@@ -25,6 +25,7 @@ import {
   ChevronUp,
   BookOpen,
   Lightbulb,
+  Star,
 } from "lucide-react";
 
 interface GuideSection {
@@ -178,6 +179,39 @@ const guideSections: GuideSection[] = [
     ],
     tipsTr: [
       "Yasal Uyarı: Fiyatların daima nihai fiyat (Endpreis) olmasına dikkat edin. Sitede gerekli yasal KDV ve tüketici dipnotu otomatik yer alır.",
+    ],
+  },
+  {
+    id: "bewertungen",
+    icon: Star,
+    href: "/admin/bewertungen",
+    category: "Social Proof",
+    categoryTr: "Müşteri Yorumları",
+    titleDe: "5. Kundenstimmen & Bewertungen verwalten",
+    titleTr: "5. Müşteri Yorumları & Değerlendirmeleri Yönetme",
+    badgeDe: "Live-Feedback",
+    badgeTr: "Canlı Görünüm",
+    summaryDe: "Echte Kundenerfahrungen, Bewertungen und Sterne auf der Startseite anpassen.",
+    summaryTr: "Ana sayfada görünen gerçek müşteri yorumlarını, yıldız puanlarını ve doğrulanmış rozetleri yönetin.",
+    purposeDe: "Stärkung des Kundenvertrauens durch verifizierte Erfahrungsberichte mit 100% sofortiger Synchronisation.",
+    purposeTr: "Müşteri güvenini artırmak için doğrulanmış referansları anında ana sayfaya yansıtmak.",
+    stepsDe: [
+      "Über 'Neue Bewertung anlegen' neue Kundenstimmen hinzufügen.",
+      "Name, Wohnort/Region, Behandlung, Bewertungstext und Sterne (1-5) eintragen.",
+      "Mit 'Aktiv / Inaktiv' festlegen, welche Bewertungen aktuell auf der Startseite sichtbar sind.",
+      "Änderungen werden dank dynamischer Revalidierung sofort live auf der Startseite übernommen.",
+    ],
+    stepsTr: [
+      "'Yeni Yorum Ekle' butonuyla yeni müşteri yorumları ekleyin.",
+      "Müşteri adı, şehir/konum, alınan hizmet, yorum metni ve yıldız puanını (1-5) belirleyin.",
+      "'Aktif / Pasif' butonuyla hangi yorumların ana sayfada yayınlanacağını anında seçin.",
+      "Kaydettiğiniz tüm değişiklikler anında canlı sitede güncellenir.",
+    ],
+    tipsDe: [
+      "Tipp: 4 bis 6 aussagekräftige Bewertungen mit verifiziertem Besuch erhöhen die Konversionsrate von Neukunden spürbar.",
+    ],
+    tipsTr: [
+      "İpucu: Doğrulanmış rozetli 4-6 nitelikli yorum yeni müşterilerin randevu alma oranını belirgin şekilde artırır.",
     ],
   },
   {

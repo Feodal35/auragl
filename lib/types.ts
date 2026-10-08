@@ -173,3 +173,19 @@ export interface MediaItem {
   category?: string;
   created_at: string;
 }
+
+export interface Testimonial {
+  id: number;
+  name: string;
+  location: string;
+  treatment: string;
+  text: string;
+  rating: number;
+  date: string;
+  is_verified: boolean;
+  display_order: number;
+  is_active: boolean;
+  created_at?: string;
+  updated_at?: string;
+}
+

@@ -12,6 +12,7 @@ import {
   Image as ImageIcon,
   ArrowRight,
   BookOpen,
+  Star,
 } from "lucide-react";
 import { formatShortDate, formatDisplayDate } from "@/lib/utils";
 
@@ -168,7 +169,7 @@ export default function AdminDashboardClient({
         <h2 className="text-xs uppercase tracking-[0.16em] text-[#392D29] font-medium mb-4">
           {d.dashboard.quickActions}
         </h2>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
           <Link
             href="/admin/leistungen"
             className="p-4 bg-[#FAF6F1] hover:bg-[#EFE6DD] border border-[#E8D6C5]/60 rounded-[1px] text-center transition-colors group"
@@ -186,6 +187,16 @@ export default function AdminDashboardClient({
             <CalendarDays className="w-5 h-5 mx-auto text-[#844C36] mb-2 group-hover:scale-110 transition-transform" />
             <span className="text-xs font-medium text-[#392D29] block">
               {d.dashboard.managePrices}
+            </span>
+          </Link>
+
+          <Link
+            href="/admin/bewertungen"
+            className="p-4 bg-[#FAF6F1] hover:bg-[#EFE6DD] border border-[#E8D6C5]/60 rounded-[1px] text-center transition-colors group"
+          >
+            <Star className="w-5 h-5 mx-auto text-[#844C36] mb-2 group-hover:scale-110 transition-transform" />
+            <span className="text-xs font-medium text-[#392D29] block">
+              {d.testimonials.title}
             </span>
           </Link>
 

@@ -18,6 +18,7 @@ import {
   getBusinessSettings,
   getDesignSettings,
   getContentSections,
+  getTestimonials,
 } from "@/lib/db";
 
 export const dynamic = "force-dynamic";
@@ -30,12 +31,14 @@ export default async function HomePage() {
     business,
     designSettings,
     contentSections,
+    testimonials,
   ] = await Promise.all([
     getCategories(),
     getOpeningHours(),
     getBusinessSettings(),
     getDesignSettings(),
     getContentSections(),
+    getTestimonials(true),
   ]);
 
   return (
@@ -57,7 +60,7 @@ export default async function HomePage() {
         <CaseStudySpotlight />
 
         {/* 04 — Testimonials */}
-        <TestimonialsSection />
+        <TestimonialsSection testimonials={testimonials} />
 
         {/* 07 — About Mürvet */}
         <AboutMurvetSection content={contentSections.about_murvet} />

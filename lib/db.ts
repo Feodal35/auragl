@@ -9,6 +9,7 @@ import {
   DEFAULT_DESIGN_SETTINGS,
   DEFAULT_CONTENT_SECTIONS,
   DEFAULT_SEO_SETTINGS,
+  DEFAULT_TESTIMONIALS,
 } from "./defaultData";
 import {
   ServiceCategory,
@@ -24,6 +25,7 @@ import {
   AppointmentRequest,
   ContactMessage,
   MediaItem,
+  Testimonial,
 } from "./types";
 import { hasSupabaseConfigured, createServerSideClient, createAdminClient } from "./supabase";
 import { hasPostgresConfigured, queryPg } from "./pg";
@@ -40,6 +42,7 @@ const state = {
   designSettings: { ...DEFAULT_DESIGN_SETTINGS },
   contentSections: { ...DEFAULT_CONTENT_SECTIONS },
   seoSettings: { ...DEFAULT_SEO_SETTINGS },
+  testimonials: [...DEFAULT_TESTIMONIALS],
   appointments: [] as AppointmentRequest[],
   messages: [] as ContactMessage[],
   media: [] as MediaItem[],
@@ -1512,3 +1515,138 @@ export async function deleteMediaItem(id: string): Promise<boolean> {
   }
   return false;
 }
+
+// ── 13. TESTIMONIALS / KUNDENSTIMMEN ──
+export async function getTestimonials(onlyActive: boolean = true): Promise<Testimonial[]> {
+  if (hasPostgresConfigured()) {
+    try {
+      const sql = onlyActive
+        ? "SELECT * FROM testimonials WHERE is_active = true ORDER BY display_order ASC, id ASC"
+        : "SELECT * FROM testimonials ORDER BY display_order ASC, id ASC";
+      const rows = await queryPg<Testimonial>(sql);
+      if (rows && rows.length > 0) return rows;
+      if (rows && rows.length === 0 && !onlyActive) return [];
+    } catch (err) {
+      console.error("[PostgreSQL getTestimonials Error]:", err);
+    }
+  }
+
+  return onlyActive
+    ? state.testimonials.filter((t) => t.is_active)
+    : [...state.testimonials];
+}
+
+export async function getAllTestimonials(): Promise<Testimonial[]> {
+  return getTestimonials(false);
+}
+
+export async function saveTestimonial(
+  testimonial: Partial<Testimonial>
+): Promise<Testimonial> {
+  if (hasPostgresConfigured()) {
+    try {
+      if (testimonial.id) {
+        const rows = await queryPg<Testimonial>(
+          `UPDATE testimonials SET
+            name = COALESCE($1, name),
+            location = COALESCE($2, location),
+            treatment = COALESCE($3, treatment),
+            text = COALESCE($4, text),
+            rating = COALESCE($5, rating),
+            date = COALESCE($6, date),
+            is_verified = COALESCE($7, is_verified),
+            display_order = COALESCE($8, display_order),
+            is_active = COALESCE($9, is_active),
+            updated_at = NOW()
+          WHERE id = $10 RETURNING *`,
+          [
+            testimonial.name ?? null,
+            testimonial.location ?? null,
+            testimonial.treatment ?? null,
+            testimonial.text ?? null,
+            testimonial.rating ?? null,
+            testimonial.date ?? null,
+            testimonial.is_verified ?? null,
+            testimonial.display_order ?? null,
+            testimonial.is_active ?? null,
+            testimonial.id,
+          ]
+        );
+        if (rows && rows.length > 0) return rows[0];
+        throw new Error(`Bewertung mit ID ${testimonial.id} nicht gefunden.`);
+      } else {
+        const rows = await queryPg<Testimonial>(
+          `INSERT INTO testimonials 
+            (name, location, treatment, text, rating, date, is_verified, display_order, is_active)
+          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+          RETURNING *`,
+          [
+            testimonial.name || "Kundin",
+            testimonial.location || "Peine",
+            testimonial.treatment || "Behandlung",
+            testimonial.text || "",
+            testimonial.rating || 5,
+            testimonial.date || "Vor Kurzem",
+            testimonial.is_verified ?? true,
+            testimonial.display_order ?? 0,
+            testimonial.is_active ?? true,
+          ]
+        );
+        if (rows && rows.length > 0) return rows[0];
+      }
+    } catch (err) {
+      console.error("[PostgreSQL saveTestimonial Error]:", err);
+      throw err;
+    }
+  }
+
+  // Memory fallback
+  if (testimonial.id) {
+    const idx = state.testimonials.findIndex((t) => t.id === testimonial.id);
+    if (idx !== -1) {
+      state.testimonials[idx] = {
+        ...state.testimonials[idx],
+        ...testimonial,
+        updated_at: new Date().toISOString(),
+      } as Testimonial;
+      return state.testimonials[idx];
+    }
+  }
+
+  const newTestimonial: Testimonial = {
+    id: Date.now(),
+    name: testimonial.name || "Kundin",
+    location: testimonial.location || "Peine",
+    treatment: testimonial.treatment || "Behandlung",
+    text: testimonial.text || "",
+    rating: testimonial.rating || 5,
+    date: testimonial.date || "Vor Kurzem",
+    is_verified: testimonial.is_verified ?? true,
+    display_order: testimonial.display_order ?? 0,
+    is_active: testimonial.is_active ?? true,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  };
+  state.testimonials.push(newTestimonial);
+  return newTestimonial;
+}
+
+export async function deleteTestimonial(id: number): Promise<boolean> {
+  if (hasPostgresConfigured()) {
+    try {
+      await queryPg("DELETE FROM testimonials WHERE id = $1", [id]);
+      return true;
+    } catch (err) {
+      console.error("[PostgreSQL deleteTestimonial Error]:", err);
+      throw err;
+    }
+  }
+
+  const idx = state.testimonials.findIndex((t) => t.id === id);
+  if (idx !== -1) {
+    state.testimonials.splice(idx, 1);
+    return true;
+  }
+  return false;
+}
+
