@@ -3,8 +3,6 @@ import Header from "@/components/public/Header";
 import Footer from "@/components/public/Footer";
 import HeroSection from "@/components/sections/HeroSection";
 import CategoriesSection from "@/components/sections/CategoriesSection";
-import GalleryPreviewSection from "@/components/sections/GalleryPreviewSection";
-import SelectedPricingSection from "@/components/sections/SelectedPricingSection";
 import AboutMurvetSection from "@/components/sections/AboutMurvetSection";
 import ContactVisitSection from "@/components/sections/ContactVisitSection";
 import FinalCtaSection from "@/components/sections/FinalCtaSection";
@@ -16,8 +14,6 @@ import JsonLdSchema from "@/components/public/JsonLdSchema";
 
 import {
   getCategories,
-  getPricing,
-  getGalleryItems,
   getOpeningHours,
   getBusinessSettings,
   getDesignSettings,
@@ -30,16 +26,12 @@ export const revalidate = 0;
 export default async function HomePage() {
   const [
     categories,
-    pricing,
-    gallery,
     openingHours,
     business,
     designSettings,
     contentSections,
   ] = await Promise.all([
     getCategories(),
-    getPricing(),
-    getGalleryItems(),
     getOpeningHours(),
     getBusinessSettings(),
     getDesignSettings(),
@@ -64,13 +56,7 @@ export default async function HomePage() {
         {/* 03 — Case Studies (real results) */}
         <CaseStudySpotlight />
 
-        {/* 04 — Gallery Preview */}
-        <GalleryPreviewSection items={gallery} />
-
-        {/* 05 — Selected Pricing */}
-        <SelectedPricingSection pricing={pricing} />
-
-        {/* 06 — Testimonials */}
+        {/* 04 — Testimonials */}
         <TestimonialsSection />
 
         {/* 07 — About Mürvet */}
