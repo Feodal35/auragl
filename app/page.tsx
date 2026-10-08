@@ -2,10 +2,7 @@ import React from "react";
 import Header from "@/components/public/Header";
 import Footer from "@/components/public/Footer";
 import HeroSection from "@/components/sections/HeroSection";
-import IntroSection from "@/components/sections/IntroSection";
-import SignatureTreatmentsSection from "@/components/sections/SignatureTreatmentsSection";
 import CategoriesSection from "@/components/sections/CategoriesSection";
-import PhilosophySection from "@/components/sections/PhilosophySection";
 import GalleryPreviewSection from "@/components/sections/GalleryPreviewSection";
 import SelectedPricingSection from "@/components/sections/SelectedPricingSection";
 import AboutMurvetSection from "@/components/sections/AboutMurvetSection";
@@ -19,7 +16,6 @@ import JsonLdSchema from "@/components/public/JsonLdSchema";
 
 import {
   getCategories,
-  getFeaturedServices,
   getPricing,
   getGalleryItems,
   getOpeningHours,
@@ -34,7 +30,6 @@ export const revalidate = 0;
 export default async function HomePage() {
   const [
     categories,
-    featuredServices,
     pricing,
     gallery,
     openingHours,
@@ -43,7 +38,6 @@ export default async function HomePage() {
     contentSections,
   ] = await Promise.all([
     getCategories(),
-    getFeaturedServices(),
     getPricing(),
     getGalleryItems(),
     getOpeningHours(),
@@ -64,43 +58,31 @@ export default async function HomePage() {
           design={designSettings.hero}
         />
 
-        {/* 02 — Intro & Brand Essence (Editable in Admin: Einleitung & Philosophie) */}
-        <IntroSection content={contentSections.intro} />
-
-        {/* 03 — Signature Treatments (concrete, with real images) */}
-        <SignatureTreatmentsSection services={featuredServices} />
-
-        {/* 04 — Categories */}
+        {/* 02 — Categories (Vielfalt & Expertise / Unsere Behandlungswelten) */}
         <CategoriesSection categories={categories} />
 
-        {/* 05 — Studio Philosophy (Editable in Admin: Studio-Leitgedanke) */}
-        <PhilosophySection
-          content={contentSections.philosophy}
-          design={designSettings.philosophy}
-        />
-
-        {/* 06 — Case Studies (real results) */}
+        {/* 03 — Case Studies (real results) */}
         <CaseStudySpotlight />
 
-        {/* 05 — Gallery Preview */}
+        {/* 04 — Gallery Preview */}
         <GalleryPreviewSection items={gallery} />
 
-        {/* 06 — Selected Pricing */}
+        {/* 05 — Selected Pricing */}
         <SelectedPricingSection pricing={pricing} />
 
-        {/* 07 — Testimonials */}
+        {/* 06 — Testimonials */}
         <TestimonialsSection />
 
-        {/* 08 — About Mürvet */}
+        {/* 07 — About Mürvet */}
         <AboutMurvetSection content={contentSections.about_murvet} />
 
-        {/* 09 — FAQ */}
+        {/* 08 — FAQ */}
         <FaqSection whatsapp={business.whatsapp || business.phone} />
 
-        {/* 10 — Contact & Visit */}
+        {/* 09 — Contact & Visit */}
         <ContactVisitSection business={business} openingHours={openingHours} />
 
-        {/* 11 — Final CTA */}
+        {/* 10 — Final CTA */}
         <FinalCtaSection
           content={contentSections.appointment_cta}
           design={designSettings.appointment_cta}
