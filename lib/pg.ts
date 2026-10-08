@@ -28,9 +28,9 @@ export function getPgPool(): Pool | null {
     globalForPg.__pgPool = new Pool({
       connectionString: cleanConnectionString,
       ssl: { rejectUnauthorized: false },
-      max: 10, // Allows parallel queries (e.g. Promise.all on HomePage) without starvation
-      idleTimeoutMillis: 10000, // Release idle connection
-      connectionTimeoutMillis: 12000,
+      max: 3, // Optimal for serverless: prevents saturating DB connection limits
+      idleTimeoutMillis: 1500, // Release idle sockets fast in serverless
+      connectionTimeoutMillis: 8000,
       allowExitOnIdle: true,
     });
 
@@ -70,10 +70,13 @@ export async function queryPg<T extends QueryResultRow = QueryResultRow>(
         msg.includes("connection timeout") ||
         msg.includes("ECONNRESET") ||
         msg.includes("socket closed") ||
-        err?.code === "57P01";
+        msg.includes("remaining connection slots") ||
+        err?.code === "57P01" ||
+        err?.code === "53300";
 
       if (attempt === 1 && isTransient) {
         console.warn(`[queryPg] Transient connection drop on attempt 1, retrying with fresh socket...`);
+        await new Promise((r) => setTimeout(r, 250));
         continue;
       }
       throw err;
