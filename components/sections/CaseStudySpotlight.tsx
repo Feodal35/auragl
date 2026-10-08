@@ -6,64 +6,25 @@ import Image from "next/image";
 import { Sparkles, CheckCircle2, Clock3, CalendarDays, ArrowRight } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 
-interface CaseStudy {
-  id: string;
-  tag: string;
-  title: string;
-  image: string;
-  imageAlt: string;
-  problem: string;
-  solution: string;
-  result: string;
-  duration: string;
-  longevity: string;
-  treatmentSlug: string;
+import { CaseStudy } from "@/lib/types";
+import { DEFAULT_CASE_STUDIES } from "@/lib/defaultData";
+
+interface CaseStudySpotlightProps {
+  caseStudies?: CaseStudy[];
 }
 
-const caseStudies: CaseStudy[] = [
-  {
-    id: "case-glow",
-    tag: "Fallstudie 01 • Gesichtsästhetik",
-    title: "Hollywood Glow & Tiefenausreinigung",
-    image: "/images/treatments/microneedling-facial.jpg",
-    imageAlt: "Hollywood Glow Gesichtsbehandlung Vorher-Nachher Ergebnis im Aura Glow Studio Peine",
-    problem: "Feuchtigkeitsarme, gestresste Haut mit vergrößerten Poren und müdem Teint.",
-    solution: "Sanfte Hydro-Tiefenausreinigung kombiniert mit gezielter Hyaluron- und Peptid-Einschleusung.",
-    result: "Sofort prallere Haut, verfeinerte Porenstruktur und strahlender, natürlicher Teint ohne Rötungen oder Ausfallzeit.",
-    duration: "ca. 75 Min.",
-    longevity: "Soforteffekt, ideal vor Events oder im 4-Wochen-Zyklus",
-    treatmentSlug: "Hollywood Glow Deluxe",
-  },
-  {
-    id: "case-brows",
-    tag: "Fallstudie 02 • Permanent Make-up",
-    title: "Powder Brows Form- & Farbkorrektur",
-    image: "/images/treatments/murvet-treatment-full.jpg",
-    imageAlt: "Powder Brows Permanent Make-up Vorher-Nachher Korrektur im Studio Peine",
-    problem: "Asymmetrische Brauenform mit lückenhaftem Wuchs durch langjähriges Auszupfen.",
-    solution: "Vermessung nach dem Goldenen Schnitt und sanfte Ombré-Puderschattierung mit typgerechtem Farbton.",
-    result: "Symmetrische, sanft pudrige Brauen mit weichem Verlauf. Absolut alltagstauglich ohne Schminkaufwand.",
-    duration: "ca. 120 Min.",
-    longevity: "1,5 bis 2,5 Jahre Haltbarkeit",
-    treatmentSlug: "Powder Brows Neuanlage",
-  },
-  {
-    id: "case-lashes",
-    tag: "Fallstudie 03 • Wimpernästhetik",
-    title: "Russian Volume Wimpernverlängerung",
-    image: "/images/treatments/lash-lift-result.jpg",
-    imageAlt: "Russian Volume Wimpernverlängerung Vorher-Nachher Ergebnis Peine",
-    problem: "Sehr feine, helle Naturwimpern mit wenig Dichte und abwärts gerichtetem Wuchs.",
-    solution: "Handgefertigte 3D–5D Fächer aus ultraleichten synthetischen Seidenwimpern, perfekt isoliert appliziert.",
-    result: "Sinnlicher, gleichmäßiger Wimpernfächer mit samtweichem Tragegefühl ohne Beschwerung der Eigenwimpern.",
-    duration: "ca. 120 Min.",
-    longevity: "4 bis 6 Wochen (Refill alle 3-4 Wochen)",
-    treatmentSlug: "Russian Volume Neuanlage",
-  },
-];
-
-export default function CaseStudySpotlight() {
+export default function CaseStudySpotlight({ caseStudies: initialCaseStudies }: CaseStudySpotlightProps) {
   const { t, locale } = useLanguage();
+
+  const studies = (initialCaseStudies && initialCaseStudies.length > 0
+    ? initialCaseStudies
+    : DEFAULT_CASE_STUDIES
+  ).filter((s) => s.is_active !== false);
+
+  if (studies.length === 0) {
+    return null;
+  }
+
 
   return (
     <section
@@ -94,8 +55,12 @@ export default function CaseStudySpotlight() {
 
         {/* Case Studies Cards */}
         <div className="space-y-16">
-          {caseStudies.map((study, index) => {
+          {studies.map((study, index) => {
             const isReversed = index % 2 === 1;
+            const rawImg = study.image || "/images/hero-bg.webp";
+            const imgSrc = rawImg.startsWith("/images/treatments/")
+              ? rawImg.replace(/\.(jpg|png|jpeg)$/, ".webp")
+              : rawImg;
 
             return (
               <div
@@ -109,12 +74,13 @@ export default function CaseStudySpotlight() {
                   isReversed ? "lg:order-2" : "lg:order-1"
                 }`}>
                   <Image
-                    src={study.image.replace(/\.(jpg|png|jpeg)$/, ".webp")}
-                    alt={study.imageAlt}
+                    src={imgSrc}
+                    alt={study.image_alt || study.title}
                     fill
                     sizes="(max-width: 1024px) 100vw, 42vw"
                     className="object-cover object-center transition-transform duration-700 hover:scale-105"
                     loading="lazy"
+                    unoptimized={imgSrc.startsWith("http")}
                   />
                   <div className="absolute top-4 left-4 bg-[#211A18]/85 text-white backdrop-blur-sm px-3 py-1 text-xs font-mono tracking-widest uppercase">
                     {locale === "en" ? "Before • After Spotlight" : "Vorher • Nachher Fokus"}
@@ -182,9 +148,9 @@ export default function CaseStudySpotlight() {
                   {/* CTA link */}
                   <div className="pt-6 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                     <Link
-                      href={`/termin?behandlung=${encodeURIComponent(study.treatmentSlug)}`}
+                      href={`/termin?behandlung=${encodeURIComponent(study.treatment_slug || (study as any).treatmentSlug || study.title)}`}
                       className="btn-primary text-xs inline-flex items-center justify-center gap-2"
-                      aria-label={`Termin für ${study.treatmentSlug} anfragen`}
+                      aria-label={`Termin für ${study.treatment_slug || study.title} anfragen`}
                     >
                       <CalendarDays className="w-3.5 h-3.5" />
                       <span>{t.caseStudies.bookSimilar}</span>

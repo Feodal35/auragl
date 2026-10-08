@@ -10,6 +10,7 @@ import {
   ContentSection,
   SeoSetting,
   Testimonial,
+  CaseStudy,
 } from "./types";
 
 export const DEFAULT_CATEGORIES: ServiceCategory[] = [
@@ -18,6 +19,7 @@ export const DEFAULT_CATEGORIES: ServiceCategory[] = [
     name: "Wimpern",
     slug: "wimpern",
     description: "Präzise Wimpernverlängerung von natürlicher 1:1 Technik bis Mega Volumen sowie pflegendes Lash Lifting.",
+    image_url: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1000&q=85",
     display_order: 1,
     is_active: true,
   },
@@ -26,6 +28,7 @@ export const DEFAULT_CATEGORIES: ServiceCategory[] = [
     name: "Gesichtsreinigung & Pflege",
     slug: "gesichtsreinigung-pflege",
     description: "Hautverfeinernde apparative Behandlungen für Tiefenregeneration, Anti-Aging und den unverwechselbaren Hollywood Glow.",
+    image_url: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=1000&q=85",
     display_order: 2,
     is_active: true,
   },
@@ -34,6 +37,7 @@ export const DEFAULT_CATEGORIES: ServiceCategory[] = [
     name: "Permanent Make-up",
     slug: "permanent-make-up",
     description: "Meisterhafte Pigmentierung für perfekt definierte Powder Brows, Ombré Brows und sinnliche Lippen im Aquarell-Look.",
+    image_url: "https://images.unsplash.com/photo-1597225244660-1cd128c64284?auto=format&fit=crop&w=1000&q=85",
     display_order: 3,
     is_active: true,
   },
@@ -42,6 +46,7 @@ export const DEFAULT_CATEGORIES: ServiceCategory[] = [
     name: "Schulungen",
     slug: "schulungen",
     description: "Zertifizierte Einzelschulungen für angehende Lash- und PMU-Artists nach modernsten europäischen Techniken.",
+    image_url: "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=1000&q=85",
     display_order: 4,
     is_active: true,
   },
@@ -643,4 +648,53 @@ export const DEFAULT_TESTIMONIALS: Testimonial[] = [
     is_active: true,
   },
 ];
+
+export const DEFAULT_CASE_STUDIES: CaseStudy[] = [
+  {
+    id: 1,
+    tag: "Fallstudie 01 • Gesichtsästhetik",
+    title: "Hollywood Glow & Tiefenausreinigung",
+    image: "/images/treatments/microneedling-facial.jpg",
+    image_alt: "Hollywood Glow Gesichtsbehandlung Vorher-Nachher Ergebnis im Aura Glow Studio Peine",
+    problem: "Feuchtigkeitsarme, gestresste Haut mit vergrößerten Poren und müdem Teint.",
+    solution: "Sanfte Hydro-Tiefenausreinigung kombiniert mit gezielter Hyaluron- und Peptid-Einschleusung.",
+    result: "Sofort prallere Haut, verfeinerte Porenstruktur und strahlender, natürlicher Teint ohne Rötungen oder Ausfallzeit.",
+    duration: "ca. 75 Min.",
+    longevity: "Soforteffekt, ideal vor Events oder im 4-Wochen-Zyklus",
+    treatment_slug: "Hollywood Glow Deluxe",
+    display_order: 1,
+    is_active: true,
+  },
+  {
+    id: 2,
+    tag: "Fallstudie 02 • Permanent Make-up",
+    title: "Powder Brows Form- & Farbkorrektur",
+    image: "/images/treatments/murvet-treatment-full.jpg",
+    image_alt: "Powder Brows Permanent Make-up Vorher-Nachher Korrektur im Studio Peine",
+    problem: "Asymmetrische Brauenform mit lückenhaftem Wuchs durch langjähriges Auszupfen.",
+    solution: "Vermessung nach dem Goldenen Schnitt und sanfte Ombré-Puderschattierung mit typgerechtem Farbton.",
+    result: "Symmetrische, sanft pudrige Brauen mit weichem Verlauf. Absolut alltagstauglich ohne Schminkaufwand.",
+    duration: "ca. 120 Min.",
+    longevity: "1,5 bis 2,5 Jahre Haltbarkeit",
+    treatment_slug: "Powder Brows Neuanlage",
+    display_order: 2,
+    is_active: true,
+  },
+  {
+    id: 3,
+    tag: "Fallstudie 03 • Wimpernästhetik",
+    title: "Russian Volume Wimpernverlängerung",
+    image: "/images/treatments/lash-lift-result.jpg",
+    image_alt: "Russian Volume Wimpernverlängerung Vorher-Nachher Ergebnis Peine",
+    problem: "Sehr feine, helle Naturwimpern mit wenig Dichte und abwärts gerichtetem Wuchs.",
+    solution: "Handgefertigte 3D–5D Fächer aus ultraleichten synthetischen Seidenwimpern, perfekt isoliert appliziert.",
+    result: "Sinnlicher, gleichmäßiger Wimpernfächer mit samtweichem Tragegefühl ohne Beschwerung der Eigenwimpern.",
+    duration: "ca. 120 Min.",
+    longevity: "4 bis 6 Wochen (Refill alle 3-4 Wochen)",
+    treatment_slug: "Russian Volume Neuanlage",
+    display_order: 3,
+    is_active: true,
+  },
+];
+
 

@@ -13,6 +13,7 @@ import {
   ArrowRight,
   BookOpen,
   Star,
+  Layers,
 } from "lucide-react";
 import { formatShortDate, formatDisplayDate } from "@/lib/utils";
 
@@ -197,6 +198,16 @@ export default function AdminDashboardClient({
             <Star className="w-5 h-5 mx-auto text-[#844C36] mb-2 group-hover:scale-110 transition-transform" />
             <span className="text-xs font-medium text-[#392D29] block">
               {d.testimonials.title}
+            </span>
+          </Link>
+
+          <Link
+            href="/admin/fallstudien"
+            className="p-4 bg-[#FAF6F1] hover:bg-[#EFE6DD] border border-[#E8D6C5]/60 rounded-[1px] text-center transition-colors group"
+          >
+            <Layers className="w-5 h-5 mx-auto text-[#844C36] mb-2 group-hover:scale-110 transition-transform" />
+            <span className="text-xs font-medium text-[#392D29] block">
+              {d.caseStudies.title}
             </span>
           </Link>
 

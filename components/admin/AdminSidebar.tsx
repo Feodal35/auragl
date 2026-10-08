@@ -22,6 +22,7 @@ import {
   X,
   BookOpen,
   Star,
+  Layers,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -29,6 +30,7 @@ const adminNav = [
   { href: "/admin", labelDe: "Dashboard", labelTr: "Genel Bakış", icon: LayoutDashboard },
   { href: "/admin/inhalte", labelDe: "Inhalte", labelTr: "İçerikler & Metinler", icon: FileText },
   { href: "/admin/leistungen", labelDe: "Behandlungen", labelTr: "Hizmetler & Tedaviler", icon: Sparkles },
+  { href: "/admin/fallstudien", labelDe: "Fallstudien", labelTr: "Vaka Analizleri", icon: Layers },
   { href: "/admin/preise", labelDe: "Preise", labelTr: "Fiyat Listesi", icon: DollarSign },
   { href: "/admin/bewertungen", labelDe: "Kundenstimmen", labelTr: "Müşteri Yorumları", icon: Star },
   { href: "/admin/galerie", labelDe: "Galerie", labelTr: "Galeri", icon: Image },

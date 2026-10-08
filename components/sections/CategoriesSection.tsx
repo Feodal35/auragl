@@ -43,7 +43,7 @@ export default function CategoriesSection({ categories }: CategoriesSectionProps
         {/* 4 Interactive Category Columns */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {categories.map((cat, idx) => {
-            const img = categoryImages[cat.slug] || categoryImages.wimpern;
+            const img = cat.image_url || categoryImages[cat.slug] || categoryImages.wimpern;
             return (
               <a
                 key={cat.id}
@@ -59,6 +59,7 @@ export default function CategoriesSection({ categories }: CategoriesSectionProps
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover object-center group-hover:scale-110 transition-transform duration-700 ease-out opacity-60 group-hover:opacity-75"
                   loading="lazy"
+                  unoptimized={img.startsWith("http")}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#211A18] via-[#211A18]/40 to-transparent" />
 

@@ -10,6 +10,7 @@ import {
   DEFAULT_CONTENT_SECTIONS,
   DEFAULT_SEO_SETTINGS,
   DEFAULT_TESTIMONIALS,
+  DEFAULT_CASE_STUDIES,
 } from "./defaultData";
 import {
   ServiceCategory,
@@ -26,6 +27,7 @@ import {
   ContactMessage,
   MediaItem,
   Testimonial,
+  CaseStudy,
 } from "./types";
 import { hasSupabaseConfigured, createServerSideClient, createAdminClient } from "./supabase";
 import { hasPostgresConfigured, queryPg } from "./pg";
@@ -43,6 +45,7 @@ const state = {
   contentSections: { ...DEFAULT_CONTENT_SECTIONS },
   seoSettings: { ...DEFAULT_SEO_SETTINGS },
   testimonials: [...DEFAULT_TESTIMONIALS],
+  caseStudies: [...DEFAULT_CASE_STUDIES],
   appointments: [] as AppointmentRequest[],
   messages: [] as ContactMessage[],
   media: [] as MediaItem[],
@@ -109,6 +112,45 @@ export async function getAllCategories(): Promise<ServiceCategory[]> {
     }
   }
   return state.categories;
+}
+
+export async function saveCategory(category: Partial<ServiceCategory>): Promise<ServiceCategory> {
+  if (hasPostgresConfigured()) {
+    try {
+      if (category.id) {
+        const rows = await queryPg<ServiceCategory>(
+          `UPDATE service_categories SET
+            name = COALESCE($1, name),
+            description = COALESCE($2, description),
+            image_url = COALESCE($3, image_url),
+            display_order = COALESCE($4, display_order),
+            is_active = COALESCE($5, is_active),
+            updated_at = NOW()
+          WHERE id = $6 RETURNING *`,
+          [
+            category.name ?? null,
+            category.description ?? null,
+            category.image_url ?? null,
+            category.display_order ?? null,
+            category.is_active ?? null,
+            category.id,
+          ]
+        );
+        if (rows && rows.length > 0) return rows[0];
+        throw new Error(`Kategorie mit ID ${category.id} nicht gefunden.`);
+      }
+    } catch (err) {
+      console.error("[PostgreSQL saveCategory Error]:", err);
+      throw err;
+    }
+  }
+
+  const idx = state.categories.findIndex((c) => c.id === category.id);
+  if (idx !== -1) {
+    state.categories[idx] = { ...state.categories[idx], ...category };
+    return state.categories[idx];
+  }
+  throw new Error("Kategorie nicht gefunden.");
 }
 
 // ── 2. SERVICES ──
@@ -1649,4 +1691,149 @@ export async function deleteTestimonial(id: number): Promise<boolean> {
   }
   return false;
 }
+
+// ── 14. CASE STUDIES / VORHER & NACHHER FALLSTUDIEN ──
+export async function getCaseStudies(onlyActive: boolean = true): Promise<CaseStudy[]> {
+  if (hasPostgresConfigured()) {
+    try {
+      const sql = onlyActive
+        ? "SELECT * FROM case_studies WHERE is_active = true ORDER BY display_order ASC, id ASC"
+        : "SELECT * FROM case_studies ORDER BY display_order ASC, id ASC";
+      const rows = await queryPg<CaseStudy>(sql);
+      if (rows && rows.length > 0) return rows;
+      if (rows && rows.length === 0 && !onlyActive) return [];
+    } catch (err) {
+      console.error("[PostgreSQL getCaseStudies Error]:", err);
+    }
+  }
+
+  return onlyActive
+    ? state.caseStudies.filter((c) => c.is_active)
+    : [...state.caseStudies];
+}
+
+export async function getAllCaseStudies(): Promise<CaseStudy[]> {
+  return getCaseStudies(false);
+}
+
+export async function saveCaseStudy(study: Partial<CaseStudy>): Promise<CaseStudy> {
+  if (hasPostgresConfigured()) {
+    try {
+      if (study.id) {
+        const rows = await queryPg<CaseStudy>(
+          `UPDATE case_studies SET
+            tag = COALESCE($1, tag),
+            title = COALESCE($2, title),
+            image = COALESCE($3, image),
+            image_alt = COALESCE($4, image_alt),
+            problem = COALESCE($5, problem),
+            solution = COALESCE($6, solution),
+            result = COALESCE($7, result),
+            duration = COALESCE($8, duration),
+            longevity = COALESCE($9, longevity),
+            treatment_slug = COALESCE($10, treatment_slug),
+            display_order = COALESCE($11, display_order),
+            is_active = COALESCE($12, is_active),
+            updated_at = NOW()
+          WHERE id = $13 RETURNING *`,
+          [
+            study.tag ?? null,
+            study.title ?? null,
+            study.image ?? null,
+            study.image_alt ?? null,
+            study.problem ?? null,
+            study.solution ?? null,
+            study.result ?? null,
+            study.duration ?? null,
+            study.longevity ?? null,
+            study.treatment_slug ?? null,
+            study.display_order ?? null,
+            study.is_active ?? null,
+            study.id,
+          ]
+        );
+        if (rows && rows.length > 0) return rows[0];
+        throw new Error(`Fallstudie mit ID ${study.id} nicht gefunden.`);
+      } else {
+        const rows = await queryPg<CaseStudy>(
+          `INSERT INTO case_studies 
+            (tag, title, image, image_alt, problem, solution, result, duration, longevity, treatment_slug, display_order, is_active)
+          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+          RETURNING *`,
+          [
+            study.tag || "Fallstudie",
+            study.title || "Neue Fallstudie",
+            study.image || "/images/treatments/microneedling-facial.jpg",
+            study.image_alt || study.title || "",
+            study.problem || "",
+            study.solution || "",
+            study.result || "",
+            study.duration || "ca. 60 Min.",
+            study.longevity || "",
+            study.treatment_slug || "",
+            study.display_order ?? 0,
+            study.is_active ?? true,
+          ]
+        );
+        if (rows && rows.length > 0) return rows[0];
+      }
+    } catch (err) {
+      console.error("[PostgreSQL saveCaseStudy Error]:", err);
+      throw err;
+    }
+  }
+
+  // Memory fallback
+  if (study.id) {
+    const idx = state.caseStudies.findIndex((c) => c.id === study.id);
+    if (idx !== -1) {
+      state.caseStudies[idx] = {
+        ...state.caseStudies[idx],
+        ...study,
+        updated_at: new Date().toISOString(),
+      } as CaseStudy;
+      return state.caseStudies[idx];
+    }
+  }
+
+  const newStudy: CaseStudy = {
+    id: Date.now(),
+    tag: study.tag || "Fallstudie",
+    title: study.title || "Neue Fallstudie",
+    image: study.image || "/images/treatments/microneedling-facial.jpg",
+    image_alt: study.image_alt || study.title || "",
+    problem: study.problem || "",
+    solution: study.solution || "",
+    result: study.result || "",
+    duration: study.duration || "ca. 60 Min.",
+    longevity: study.longevity || "",
+    treatment_slug: study.treatment_slug || "",
+    display_order: study.display_order ?? 0,
+    is_active: study.is_active ?? true,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  };
+  state.caseStudies.push(newStudy);
+  return newStudy;
+}
+
+export async function deleteCaseStudy(id: number): Promise<boolean> {
+  if (hasPostgresConfigured()) {
+    try {
+      await queryPg("DELETE FROM case_studies WHERE id = $1", [id]);
+      return true;
+    } catch (err) {
+      console.error("[PostgreSQL deleteCaseStudy Error]:", err);
+      throw err;
+    }
+  }
+
+  const idx = state.caseStudies.findIndex((c) => c.id === id);
+  if (idx !== -1) {
+    state.caseStudies.splice(idx, 1);
+    return true;
+  }
+  return false;
+}
+
 

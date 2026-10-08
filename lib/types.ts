@@ -3,6 +3,7 @@ export interface ServiceCategory {
   name: string;
   slug: string;
   description: string;
+  image_url?: string;
   display_order: number;
   is_active: boolean;
 }
@@ -188,4 +189,23 @@ export interface Testimonial {
   created_at?: string;
   updated_at?: string;
 }
+
+export interface CaseStudy {
+  id: number;
+  tag: string;
+  title: string;
+  image: string;
+  image_alt?: string;
+  problem: string;
+  solution: string;
+  result: string;
+  duration: string;
+  longevity: string;
+  treatment_slug: string;
+  display_order: number;
+  is_active: boolean;
+  created_at?: string;
+  updated_at?: string;
+}
+
 

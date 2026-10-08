@@ -1,5 +1,5 @@
 import React from "react";
-import { getAllServices, getCategories } from "@/lib/db";
+import { getAllServices, getAllCategories } from "@/lib/db";
 import ServicesManagerClient from "./ServicesManagerClient";
 
 export const dynamic = "force-dynamic";
@@ -8,7 +8,7 @@ export const revalidate = 0;
 export default async function AdminServicesPage() {
   const [services, categories] = await Promise.all([
     getAllServices(),
-    getCategories(),
+    getAllCategories(),
   ]);
 
   return (
