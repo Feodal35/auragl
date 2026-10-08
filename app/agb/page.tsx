@@ -14,7 +14,8 @@ export const metadata: Metadata = {
     "Allgemeine Geschäftsbedingungen und Stornierungsregelungen für kosmetische Behandlungen bei Aura Glow by Mürvet in Peine.",
 };
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default async function AgbPage() {
   const [business, openingHours] = await Promise.all([

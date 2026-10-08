@@ -1,7 +1,7 @@
 import { Pool } from "pg";
 import type { QueryResultRow } from "pg";
 
-let pool: Pool | null = null;
+const globalForPg = globalThis as unknown as { __pgPool?: Pool };
 
 export function hasPostgresConfigured(): boolean {
   return Boolean(process.env.DATABASE_URL && process.env.DATABASE_URL.trim().length > 0);
@@ -12,7 +12,7 @@ export function getPgPool(): Pool | null {
     return null;
   }
 
-  if (!pool) {
+  if (!globalForPg.__pgPool) {
     const rawConnectionString = process.env.DATABASE_URL || "";
 
     // Aiven SSL fix: strip sslmode so pg-connection-string does not force strict CA verification
@@ -25,21 +25,21 @@ export function getPgPool(): Pool | null {
       cleanConnectionString = rawConnectionString.replace(/[?&]sslmode=[^&]+/, "");
     }
 
-    pool = new Pool({
+    globalForPg.__pgPool = new Pool({
       connectionString: cleanConnectionString,
       ssl: { rejectUnauthorized: false },
-      max: 1, // 1 connection per serverless function instance to prevent pool exhaustion on Aiven
-      idleTimeoutMillis: 2000, // Release idle connection quickly
-      connectionTimeoutMillis: 10000,
+      max: 10, // Allows parallel queries (e.g. Promise.all on HomePage) without starvation
+      idleTimeoutMillis: 10000, // Release idle connection
+      connectionTimeoutMillis: 12000,
       allowExitOnIdle: true,
     });
 
-    pool.on("error", (err) => {
+    globalForPg.__pgPool.on("error", (err) => {
       console.error("[PostgreSQL Pool Error]:", err.message);
     });
   }
 
-  return pool;
+  return globalForPg.__pgPool;
 }
 
 export async function queryPg<T extends QueryResultRow = QueryResultRow>(
@@ -54,11 +54,36 @@ export async function queryPg<T extends QueryResultRow = QueryResultRow>(
   // Node-postgres can fail if bind params contain undefined; convert to null
   const safeParams = params ? params.map((v) => (v === undefined ? null : v)) : undefined;
 
-  const client = await p.connect();
-  try {
-    const res = await client.query<T>(text, safeParams);
-    return res.rows;
-  } finally {
-    client.release();
+  // Execute with automatic 1-time retry for stale/closed serverless sockets
+  for (let attempt = 1; attempt <= 2; attempt++) {
+    let client;
+    let hasError = false;
+    try {
+      client = await p.connect();
+      const res = await client.query<T>(text, safeParams);
+      return res.rows;
+    } catch (err: any) {
+      hasError = true;
+      const msg = err?.message || "";
+      const isTransient =
+        msg.includes("Connection terminated") ||
+        msg.includes("connection timeout") ||
+        msg.includes("ECONNRESET") ||
+        msg.includes("socket closed") ||
+        err?.code === "57P01";
+
+      if (attempt === 1 && isTransient) {
+        console.warn(`[queryPg] Transient connection drop on attempt 1, retrying with fresh socket...`);
+        continue;
+      }
+      throw err;
+    } finally {
+      if (client) {
+        // Destroy socket if an error occurred to prevent contaminated pool
+        client.release(hasError);
+      }
+    }
   }
+
+  throw new Error("Query execution failed after retry.");
 }

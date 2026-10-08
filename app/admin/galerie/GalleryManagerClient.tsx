@@ -109,9 +109,11 @@ export default function GalleryManagerClient({ initialItems }: Props) {
         setFeedback(d.gallery.savedSuccess);
         router.refresh();
         setTimeout(() => setFeedback(null), 3000);
+      } else {
+        alert(data.error || d.common.errorSaving);
       }
-    } catch {
-      alert(d.common.errorSaving);
+    } catch (err: any) {
+      alert(err?.message || d.common.errorSaving);
     } finally {
       setSaving(false);
     }

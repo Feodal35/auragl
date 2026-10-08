@@ -135,9 +135,11 @@ export default function ServicesManagerClient({ initialServices, categories }: P
         setEditingService(null);
         router.refresh();
         setTimeout(() => setFeedback(null), 3000);
+      } else {
+        alert(data.error || d.common.errorSaving);
       }
-    } catch {
-      alert(d.common.errorSaving);
+    } catch (err: any) {
+      alert(err?.message || d.common.errorSaving);
     } finally {
       setLoading(false);
     }

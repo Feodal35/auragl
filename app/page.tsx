@@ -2,8 +2,10 @@ import React from "react";
 import Header from "@/components/public/Header";
 import Footer from "@/components/public/Footer";
 import HeroSection from "@/components/sections/HeroSection";
+import IntroSection from "@/components/sections/IntroSection";
 import SignatureTreatmentsSection from "@/components/sections/SignatureTreatmentsSection";
 import CategoriesSection from "@/components/sections/CategoriesSection";
+import PhilosophySection from "@/components/sections/PhilosophySection";
 import GalleryPreviewSection from "@/components/sections/GalleryPreviewSection";
 import SelectedPricingSection from "@/components/sections/SelectedPricingSection";
 import AboutMurvetSection from "@/components/sections/AboutMurvetSection";
@@ -62,13 +64,22 @@ export default async function HomePage() {
           design={designSettings.hero}
         />
 
-        {/* 02 — Signature Treatments (concrete, with real images) */}
+        {/* 02 — Intro & Brand Essence (Editable in Admin: Einleitung & Philosophie) */}
+        <IntroSection content={contentSections.intro} />
+
+        {/* 03 — Signature Treatments (concrete, with real images) */}
         <SignatureTreatmentsSection services={featuredServices} />
 
-        {/* 03 — Categories */}
+        {/* 04 — Categories */}
         <CategoriesSection categories={categories} />
 
-        {/* 04 — Case Studies (real results) */}
+        {/* 05 — Studio Philosophy (Editable in Admin: Studio-Leitgedanke) */}
+        <PhilosophySection
+          content={contentSections.philosophy}
+          design={designSettings.philosophy}
+        />
+
+        {/* 06 — Case Studies (real results) */}
         <CaseStudySpotlight />
 
         {/* 05 — Gallery Preview */}

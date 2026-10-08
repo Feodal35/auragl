@@ -134,9 +134,11 @@ export default function PricingManagerClient({ initialPricing, categories }: Pro
         setEditingRow(null);
         router.refresh();
         setTimeout(() => setFeedback(null), 3000);
+      } else {
+        alert(data.error || d.common.errorSaving);
       }
-    } catch {
-      alert(d.common.errorSaving);
+    } catch (err: any) {
+      alert(err?.message || d.common.errorSaving);
     } finally {
       setLoading(false);
     }

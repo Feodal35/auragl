@@ -66,7 +66,7 @@ export async function getCategories(): Promise<ServiceCategory[]> {
       const rows = await queryPg<ServiceCategory>(
         "SELECT * FROM service_categories WHERE is_active = true ORDER BY display_order ASC"
       );
-      if (rows && rows.length > 0) return rows;
+      if (rows) return rows;
     } catch (err) {
       console.error("[PostgreSQL getCategories Error]:", err);
     }
@@ -78,7 +78,7 @@ export async function getCategories(): Promise<ServiceCategory[]> {
       .from("service_categories")
       .select("*")
       .order("display_order", { ascending: true });
-    if (!error && data && data.length > 0) return data as ServiceCategory[];
+    if (!error && data) return data as ServiceCategory[];
   }
   return state.categories.filter((c) => c.is_active);
 }
@@ -89,7 +89,7 @@ export async function getAllCategories(): Promise<ServiceCategory[]> {
       const rows = await queryPg<ServiceCategory>(
         "SELECT * FROM service_categories ORDER BY display_order ASC"
       );
-      if (rows && rows.length > 0) return rows;
+      if (rows) return rows;
     } catch (err) {
       console.error("[PostgreSQL getAllCategories Error]:", err);
     }
@@ -120,7 +120,7 @@ export async function getServices(categoryId?: number): Promise<ServiceItem[]> {
       }
       sql += " ORDER BY display_order ASC";
       const rows = await queryPg<ServiceItem>(sql, params);
-      if (rows && rows.length > 0) return rows;
+      if (rows) return rows;
     } catch (err) {
       console.error("[PostgreSQL getServices Error]:", err);
     }
@@ -136,7 +136,7 @@ export async function getServices(categoryId?: number): Promise<ServiceItem[]> {
         .order("display_order", { ascending: true });
       if (categoryId) query = query.eq("category_id", categoryId);
       const { data, error } = await query;
-      if (!error && data && data.length > 0) return data as ServiceItem[];
+      if (!error && data) return data as ServiceItem[];
     }
   }
   let filtered = state.services.filter((s) => s.is_active);
@@ -152,7 +152,7 @@ export async function getAllServices(): Promise<ServiceItem[]> {
       const rows = await queryPg<ServiceItem>(
         "SELECT * FROM services ORDER BY display_order ASC"
       );
-      if (rows && rows.length > 0) return rows;
+      if (rows) return rows;
     } catch (err) {
       console.error("[PostgreSQL getAllServices Error]:", err);
     }
@@ -352,7 +352,7 @@ export async function getPricing(): Promise<PriceRow[]> {
       const rows = await queryPg<PriceRow>(
         "SELECT * FROM pricing WHERE is_active = true ORDER BY display_order ASC"
       );
-      if (rows && rows.length > 0) return rows;
+      if (rows) return rows;
     } catch (err) {
       console.error("[PostgreSQL getPricing Error]:", err);
     }
@@ -366,7 +366,7 @@ export async function getPricing(): Promise<PriceRow[]> {
         .select("*")
         .eq("is_active", true)
         .order("display_order", { ascending: true });
-      if (!error && data && data.length > 0) return data as PriceRow[];
+      if (!error && data) return data as PriceRow[];
     }
   }
   return state.pricing.filter((p) => p.is_active);
@@ -378,7 +378,7 @@ export async function getAllPricing(): Promise<PriceRow[]> {
       const rows = await queryPg<PriceRow>(
         "SELECT * FROM pricing ORDER BY display_order ASC"
       );
-      if (rows && rows.length > 0) return rows;
+      if (rows) return rows;
     } catch (err) {
       console.error("[PostgreSQL getAllPricing Error]:", err);
     }
@@ -533,7 +533,7 @@ export async function getGalleryItems(): Promise<GalleryItem[]> {
       const rows = await queryPg<GalleryItem>(
         "SELECT * FROM gallery_items WHERE is_active = true ORDER BY display_order ASC"
       );
-      if (rows && rows.length > 0) return rows;
+      if (rows) return rows;
     } catch (err) {
       console.error("[PostgreSQL getGalleryItems Error]:", err);
     }
@@ -547,7 +547,7 @@ export async function getGalleryItems(): Promise<GalleryItem[]> {
         .select("*")
         .eq("is_active", true)
         .order("display_order", { ascending: true });
-      if (!error && data && data.length > 0) return data as GalleryItem[];
+      if (!error && data) return data as GalleryItem[];
     }
   }
   return state.gallery.filter((g) => g.is_active);
@@ -559,7 +559,7 @@ export async function getAllGalleryItems(): Promise<GalleryItem[]> {
       const rows = await queryPg<GalleryItem>(
         "SELECT * FROM gallery_items ORDER BY display_order ASC"
       );
-      if (rows && rows.length > 0) return rows;
+      if (rows) return rows;
     } catch (err) {
       console.error("[PostgreSQL getAllGalleryItems Error]:", err);
     }
@@ -681,7 +681,7 @@ export async function getOpeningHours(): Promise<OpeningHour[]> {
       const rows = await queryPg<OpeningHour>(
         "SELECT * FROM opening_hours ORDER BY display_order ASC"
       );
-      if (rows && rows.length > 0) return rows;
+      if (rows) return rows;
     } catch (err) {
       console.error("[PostgreSQL getOpeningHours Error]:", err);
     }
@@ -694,7 +694,7 @@ export async function getOpeningHours(): Promise<OpeningHour[]> {
         .from("opening_hours")
         .select("*")
         .order("display_order", { ascending: true });
-      if (!error && data && data.length > 0) return data as OpeningHour[];
+      if (!error && data) return data as OpeningHour[];
     }
   }
   return state.openingHours;
@@ -716,6 +716,7 @@ export async function saveOpeningHours(hours: OpeningHour[]): Promise<OpeningHou
       }
     } catch (err) {
       console.error("[PostgreSQL saveOpeningHours Error]:", err);
+      throw err;
     }
   }
 
@@ -727,10 +728,13 @@ export async function saveOpeningHours(hours: OpeningHour[]): Promise<OpeningHou
 export async function getBusinessSettings(): Promise<BusinessSettings> {
   if (hasPostgresConfigured()) {
     try {
-      const rows = await queryPg<{ value: BusinessSettings }>(
+      const rows = await queryPg<{ value: any }>(
         "SELECT value FROM site_settings WHERE key = 'business' LIMIT 1"
       );
-      if (rows && rows[0]?.value) return rows[0].value;
+      if (rows && rows[0]?.value) {
+        const val = typeof rows[0].value === "string" ? JSON.parse(rows[0].value) : rows[0].value;
+        return { ...state.businessSettings, ...val };
+      }
     } catch (err) {
       console.error("[PostgreSQL getBusinessSettings Error]:", err);
     }
@@ -744,24 +748,29 @@ export async function getBusinessSettings(): Promise<BusinessSettings> {
         .select("value")
         .eq("key", "business")
         .single();
-      if (!error && data?.value) return data.value as BusinessSettings;
+      if (!error && data?.value) return { ...state.businessSettings, ...data.value } as BusinessSettings;
     }
   }
   return state.businessSettings;
 }
 
 export async function saveBusinessSettings(settings: Partial<BusinessSettings>): Promise<BusinessSettings> {
-  state.businessSettings = { ...state.businessSettings, ...settings };
+  const current = await getBusinessSettings();
+  const merged = { ...current, ...settings };
+  state.businessSettings = merged;
+
   if (hasPostgresConfigured()) {
     try {
       await queryPg(
         `INSERT INTO site_settings (key, value, updated_at) 
-         VALUES ('business', $1, NOW()) 
+         VALUES ('business', $1::jsonb, NOW()) 
          ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value, updated_at = NOW()`,
-        [JSON.stringify(state.businessSettings)]
+        [JSON.stringify(merged)]
       );
+      return merged;
     } catch (err) {
       console.error("[PostgreSQL saveBusinessSettings Error]:", err);
+      throw err;
     }
   }
 
@@ -770,19 +779,22 @@ export async function saveBusinessSettings(settings: Partial<BusinessSettings>):
     if (supabase) {
       await supabase
         .from("site_settings")
-        .upsert({ key: "business", value: state.businessSettings });
+        .upsert({ key: "business", value: merged });
     }
   }
-  return state.businessSettings;
+  return merged;
 }
 
 export async function getBrandSettings(): Promise<BrandSettings> {
   if (hasPostgresConfigured()) {
     try {
-      const rows = await queryPg<{ value: BrandSettings }>(
+      const rows = await queryPg<{ value: any }>(
         "SELECT value FROM site_settings WHERE key = 'brand' LIMIT 1"
       );
-      if (rows && rows[0]?.value) return rows[0].value;
+      if (rows && rows[0]?.value) {
+        const val = typeof rows[0].value === "string" ? JSON.parse(rows[0].value) : rows[0].value;
+        return { ...state.brandSettings, ...val };
+      }
     } catch (err) {
       console.error("[PostgreSQL getBrandSettings Error]:", err);
     }
@@ -796,24 +808,29 @@ export async function getBrandSettings(): Promise<BrandSettings> {
         .select("value")
         .eq("key", "brand")
         .single();
-      if (!error && data?.value) return data.value as BrandSettings;
+      if (!error && data?.value) return { ...state.brandSettings, ...data.value } as BrandSettings;
     }
   }
   return state.brandSettings;
 }
 
 export async function saveBrandSettings(settings: Partial<BrandSettings>): Promise<BrandSettings> {
-  state.brandSettings = { ...state.brandSettings, ...settings };
+  const current = await getBrandSettings();
+  const merged = { ...current, ...settings };
+  state.brandSettings = merged;
+
   if (hasPostgresConfigured()) {
     try {
       await queryPg(
         `INSERT INTO site_settings (key, value, updated_at) 
-         VALUES ('brand', $1, NOW()) 
+         VALUES ('brand', $1::jsonb, NOW()) 
          ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value, updated_at = NOW()`,
-        [JSON.stringify(state.brandSettings)]
+        [JSON.stringify(merged)]
       );
+      return merged;
     } catch (err) {
       console.error("[PostgreSQL saveBrandSettings Error]:", err);
+      throw err;
     }
   }
 
@@ -822,17 +839,17 @@ export async function saveBrandSettings(settings: Partial<BrandSettings>): Promi
     if (supabase) {
       await supabase
         .from("site_settings")
-        .upsert({ key: "brand", value: state.brandSettings });
+        .upsert({ key: "brand", value: merged });
     }
   }
-  return state.brandSettings;
+  return merged;
 }
 
 export async function getDesignSettings(): Promise<Record<string, DesignSectionSetting>> {
   if (hasPostgresConfigured()) {
     try {
       const rows = await queryPg<DesignSectionSetting>("SELECT * FROM design_settings");
-      if (rows && rows.length > 0) {
+      if (rows) {
         const mapped: Record<string, DesignSectionSetting> = {};
         for (const item of rows) {
           mapped[item.section_id] = item;
@@ -868,7 +885,7 @@ export async function saveDesignSetting(setting: DesignSectionSetting): Promise<
 
   if (hasPostgresConfigured()) {
     try {
-      await queryPg(
+      const rows = await queryPg<DesignSectionSetting>(
         `INSERT INTO design_settings 
           (section_id, background_color, background_image_desktop, background_image_mobile, image_position, image_size, overlay_color, overlay_opacity, text_color, updated_at)
          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, NOW())
@@ -881,7 +898,8 @@ export async function saveDesignSetting(setting: DesignSectionSetting): Promise<
           overlay_color = EXCLUDED.overlay_color,
           overlay_opacity = EXCLUDED.overlay_opacity,
           text_color = EXCLUDED.text_color,
-          updated_at = NOW()`,
+          updated_at = NOW()
+         RETURNING *`,
         [
           setting.section_id,
           setting.background_color || null,
@@ -894,8 +912,10 @@ export async function saveDesignSetting(setting: DesignSectionSetting): Promise<
           setting.text_color || "#392D29",
         ]
       );
+      if (rows && rows.length > 0) return rows[0];
     } catch (err) {
       console.error("[PostgreSQL saveDesignSetting Error]:", err);
+      throw err;
     }
   }
 
@@ -912,7 +932,7 @@ export async function getContentSections(): Promise<Record<string, ContentSectio
   if (hasPostgresConfigured()) {
     try {
       const rows = await queryPg<ContentSection>("SELECT * FROM content_sections");
-      if (rows && rows.length > 0) {
+      if (rows) {
         const mapped: Record<string, ContentSection> = {};
         for (const item of rows) {
           mapped[item.section_id] = item;
@@ -948,7 +968,7 @@ export async function saveContentSection(section: ContentSection): Promise<Conte
 
   if (hasPostgresConfigured()) {
     try {
-      await queryPg(
+      const rows = await queryPg<ContentSection>(
         `INSERT INTO content_sections 
           (section_id, title, eyebrow, headline, body_text, primary_cta_label, primary_cta_url, secondary_cta_label, secondary_cta_url, updated_at)
          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, NOW())
@@ -961,7 +981,8 @@ export async function saveContentSection(section: ContentSection): Promise<Conte
           primary_cta_url = EXCLUDED.primary_cta_url,
           secondary_cta_label = EXCLUDED.secondary_cta_label,
           secondary_cta_url = EXCLUDED.secondary_cta_url,
-          updated_at = NOW()`,
+          updated_at = NOW()
+         RETURNING *`,
         [
           section.section_id,
           section.title || null,
@@ -974,8 +995,10 @@ export async function saveContentSection(section: ContentSection): Promise<Conte
           section.secondary_cta_url || null,
         ]
       );
+      if (rows && rows.length > 0) return rows[0];
     } catch (err) {
       console.error("[PostgreSQL saveContentSection Error]:", err);
+      throw err;
     }
   }
 
@@ -1023,6 +1046,21 @@ export async function getSeoSettings(route: string): Promise<SeoSetting> {
 }
 
 export async function getAllSeoSettings(): Promise<Record<string, SeoSetting>> {
+  if (hasPostgresConfigured()) {
+    try {
+      const rows = await queryPg<SeoSetting>("SELECT * FROM seo_settings");
+      if (rows) {
+        const mapped: Record<string, SeoSetting> = {};
+        for (const item of rows) {
+          const key = item.route === "/" ? "home" : item.route.replace(/^\//, "");
+          mapped[key] = item;
+        }
+        return { ...state.seoSettings, ...mapped };
+      }
+    } catch (err) {
+      console.error("[PostgreSQL getAllSeoSettings Error]:", err);
+    }
+  }
   return state.seoSettings;
 }
 
@@ -1031,7 +1069,7 @@ export async function saveSeoSetting(key: string, setting: SeoSetting): Promise<
 
   if (hasPostgresConfigured()) {
     try {
-      await queryPg(
+      const rows = await queryPg<SeoSetting>(
         `INSERT INTO seo_settings 
           (route, title, description, og_title, og_description, og_image, no_index, canonical_url, updated_at)
          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, NOW())
@@ -1043,7 +1081,8 @@ export async function saveSeoSetting(key: string, setting: SeoSetting): Promise<
           og_image = EXCLUDED.og_image,
           no_index = EXCLUDED.no_index,
           canonical_url = EXCLUDED.canonical_url,
-          updated_at = NOW()`,
+          updated_at = NOW()
+         RETURNING *`,
         [
           setting.route,
           setting.title,
@@ -1055,8 +1094,10 @@ export async function saveSeoSetting(key: string, setting: SeoSetting): Promise<
           setting.canonical_url || null,
         ]
       );
+      if (rows && rows.length > 0) return rows[0];
     } catch (err) {
       console.error("[PostgreSQL saveSeoSetting Error]:", err);
+      throw err;
     }
   }
 

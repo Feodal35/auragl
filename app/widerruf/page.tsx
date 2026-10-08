@@ -14,7 +14,8 @@ export const metadata: Metadata = {
     "Informationen zum gesetzlichen Widerrufsrecht für Verbraucher und Muster-Widerrufsformular bei Aura Glow by Mürvet in Peine.",
 };
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default async function WiderrufPage() {
   const [business, openingHours] = await Promise.all([

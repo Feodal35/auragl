@@ -14,7 +14,8 @@ export const metadata: Metadata = {
     "Umfassende Datenschutzerklärung gemäß DSGVO und § 25 TDDDG für das Beauty- & Aesthetics-Studio Aura Glow by Mürvet in Peine.",
 };
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default async function PrivacyPage() {
   const [business, openingHours] = await Promise.all([

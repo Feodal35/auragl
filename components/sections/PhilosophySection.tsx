@@ -29,8 +29,29 @@ export default function PhilosophySection({ content, design }: PhilosophySection
     },
   ];
 
+  const bgColor = design?.background_color || "#211A18";
+  const textColor = design?.text_color || "#ffffff";
+  const bgImage = design?.background_image_desktop;
+  const overlayOpacity = design?.overlay_opacity ?? 0.7;
+  const overlayColor = design?.overlay_color || "#211A18";
+
   return (
-    <section className="relative py-28 sm:py-36 bg-[#211A18] text-white overflow-hidden">
+    <section
+      className="relative py-28 sm:py-36 overflow-hidden"
+      style={{ backgroundColor: bgColor, color: textColor }}
+    >
+      {bgImage && (
+        <div
+          className="absolute inset-0 bg-cover bg-center pointer-events-none"
+          style={{ backgroundImage: `url(${bgImage})` }}
+        />
+      )}
+      {bgImage && (
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{ backgroundColor: overlayColor, opacity: overlayOpacity }}
+        />
+      )}
       {/* Subtle background glow / vignette */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#B88770]/15 via-transparent to-transparent pointer-events-none" />
 

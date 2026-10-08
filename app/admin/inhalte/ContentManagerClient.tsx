@@ -52,13 +52,16 @@ export default function ContentManagerClient({ initialSections }: Props) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(current),
       });
-      if (res.ok) {
+      const data = await res.json();
+      if (res.ok && data.success) {
         setFeedback(d.content.savedSuccess);
         router.refresh();
         setTimeout(() => setFeedback(null), 3000);
+      } else {
+        alert(data.error || d.common.errorSaving);
       }
-    } catch {
-      alert(d.common.errorSaving);
+    } catch (err: any) {
+      alert(err?.message || d.common.errorSaving);
     } finally {
       setSaving(false);
     }
