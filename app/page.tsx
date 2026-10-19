@@ -2,7 +2,6 @@ import React from "react";
 import Header from "@/components/public/Header";
 import Footer from "@/components/public/Footer";
 import HeroSection from "@/components/sections/HeroSection";
-import CategoriesSection from "@/components/sections/CategoriesSection";
 import AboutMurvetSection from "@/components/sections/AboutMurvetSection";
 import ContactVisitSection from "@/components/sections/ContactVisitSection";
 import FinalCtaSection from "@/components/sections/FinalCtaSection";
@@ -13,7 +12,6 @@ import StickyMobileCta from "@/components/public/StickyMobileCta";
 import JsonLdSchema from "@/components/public/JsonLdSchema";
 
 import {
-  getCategories,
   getOpeningHours,
   getBusinessSettings,
   getDesignSettings,
@@ -27,7 +25,6 @@ export const revalidate = 0;
 
 export default async function HomePage() {
   const [
-    categories,
     openingHours,
     business,
     designSettings,
@@ -35,7 +32,6 @@ export default async function HomePage() {
     testimonials,
     caseStudies,
   ] = await Promise.all([
-    getCategories(),
     getOpeningHours(),
     getBusinessSettings(),
     getDesignSettings(),
@@ -56,10 +52,7 @@ export default async function HomePage() {
           design={designSettings.hero}
         />
 
-        {/* 02 — Categories (Vielfalt & Expertise / Unsere Behandlungswelten) */}
-        <CategoriesSection categories={categories} />
-
-        {/* 03 — Case Studies (real results) */}
+        {/* 02 — Case Studies (real results) */}
         <CaseStudySpotlight caseStudies={caseStudies} />
 
         {/* 04 — Testimonials */}
