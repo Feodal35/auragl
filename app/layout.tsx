@@ -26,10 +26,12 @@ const inter = Inter({
 });
 
 const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ||
+  (process.env.NEXT_PUBLIC_SITE_URL && process.env.NEXT_PUBLIC_SITE_URL !== "http://localhost:3000"
+    ? process.env.NEXT_PUBLIC_SITE_URL
+    : null) ||
   (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : null) ||
   (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null) ||
-  "https://auragl.vercel.app";
+  "https://xn--aura6lowbymrvet-9vb.de";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -76,10 +78,11 @@ export const metadata: Metadata = {
       "Entdecke individuelle Beauty-Behandlungen für deine natürliche Schönheit und ein strahlendes Selbstbewusstsein.",
     images: [
       {
-        url: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1200&q=85",
+        url: "/images/og-image.jpg?v=2",
         width: 1200,
         height: 630,
-        alt: "Aura Glow by Mürvet Studio",
+        type: "image/jpeg",
+        alt: "Aura Glow by Mürvet Studio Peine",
       },
     ],
   },
@@ -88,6 +91,7 @@ export const metadata: Metadata = {
     title: "Aura Glow by Mürvet | Exklusive Beauty & Aesthetics",
     description:
       "Entdecke individuelle Beauty-Behandlungen für deine natürliche Schönheit und ein strahlendes Selbstbewusstsein.",
+    images: ["/images/og-image.jpg?v=2"],
   },
   robots: {
     index: true,

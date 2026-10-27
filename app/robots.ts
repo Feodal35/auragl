@@ -24,7 +24,7 @@ export default async function robots(): Promise<MetadataRoute.Robots> {
       ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
       : process.env.VERCEL_URL
       ? `https://${process.env.VERCEL_URL}`
-      : "https://auragl.vercel.app";
+      : "https://xn--aura6lowbymrvet-9vb.de";
   }
 
   baseUrl = baseUrl.replace(/\/$/, "");

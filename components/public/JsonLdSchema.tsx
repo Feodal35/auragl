@@ -17,7 +17,10 @@ export default function JsonLdSchema({ business, openingHours }: Props) {
     7: "Sunday",
   };
 
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://auraglow.de";
+  const baseUrl =
+    process.env.NEXT_PUBLIC_SITE_URL && process.env.NEXT_PUBLIC_SITE_URL !== "http://localhost:3000"
+      ? process.env.NEXT_PUBLIC_SITE_URL
+      : "https://xn--aura6lowbymrvet-9vb.de";
 
   const schema = {
     "@context": "https://schema.org",
@@ -58,6 +61,7 @@ export default function JsonLdSchema({ business, openingHours }: Props) {
         currenciesAccepted: "EUR",
         paymentAccepted: "Barzahlung, EC-Karte, Kreditkarte",
         image: [
+          `${baseUrl}/images/og-image.jpg`,
           `${baseUrl}/images/treatments/microneedling-facial.jpg`,
           `${baseUrl}/images/treatments/murvet-treatment-full.jpg`,
           `${baseUrl}/images/treatments/lash-lift-result.jpg`,
