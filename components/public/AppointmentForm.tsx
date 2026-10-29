@@ -124,7 +124,16 @@ export default function AppointmentForm({ services, initialTreatment = "" }: App
     "w-full px-4 py-3 bg-white border border-[#E8D6C5] rounded-[1px] text-base sm:text-sm text-[#392D29] focus:outline-none focus:border-[#A26D57] focus:ring-1 focus:ring-[#A26D57] transition-all min-h-[46px]";
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6" noValidate>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-6"
+      noValidate
+      toolname="book_appointment"
+      tooldescription="Bucht eine Beauty-Behandlung (Wimpern, Facials, Powder Brows) im Aura Glow Studio Peine"
+      toolautosubmit={false}
+      action="/api/appointments"
+      method="POST"
+    >
       {errorMessage && (
         <div className="p-4 bg-red-50 border border-red-200 text-red-700 text-xs rounded-[1px] flex items-center gap-3">
           <AlertCircle className="w-4 h-4 shrink-0" />
@@ -147,6 +156,7 @@ export default function AppointmentForm({ services, initialTreatment = "" }: App
             id="first_name"
             type="text"
             placeholder={locale === "en" ? "Your first name" : "Dein Vorname"}
+            toolparamdescription="Vorname des Kunden"
             {...register("first_name")}
             className={inputClasses}
           />
@@ -163,6 +173,7 @@ export default function AppointmentForm({ services, initialTreatment = "" }: App
             id="last_name"
             type="text"
             placeholder={locale === "en" ? "Your last name" : "Dein Nachname"}
+            toolparamdescription="Nachname des Kunden"
             {...register("last_name")}
             className={inputClasses}
           />
@@ -182,6 +193,7 @@ export default function AppointmentForm({ services, initialTreatment = "" }: App
             id="email"
             type="email"
             placeholder="deine@email.de"
+            toolparamdescription="Gültige E-Mail-Adresse für die Terminbestätigung"
             {...register("email")}
             className={inputClasses}
           />
@@ -198,6 +210,7 @@ export default function AppointmentForm({ services, initialTreatment = "" }: App
             id="phone"
             type="tel"
             placeholder="+49 176 ..."
+            toolparamdescription="Telefonnummer für eventuelle Rückfragen zum Wunschtermin"
             {...register("phone")}
             className={inputClasses}
           />
@@ -214,6 +227,7 @@ export default function AppointmentForm({ services, initialTreatment = "" }: App
         </label>
         <select
           id="treatment_title"
+          toolparamdescription="Name der gewünschten Schönheitsbehandlung"
           {...register("treatment_title")}
           className={inputClasses}
         >
@@ -243,6 +257,7 @@ export default function AppointmentForm({ services, initialTreatment = "" }: App
             id="preferred_date"
             type="date"
             min={todayString}
+            toolparamdescription="Wunschdatum für den Termin"
             {...register("preferred_date")}
             className={inputClasses}
           />
@@ -257,6 +272,7 @@ export default function AppointmentForm({ services, initialTreatment = "" }: App
           </label>
           <select
             id="preferred_time"
+            toolparamdescription="Bevorzugtes Zeitfenster (Vormittag, Nachmittag, Abend)"
             {...register("preferred_time")}
             className={inputClasses}
           >
@@ -277,6 +293,7 @@ export default function AppointmentForm({ services, initialTreatment = "" }: App
             id="alternative_date"
             type="date"
             min={todayString}
+            toolparamdescription="Alternatives Ausweichdatum"
             {...register("alternative_date")}
             className={inputClasses}
           />
@@ -292,6 +309,7 @@ export default function AppointmentForm({ services, initialTreatment = "" }: App
           id="notes"
           rows={3}
           placeholder={t.appointment.notesPlaceholder}
+          toolparamdescription="Optionale Wünsche, Fragen oder Anmerkungen"
           {...register("notes")}
           className="w-full px-4 py-3 bg-white border border-[#E8D6C5] rounded-[1px] text-base sm:text-sm text-[#392D29] focus:outline-none focus:border-[#A26D57] focus:ring-1 focus:ring-[#A26D57] transition-all"
         />

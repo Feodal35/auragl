@@ -102,7 +102,16 @@ export default function ContactForm() {
     "w-full px-4 py-3 bg-white border border-[#E8D6C5] rounded-[1px] text-base sm:text-sm text-[#392D29] focus:outline-none focus:border-[#A26D57] focus:ring-1 focus:ring-[#A26D57] transition-all min-h-[46px]";
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6" noValidate>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-6"
+      noValidate
+      toolname="send_contact_message"
+      tooldescription="Sendet eine Kontakt- oder Beratungsanfrage an Aura Glow Studio Peine"
+      toolautosubmit={false}
+      action="/api/contact"
+      method="POST"
+    >
       {errorMessage && (
         <div className="p-4 bg-red-50 border border-red-200 text-red-700 text-xs rounded-[1px] flex items-center gap-3">
           <AlertCircle className="w-4 h-4 shrink-0" />
@@ -125,6 +134,7 @@ export default function ContactForm() {
             id="contact_name"
             type="text"
             placeholder={locale === "en" ? "e.g. Sarah Miller" : "z. B. Sophie Müller"}
+            toolparamdescription="Vollständiger Name des Absenders"
             {...register("name")}
             className={inputClasses}
           />
@@ -142,6 +152,7 @@ export default function ContactForm() {
             id="contact_email"
             type="email"
             placeholder="sophie@beispiel.de"
+            toolparamdescription="E-Mail-Adresse für die Rückantwort"
             {...register("email")}
             className={inputClasses}
           />
@@ -161,6 +172,7 @@ export default function ContactForm() {
             id="contact_phone"
             type="tel"
             placeholder="+49 176 ..."
+            toolparamdescription="Optionale Telefonnummer für Rückfragen"
             {...register("phone")}
             className={inputClasses}
           />
@@ -175,6 +187,7 @@ export default function ContactForm() {
             id="contact_subject"
             type="text"
             placeholder={locale === "en" ? "e.g. Consultation Lash Extensions" : "z. B. Beratung Wimpernverlängerung"}
+            toolparamdescription="Betreff oder Thema der Anfrage"
             {...register("subject")}
             className={inputClasses}
           />
@@ -193,6 +206,7 @@ export default function ContactForm() {
           id="contact_message"
           rows={4}
           placeholder={locale === "en" ? "How can we help you? Feel free to describe your wishes or questions..." : "Wie können wir dir weiterhelfen? Beschreibe gerne deine Wünsche oder Fragen..."}
+          toolparamdescription="Ausführlicher Nachrichtentext oder Fragen"
           {...register("message")}
           className="w-full px-4 py-3 bg-white border border-[#E8D6C5] rounded-[1px] text-base sm:text-sm text-[#392D29] focus:outline-none focus:border-[#A26D57] focus:ring-1 focus:ring-[#A26D57] transition-all"
         />

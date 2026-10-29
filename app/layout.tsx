@@ -4,6 +4,7 @@ import "./globals.css";
 import CookieConsent from "@/components/public/CookieConsent";
 import GoogleConsentMode, { GoogleTagManagerNoScript } from "@/components/analytics/GoogleConsentMode";
 import { LanguageProvider } from "@/lib/i18n/LanguageContext";
+import WebMcpProvider from "@/components/public/WebMcpProvider";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -78,7 +79,7 @@ export const metadata: Metadata = {
       "Entdecke individuelle Beauty-Behandlungen für deine natürliche Schönheit und ein strahlendes Selbstbewusstsein.",
     images: [
       {
-        url: "/images/og-image.jpg?v=2",
+        url: "/images/og-image.jpg?v=3",
         width: 1200,
         height: 630,
         type: "image/jpeg",
@@ -91,7 +92,7 @@ export const metadata: Metadata = {
     title: "Aura Glow by Mürvet | Exklusive Beauty & Aesthetics",
     description:
       "Entdecke individuelle Beauty-Behandlungen für deine natürliche Schönheit und ein strahlendes Selbstbewusstsein.",
-    images: ["/images/og-image.jpg?v=2"],
+    images: ["/images/og-image.jpg?v=3"],
   },
   robots: {
     index: true,
@@ -143,6 +144,7 @@ export default function RootLayout({
       className={`${cormorant.variable} ${dancing.variable} ${inter.variable}`}
     >
       <head>
+        <link rel="ai-catalog" type="application/json" href="/.well-known/ai-catalog.json" />
         <GoogleConsentMode />
       </head>
       <body
@@ -150,6 +152,7 @@ export default function RootLayout({
         className="antialiased bg-[#F7F3EE] text-[#392D29] min-h-screen selection:bg-[#E8D6C5] selection:text-[#211A18]"
       >
         <GoogleTagManagerNoScript />
+        <WebMcpProvider />
         <LanguageProvider>
           {children}
           <CookieConsent />
