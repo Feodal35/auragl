@@ -1,5 +1,4 @@
 {
-  "$schema": "https://raw.githubusercontent.com/ards-project/ard-spec/main/spec/schemas/ai-catalog.schema.json",
   "specVersion": "1.0",
   "host": {
     "displayName": "Aura Glow by Mürvet",
@@ -8,9 +7,9 @@
   },
   "entries": [
     {
-      "identifier": "urn:ai:xn--aura6lowbymrvet-9vb.de:tools:book-appointment",
+      "identifier": "urn:air:xn--aura6lowbymrvet-9vb.de:booking:appointment",
       "displayName": "Aura Glow Terminanfrage (Appointment Booking)",
-      "mediaType": "application/mcp-server-card+json",
+      "type": "application/mcp-server-card+json",
       "description": "Bucht eine Beauty-Behandlung (Wimpernverlängerung, Hollywood Glow Facials, Powder Brows) im Aura Glow Studio in 31224 Peine.",
       "tags": ["beauty", "lashes", "facials", "brows", "booking", "peine"],
       "representativeQueries": [
@@ -23,9 +22,9 @@
       "updatedAt": "2026-10-29T10:00:00Z"
     },
     {
-      "identifier": "urn:ai:xn--aura6lowbymrvet-9vb.de:tools:contact-inquiry",
+      "identifier": "urn:air:xn--aura6lowbymrvet-9vb.de:contact:inquiry",
       "displayName": "Aura Glow Kontakt & Beratung (Contact)",
-      "mediaType": "application/mcp-server-card+json",
+      "type": "application/mcp-server-card+json",
       "description": "Sendet eine allgemeine Anfrage, Preisauskunft oder Beratungsnachricht an Aura Glow by Mürvet.",
       "tags": ["contact", "inquiry", "support", "peine"],
       "representativeQueries": [
@@ -37,9 +36,9 @@
       "updatedAt": "2026-10-29T10:00:00Z"
     },
     {
-      "identifier": "urn:ai:xn--aura6lowbymrvet-9vb.de:tools:treatment-catalog",
+      "identifier": "urn:air:xn--aura6lowbymrvet-9vb.de:catalog:treatments",
       "displayName": "Aura Glow Behandlungskatalog (Treatments & Prices)",
-      "mediaType": "application/mcp-server-card+json",
+      "type": "application/mcp-server-card+json",
       "description": "Ruft alle verfügbaren Behandlungen, Beschreibungen, Dauer und Preise (PAngV-konform) von Aura Glow by Mürvet ab.",
       "tags": ["catalog", "services", "pricing", "peine"],
       "representativeQueries": [

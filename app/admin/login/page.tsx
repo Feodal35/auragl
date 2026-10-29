@@ -113,7 +113,16 @@ export default function AdminLoginPage() {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-5"
+          noValidate
+          toolname="admin_login"
+          tooldescription="Administrator-Anmeldung für das Aura Glow Dashboard"
+          toolautosubmit={false}
+          action="/api/admin/login"
+          method="POST"
+        >
           <div>
             <label className="block text-xs uppercase tracking-[0.14em] text-[#392D29] font-medium mb-1.5">
               {d.login.emailLabel}
@@ -126,6 +135,7 @@ export default function AdminLoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="auralow@gmail.com"
+                toolparamdescription="Administrator E-Mail-Adresse"
                 className="w-full pl-10 pr-4 py-3 bg-[#FAF6F1] border border-[#E8D6C5] rounded-[1px] text-sm text-[#392D29] focus:outline-none focus:border-[#844C36] transition-colors"
               />
             </div>
@@ -143,6 +153,7 @@ export default function AdminLoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
+                toolparamdescription="Administrator Passwort"
                 className="w-full pl-10 pr-4 py-3 bg-[#FAF6F1] border border-[#E8D6C5] rounded-[1px] text-sm text-[#392D29] focus:outline-none focus:border-[#844C36] transition-colors"
               />
             </div>
