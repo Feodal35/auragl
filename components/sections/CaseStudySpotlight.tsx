@@ -77,10 +77,9 @@ export default function CaseStudySpotlight({ caseStudies: initialCaseStudies }: 
                     src={imgSrc}
                     alt={study.image_alt || study.title}
                     fill
-                    sizes="(max-width: 1024px) 100vw, 42vw"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 540px"
                     className="object-cover object-center transition-transform duration-700 hover:scale-105"
                     loading="lazy"
-                    unoptimized={imgSrc.startsWith("http")}
                   />
                   <div className="absolute top-4 left-4 bg-[#211A18]/85 text-white backdrop-blur-sm px-3 py-1 text-xs font-mono tracking-widest uppercase">
                     {locale === "en" ? "Before • After Spotlight" : "Vorher • Nachher Fokus"}

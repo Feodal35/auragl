@@ -86,6 +86,11 @@ export default function AuraGlowLogo({
 
     return (
       <picture>
+        <source
+          media="(max-width: 640px)"
+          srcSet={customLogoUrl || "/images/aura-glow-logo-sm.webp"}
+          type="image/webp"
+        />
         <source srcSet={customLogoUrl || fullLogoSrc} type="image/webp" />
         <img
           src={customLogoUrl || "/images/aura-glow-logo.png"}

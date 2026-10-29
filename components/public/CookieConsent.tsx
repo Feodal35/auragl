@@ -131,7 +131,7 @@ export default function CookieConsent() {
               <h2 id="cookie-banner-title" className="font-editorial text-xl sm:text-2xl text-[#392D29]">
                 {t.cookie.title}
               </h2>
-              <span className="text-[11px] uppercase tracking-wider text-[#A26D57] font-medium">
+              <span className="text-[11px] uppercase tracking-wider text-[#844C36] font-semibold">
                 Google Consent Mode v2 &bull; DSGVO / GDPR &bull; § 25 TDDDG
               </span>
             </div>
@@ -139,7 +139,7 @@ export default function CookieConsent() {
           <button
             type="button"
             onClick={handleAcceptEssential}
-            className="text-[#756A63] hover:text-[#392D29] p-1.5 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-[#A26D57]"
+            className="text-[#392D29] hover:text-[#844C36] p-1.5 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-[#844C36]"
             aria-label={t.cookie.btnEssentialOnly}
           >
             <X className="w-4 h-4" />
@@ -150,10 +150,10 @@ export default function CookieConsent() {
         {!isDetailedView ? (
           /* Simple View */
           <div className="space-y-4">
-            <p className="text-xs sm:text-sm text-[#756A63] font-light leading-relaxed">
+            <p className="text-xs sm:text-sm text-[#392D29] font-normal leading-relaxed">
               {t.cookie.desc}
             </p>
-            <p className="text-xs text-[#756A63]/80 font-light leading-relaxed">
+            <p className="text-xs text-[#4F443E] font-normal leading-relaxed">
               {locale === "en"
                 ? "You can choose which categories you allow. Technically necessary cookies remain active for essential website functions (§ 25 para. 2 TDDDG)."
                 : "Du kannst selbst entscheiden, welche Kategorien du erlauben möchtest. Technisch notwendige Cookies sind für die Kernfunktionen stets aktiv (§ 25 Abs. 2 TDDDG)."}
@@ -161,11 +161,11 @@ export default function CookieConsent() {
 
             {/* Quick feature pill tags */}
             <div className="flex flex-wrap gap-2 pt-1">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#EFE6DD] text-[11px] text-[#392D29] font-medium">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#EFE6DD] text-[11px] text-[#392D29] font-medium border border-[#E8D6C5]">
                 <ShieldCheck className="w-3.5 h-3.5 text-[#844C36]" />
                 {locale === "en" ? "No data transfer without consent" : "Keine Datenübertragung ohne Einwilligung"}
               </span>
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#EFE6DD] text-[11px] text-[#392D29] font-medium">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#EFE6DD] text-[11px] text-[#392D29] font-medium border border-[#E8D6C5]">
                 <Lock className="w-3.5 h-3.5 text-[#844C36]" />
                 {locale === "en" ? "Revocable anytime in footer" : "Jederzeit im Footer widerrufbar"}
               </span>
@@ -187,7 +187,7 @@ export default function CookieConsent() {
                   {t.cookie.alwaysActive}
                 </span>
               </div>
-              <p className="text-[11px] text-[#756A63] font-light leading-relaxed">
+              <p className="text-[11px] text-[#4F443E] font-normal leading-relaxed">
                 {t.cookie.categoryNecessaryDesc}
               </p>
             </div>
@@ -206,11 +206,11 @@ export default function CookieConsent() {
                     className="sr-only peer"
                     aria-label={t.cookie.categoryAnalytics}
                   />
-                  <div className="w-9 h-5 bg-[#E8D6C5] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#A26D57]"></div>
+                  <div className="w-9 h-5 bg-[#E8D6C5] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#844C36]"></div>
                 </label>
               </div>
-              <p className="text-[11px] text-[#756A63] font-light leading-relaxed">
-                {t.cookie.categoryAnalyticsDesc} (<code className="text-[#392D29] bg-[#FAF6F1] px-1 py-0.5 rounded">analytics_storage</code>).
+              <p className="text-[11px] text-[#4F443E] font-normal leading-relaxed">
+                {t.cookie.categoryAnalyticsDesc} (<code className="text-[#392D29] bg-[#FAF6F1] px-1 py-0.5 rounded font-mono">analytics_storage</code>).
               </p>
             </div>
 
@@ -230,11 +230,11 @@ export default function CookieConsent() {
                     className="sr-only peer"
                     aria-label={t.cookie.categoryMarketing}
                   />
-                  <div className="w-9 h-5 bg-[#E8D6C5] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#A26D57]"></div>
+                  <div className="w-9 h-5 bg-[#E8D6C5] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#844C36]"></div>
                 </label>
               </div>
-              <p className="text-[11px] text-[#756A63] font-light leading-relaxed">
-                {t.cookie.categoryMarketingDesc} (<code className="text-[#392D29] bg-[#FAF6F1] px-1 py-0.5 rounded">ad_storage</code>, <code className="text-[#392D29] bg-[#FAF6F1] px-1 py-0.5 rounded">ad_user_data</code>, <code className="text-[#392D29] bg-[#FAF6F1] px-1 py-0.5 rounded">ad_personalization</code>).
+              <p className="text-[11px] text-[#4F443E] font-normal leading-relaxed">
+                {t.cookie.categoryMarketingDesc} (<code className="text-[#392D29] bg-[#FAF6F1] px-1 py-0.5 rounded font-mono">ad_storage</code>, <code className="text-[#392D29] bg-[#FAF6F1] px-1 py-0.5 rounded font-mono">ad_user_data</code>, <code className="text-[#392D29] bg-[#FAF6F1] px-1 py-0.5 rounded font-mono">ad_personalization</code>).
               </p>
             </div>
 
@@ -252,23 +252,23 @@ export default function CookieConsent() {
                     className="sr-only peer"
                     aria-label={t.cookie.categoryPreferences}
                   />
-                  <div className="w-9 h-5 bg-[#E8D6C5] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#A26D57]"></div>
+                  <div className="w-9 h-5 bg-[#E8D6C5] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#844C36]"></div>
                 </label>
               </div>
-              <p className="text-[11px] text-[#756A63] font-light leading-relaxed">
-                {t.cookie.categoryPreferencesDesc} (<code className="text-[#392D29] bg-[#FAF6F1] px-1 py-0.5 rounded">personalization_storage</code>).
+              <p className="text-[11px] text-[#4F443E] font-normal leading-relaxed">
+                {t.cookie.categoryPreferencesDesc} (<code className="text-[#392D29] bg-[#FAF6F1] px-1 py-0.5 rounded font-mono">personalization_storage</code>).
               </p>
             </div>
           </div>
         )}
 
         {/* Legal Links */}
-        <div className="text-[11px] text-[#756A63] font-light flex items-center justify-between pt-1 border-t border-[#E8D6C5]/50">
+        <div className="text-[11px] text-[#4F443E] font-normal flex items-center justify-between pt-1 border-t border-[#E8D6C5]/50">
           <div className="flex items-center gap-3">
             <Link
               href="/datenschutz"
               target="_blank"
-              className="underline hover:text-[#A26D57] transition-colors"
+              className="underline hover:text-[#844C36] transition-colors"
             >
               {t.footer.privacy}
             </Link>
@@ -276,7 +276,7 @@ export default function CookieConsent() {
             <Link
               href="/impressum"
               target="_blank"
-              className="underline hover:text-[#A26D57] transition-colors"
+              className="underline hover:text-[#844C36] transition-colors"
             >
               {t.footer.impressum}
             </Link>
@@ -285,7 +285,7 @@ export default function CookieConsent() {
           <button
             type="button"
             onClick={() => setIsDetailedView((prev) => !prev)}
-            className="text-[#A26D57] hover:underline inline-flex items-center gap-1 font-medium min-h-[36px]"
+            className="text-[#844C36] hover:underline inline-flex items-center gap-1 font-medium min-h-[36px]"
           >
             <Sliders className="w-3 h-3" />
             <span>{isDetailedView ? (locale === "en" ? "Simple View" : "Einfache Ansicht") : t.cookie.btnCustomize}</span>

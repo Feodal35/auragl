@@ -195,7 +195,7 @@ export default function Footer({ business, openingHours }: FooterProps) {
             <div className="pt-2">
               <Link
                 href="/termin"
-                className="inline-flex items-center justify-center min-h-[44px] text-xs uppercase tracking-[0.14em] font-medium px-5 py-2.5 bg-[#A26D57] text-white hover:bg-[#8E5A45] active:scale-[0.98] transition-all rounded-sm shadow-luxury-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9A891]"
+                className="inline-flex items-center justify-center min-h-[44px] text-xs uppercase tracking-[0.14em] font-medium px-5 py-2.5 bg-[#844C36] text-white hover:bg-[#6C3D2B] active:scale-[0.98] transition-all rounded-sm shadow-luxury-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#844C36]"
               >
                 {t.footer.bookAppointmentBtn}
               </Link>

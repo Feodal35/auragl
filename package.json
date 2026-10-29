@@ -42,7 +42,11 @@
   "browserslist": [
     "> 0.5%",
     "last 2 versions",
-    "Firefox ESR",
-    "not dead"
+    "not dead",
+    "not IE 11",
+    "chrome >= 95",
+    "safari >= 15.4",
+    "ios_saf >= 15.4",
+    "firefox >= 95"
   ]
 }
